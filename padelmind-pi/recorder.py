@@ -32,7 +32,8 @@ R2_ACCOUNT_ID = os.environ['PADEL_R2_ACCOUNT_ID']
 R2_ACCESS_KEY = os.environ['PADEL_R2_ACCESS_KEY']
 R2_SECRET_KEY = os.environ['PADEL_R2_SECRET_KEY']
 R2_BUCKET     = os.environ.get('PADEL_R2_BUCKET', 'padelmind-videos')
-WORKER_URL    = os.environ['PADEL_WORKER_URL']             # /on-upload endpoint
+WORKER_URL    = os.environ['PADEL_WORKER_URL']             # Worker base URL (no path)
+PI_SECRET     = os.environ.get('PADEL_PI_SECRET', '')      # Worker's PI_SHARED_SECRET
 SEGMENTS_BASE = Path(os.environ.get('SEGMENTS_DIR', '/tmp/padelmind'))
 POLL_INTERVAL = int(os.environ.get('POLL_INTERVAL', '5'))
 
@@ -177,16 +178,12 @@ def _upload_worker(court_id, match_id, segments_dir):
         )
         log.info(f'[{match_id[:8]}] Upload complete')
 
-        # Notify Cloudflare Worker → triggers RunPod job dispatch
-        payload = {
-            'match_id':    match_id,
-            'r2_key':      r2_key,
-            'court_id':    court_id,
-            'uploaded_at': datetime.now(timezone.utc).isoformat(),
-        }
+        # Notify Cloudflare Worker → queues job + triggers RunPod dispatch
+        notify_url = f"{WORKER_URL.rstrip('/')}/api/matches/{match_id}/uploaded"
+        payload = {'secret': PI_SECRET, 'r2_key': r2_key}
         for attempt in range(3):
             try:
-                r = requests.post(WORKER_URL, json=payload, timeout=30)
+                r = requests.post(notify_url, json=payload, timeout=30)
                 r.raise_for_status()
                 log.info(f'[{match_id[:8]}] Worker notified  status={r.status_code}')
                 break

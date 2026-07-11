@@ -11,3 +11,4 @@ yolov8*.pt
 .DS_Store
 pwa/dist/
 Booking App/
+ingest/ingest.env

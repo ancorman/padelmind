@@ -79,6 +79,12 @@ export default {
       return handleMatchEnd(request, env, endMatch[1]);
     }
 
+    // POST /api/matches/:id/uploaded — video is in R2 (iPad ingest script or Pi); queue processing
+    const uploadedMatch = path.match(/^\/api\/matches\/([^/]+)\/uploaded$/);
+    if (method === 'POST' && uploadedMatch) {
+      return handleUploaded(request, env, uploadedMatch[1]);
+    }
+
     // GET /api/jobs/next — RunPod polls for next job
     if (method === 'GET' && path === '/api/jobs/next') {
       return handleJobNext(request, env);
@@ -173,23 +179,53 @@ async function handleMatchEnd(request: Request, env: Env, matchId: string): Prom
   return json({ ok: true });
 }
 
+// Called AFTER the video is confirmed in R2 — the only place a job should be enqueued.
+// Sources: ingest/ingest_match.py (iPad recording) or the Pi recorder's upload worker.
+async function handleUploaded(request: Request, env: Env, matchId: string): Promise<Response> {
+  const body = await request.json() as { secret: string; r2_key?: string };
+  if (body.secret !== env.PI_SHARED_SECRET) return json({ error: 'Unauthorized' }, 401);
+
+  const videoKey = body.r2_key || `videos/${matchId}/match.mp4`;
+
+  // Verify the object actually exists in R2 before queueing
+  const head = await env.VIDEOS.head(videoKey);
+  if (!head) return json({ error: `Video not found in R2: ${videoKey}` }, 400);
+
+  await sbQuery(env, `/padel_matches?id=eq.${matchId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status: 'queued', video_r2_key: videoKey }),
+  });
+
+  await enqueueJob(env, matchId);
+
+  await sbQuery(env, '/padel_jobs', {
+    method: 'POST',
+    body: JSON.stringify({ match_id: matchId, status: 'queued' }),
+    headers: { Prefer: 'resolution=merge-duplicates' },
+  });
+
+  await triggerRunPod(env, matchId);
+
+  return json({ ok: true, match_id: matchId, video_r2_key: videoKey });
+}
+
 async function handleJobNext(request: Request, env: Env): Promise<Response> {
   const matchId = await dequeueJob(env);
   if (!matchId) return new Response(null, { status: 204 });
 
   // Fetch match + court keypoints + player slots
   const matches = await sbQuery(env,
-    `/padel_matches?id=eq.${matchId}&select=*,padel_courts(camera_keypoints),padel_match_players(player_slot,padel_players(phone))`
+    `/padel_matches?id=eq.${matchId}&select=*,padel_courts(camera_keypoints),padel_match_players(player_slot,player_phone,padel_players(phone))`
   );
   if (!matches?.length) return json({ error: 'Match not found' }, 404);
 
   const match = matches[0];
-  const videoKey = `videos/${matchId}/match.mp4`;
+  const videoKey = match.video_r2_key || `videos/${matchId}/match.mp4`;
 
-  // Build player slots map
+  // Build player slots map — player_phone covers opt-in players with no padel_players row
   const playerSlots: Record<string, string> = {};
   for (const mp of match.padel_match_players || []) {
-    playerSlots[String(mp.player_slot)] = mp.padel_players?.phone || '';
+    playerSlots[String(mp.player_slot)] = mp.padel_players?.phone || mp.player_phone || '';
   }
 
   // Mark job as dispatched
@@ -279,14 +315,14 @@ async function triggerRunPod(env: Env, matchId: string) {
 
   // Fetch match + keypoints + player slots to pass directly to RunPod
   const matches = await sbQuery(env,
-    `/padel_matches?id=eq.${matchId}&select=*,padel_courts(camera_keypoints),padel_match_players(player_slot,padel_players(phone))`
+    `/padel_matches?id=eq.${matchId}&select=*,padel_courts(camera_keypoints),padel_match_players(player_slot,player_phone,padel_players(phone))`
   );
   if (!matches?.length) return;
 
   const match = matches[0];
   const playerSlots: Record<string, string> = {};
   for (const mp of match.padel_match_players || []) {
-    playerSlots[String(mp.player_slot)] = mp.padel_players?.phone || '';
+    playerSlots[String(mp.player_slot)] = mp.padel_players?.phone || mp.player_phone || '';
   }
 
   await fetch(`https://api.runpod.io/v2/${env.RUNPOD_ENDPOINT_ID}/run`, {
@@ -298,7 +334,7 @@ async function triggerRunPod(env: Env, matchId: string) {
     body: JSON.stringify({
       input: {
         match_id: matchId,
-        video_r2_key: `videos/${matchId}/match.mp4`,
+        video_r2_key: match.video_r2_key || `videos/${matchId}/match.mp4`,
         keypoints: match.padel_courts?.camera_keypoints || null,
         player_slots: playerSlots,
       },
@@ -330,15 +366,15 @@ async function deliverWhatsApp(
   durationSec: number,
 ) {
   const players = await sbQuery(env,
-    `/padel_match_players?match_id=eq.${matchId}&select=player_slot,padel_players(phone,name)`
+    `/padel_match_players?match_id=eq.${matchId}&select=player_slot,player_phone,padel_players(phone,name)`
   );
   if (!players?.length) return;
 
   const durationMin = Math.round(durationSec / 60);
-  const pwaDomain = 'https://app.padelmind.in';
+  const pwaDomain = 'https://padelmind.quitlosing.in';
 
   for (const mp of players) {
-    const phone = mp.padel_players?.phone;
+    const phone = mp.padel_players?.phone || mp.player_phone;
     const name = mp.padel_players?.name || 'Player';
     const slot = mp.player_slot;
     if (!phone) continue;
