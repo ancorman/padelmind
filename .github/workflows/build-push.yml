@@ -6,6 +6,8 @@ on:
     paths:
       - 'cv-pipeline/**'
       - 'Dockerfile'
+      - '.github/workflows/**'
+  workflow_dispatch:
 
 jobs:
   build:
