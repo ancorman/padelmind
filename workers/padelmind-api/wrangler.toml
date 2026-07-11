@@ -1,0 +1,23 @@
+name = "padelmind-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+account_id = "5cea7760e2a9ac11cdeb84ea116ff839"
+workers_dev = true
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "padelmind-videos"
+
+[[r2_buckets]]
+binding = "OUTPUTS"
+bucket_name = "padelmind-outputs"
+
+[vars]
+SUPABASE_URL = "https://ddvntjalhtdutmcknshr.supabase.co"
+
+# Secrets (set via: wrangler secret put <NAME>)
+# SUPABASE_SERVICE_KEY
+# UPSTASH_REDIS_URL
+# UPSTASH_REDIS_TOKEN
+# PI_SHARED_SECRET
+# RUNPOD_SHARED_SECRET

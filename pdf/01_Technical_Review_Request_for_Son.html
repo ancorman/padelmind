@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Technical Review Request — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">For Family Eyes — Technical Review</div>
+    <h1 class="cover-title">A Technical Conversation</h1>
+    <p class="cover-subtitle">Padel AI Coaching Platform — a conversation between father and son, asking for your brain on the architecture and the moat thesis.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Prepared for</div><div class="cover-meta-value">[Son's name]</div></div>
+<div><div class="cover-meta-label">Reading time</div><div class="cover-meta-value">20–50 minutes</div></div>
+<div><div class="cover-meta-label">Required response</div><div class="cover-meta-value">4 lines on §Q5 and §Q7</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari · 2026-07-01</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Technical Review Request" data-brand="PadelMind">
+<p><strong>To:</strong> [Son&rsquo;s name]
+<strong>From:</strong> Papa (Manoj)
+<strong>Date:</strong> 2026-07-01
+<strong>Reading time:</strong> 20 min for the brief + 30 min for the technical depth (if you have it). Honest answers to the questions at the end are the prize.</p>
+<hr>
+<h2 id="why-this-document-exists">Why this document exists</h2>
+<p>You introduced me to Clutch. You play 3x a week. You&rsquo;re on their app. You work at Apple in AI. There is <strong>no one whose technical and product opinion would change my decisions more</strong> on this venture.</p>
+<p>I am committing to building an India-first AI padel coaching platform — a Clutch-equivalent but defensible by geography and language, with an expert coach co-founder designing the technique rubric. I have done about 4 hours of due diligence research with Claude. This document is the <strong>distilled output of that research</strong>. I&rsquo;d like you to:</p>
+<ol>
+<li><strong>Read the technical plan below</strong></li>
+<li><strong>Tell me where I&rsquo;m wrong, where Apple-stack thinking changes the answer, and where the moat thesis breaks</strong></li>
+<li><strong>Not commit any time</strong> — just give direction. I want your brain, not your weekends. Time investment only if we hit commercial traction (paying clubs).</li>
+</ol>
+<p>If you accept this lightweight advisory role, the equity ask would be <strong>0.5–1% over 2-year vest as a formal advisor</strong> — designed so you have a real upside if this works, no obligation if it doesn&rsquo;t, and zero conflict with Apple.</p>
+<hr>
+<h2 id="part-1-the-product-what-wed-build">Part 1: The product (what we&rsquo;d build)</h2>
+<p>A single IP camera per padel court records every match. Cloud AI runs computer vision: player tracking, ball trajectory, pose estimation, court keypoints, and most importantly — <strong>shot classification scored against an expert padel coach&rsquo;s rubric</strong>. Players get a WhatsApp message 10 min after every match: &ldquo;Your bandeja: 3.2/5, your hip rotation is 18° below ideal. Drill — shadow swing with hip cue, 5 min/day.&rdquo;</p>
+<p><strong>The MVP scope:</strong>
+- 1 camera per court (Reolink RLC-823A 4K, PoE, ~₹12k)
+- Edge buffer (Pi 5 8GB + 1TB NVMe) for offline reliability
+- RTSP stream → cloud GPU (RunPod RTX 3090) → analysis
+- Player PWA delivered via WhatsApp link
+- Club dashboard for court owners</p>
+<p><strong>The product roadmap:</strong>
+- V1 (Month 3): Movement + shot histogram + skill score
+- V2 (Month 6): Shot quality scoring + drill recommendations + clips
+- V3 (Month 12): Cross-club player identity (&ldquo;Skill Score&rdquo;) + matchmaking
+- V4 (Year 2): Edge inference (this is where I want your Apple Neural Engine view)</p>
+<hr>
+<h2 id="part-2-the-technical-stack-we-propose">Part 2: The technical stack we propose</h2>
+<h3 id="21-oss-wed-fork-as-the-base">2.1 OSS we&rsquo;d fork as the base</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>OSS pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full pipeline scaffold</td>
+<td><a href="https://github.com/Joao-M-Silva/padel_analytics">Joao-M-Silva/padel_analytics</a></td>
+<td>Player tracking + pose + ball + court keypoints already wired. Author actively seeking collaborators.</td>
+</tr>
+<tr>
+<td>Ball tracking</td>
+<td><a href="https://github.com/yastrebksv/TrackNet">yastrebksv/TrackNet</a></td>
+<td>Cleanest TrackNet implementation. Padel-retrain candidate.</td>
+</tr>
+<tr>
+<td>Court keypoints</td>
+<td><a href="https://github.com/yastrebksv/TennisCourtDetector">yastrebksv/TennisCourtDetector</a></td>
+<td>Retrain on padel court keypoints.</td>
+</tr>
+<tr>
+<td>Reference pipeline</td>
+<td><a href="https://github.com/ArtLabss/tennis-tracking">ArtLabss/tennis-tracking</a></td>
+<td>Tennis HawkEye OSS — most complete reference.</td>
+</tr>
+<tr>
+<td>Training datasets</td>
+<td><a href="https://github.com/UPC-ViRVIG/PadelVic">UPC-ViRVIG/PadelVic</a></td>
+<td>Padel-labeled video datasets.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-live-architecture-proposed">2.2 Live architecture (proposed)</h3>
+<pre><code>┌─────────────────────────────────────────┐
+│ Court — physical install                 │
+│  Reolink RLC-823A (4K, PoE, ultra-wide) │
+│  ↓ RTSP H.265                            │
+│  Pi 5 + 1TB NVMe (edge buffer)           │
+│  - Records to disk during WiFi drops     │
+│  - Match-end trigger uploads MP4 to R2   │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│ Cloud: Cloudflare R2 (object storage)    │
+└──────────────┬──────────────────────────┘
+               │ webhook trigger
+               ▼
+┌─────────────────────────────────────────┐
+│ RunPod GPU worker (RTX 3090)             │
+│  1. YOLOv8m player detection             │
+│  2. YOLOv8-pose 13-DOF keypoints         │
+│  3. TrackNet ball trajectory             │
+│  4. Court homography (12-pt cached)      │
+│  5. SHOT CLASSIFIER ← our trained model  │
+│  6. Skill scoring engine ← our rubric    │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│ Supabase (Postgres + Auth)               │
+│  Player identity, match records,         │
+│  scores, drill recommendations           │
+└──────────────┬──────────────────────────┘
+               │
+       ┌───────┴────────────┐
+       ▼                    ▼
+┌──────────────┐    ┌──────────────────┐
+│ Player PWA   │    │ Club dashboard   │
+│ (Cloudflare  │    │ (same React app, │
+│ Pages, React)│    │  role-gated)     │
+└──────────────┘    └──────────────────┘
+       │
+       ▼
+WhatsApp delivery (we have this — AutomationXpert router)
+</code></pre>
+<h3 id="23-the-hard-ml-problem-where-you-can-save-us-months">2.3 The hard ML problem (where you can save us months)</h3>
+<p><strong>The classifier is the moat.</strong> Pipeline diagram shows step 5 (&ldquo;shot classifier&rdquo;). This is the one piece <strong>not solved in OSS</strong>. We have to train it.</p>
+<p>Plan:
+- <strong>Input:</strong> Per-frame pose-keypoint sequence (~30 frames at 30fps = 1 sec around ball impact) + court-relative position + ball trajectory feature
+- <strong>Output:</strong> Shot class (bandeja, vibora, smash, volley, bajada, chiquita, x3, serve, return, lob, drive) + <strong>quality score 1–5</strong> + <strong>specific deviations from ideal form</strong>
+- <strong>Training data:</strong> Coach designs rubric (10-15 page IP doc) + labels 100 gold-standard clips + 2 trained labellers do bulk labelling (target 500–700 clips for V1)
+- <strong>Architecture (placeholder):</strong> Small MLP or temporal CNN on pose-keypoint features → multi-head (class + quality + deviation flags)
+- <strong>Target accuracy V1:</strong> 70% top-1 class accuracy</p>
+<p><strong>The big technical question I want your view on:</strong> Is this approach right? Or should we be looking at:
+- (a) Temporal transformer over keypoints?
+- (b) Fine-tune a pretrained pose-classifier (e.g., MotionBERT)?
+- (c) Multi-modal (pose + ball trajectory features cross-attention)?
+- (d) Self-supervised pretraining on unlabeled padel video first, then small labeled fine-tune?</p>
+<h3 id="24-hardware-bill-of-materials-per-court">2.4 Hardware bill of materials (per court)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Spec</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Camera</td>
+<td>Reolink RLC-823A 16x or Hikvision DS-2CD2T87G2</td>
+<td>12,000–22,000</td>
+</tr>
+<tr>
+<td>Edge buffer</td>
+<td>Pi 5 8GB + 1TB NVMe + case + cooling</td>
+<td>15,000</td>
+</tr>
+<tr>
+<td>PoE switch</td>
+<td>TP-Link TL-SG1005P</td>
+<td>3,000</td>
+</tr>
+<tr>
+<td>Cabling + mount + IP66 box</td>
+<td>Local</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td><strong>Per-court total</strong></td>
+<td></td>
+<td><strong>~₹32,000–42,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-cloud-cost-per-court-per-month-at-120-matchescourtmonth">2.5 Cloud cost per court per month (at 120 matches/court/month)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RunPod GPU inference (~3 min/match × ₹2.5/min)</td>
+<td>360</td>
+</tr>
+<tr>
+<td>R2 storage + egress</td>
+<td>150</td>
+</tr>
+<tr>
+<td>Supabase free/pro tier</td>
+<td>30</td>
+</tr>
+<tr>
+<td>WhatsApp delivery (own infra)</td>
+<td>30</td>
+</tr>
+<tr>
+<td><strong>Total COGS / court / mo</strong></td>
+<td><strong>~₹540</strong></td>
+</tr>
+</tbody>
+</table>
+<p>At ₹5,000/court/mo ASP → <strong>~89% gross margin.</strong></p>
+<hr>
+<h2 id="part-3-edge-inference-v2v3-the-apple-stack-question">Part 3: Edge inference (V2/V3) — the Apple-stack question</h2>
+<p><strong>This is where you have a 10x view I don&rsquo;t.</strong></p>
+<p>Year-2 plan currently has us migrating from &ldquo;cloud-only inference&rdquo; to &ldquo;edge inference on a small device per court&rdquo; — primary motivations:
+1. Cost: cloud inference at scale (1,000+ clubs) gets expensive
+2. Latency: live in-match insights need &lt;1 sec round trip
+3. Bandwidth: 4K RTSP to cloud at scale = ISP grief at clubs</p>
+<p>Default plan picks <strong>NVIDIA Jetson Orin Nano (₹40k) or Jetson Orin NX 16GB (₹70k)</strong> as the edge device. That&rsquo;s the safe path.</p>
+<p><strong>The Apple-stack alternative I want your view on:</strong>
+- Mac mini M4 (₹60–70k) as the edge box per court, running CoreML-compiled models on Neural Engine
+- Pros: cheaper than Orin NX, Apple Neural Engine is genuinely top-tier for vision workloads, you&rsquo;d know how to optimize this in your sleep
+- Cons: macOS is not a server OS most people use for production deploys; software ecosystem (RTSP capture, ffmpeg, headless service management) is slightly more awkward
+- <strong>Reality check question:</strong> Have you seen anyone do production CV pipelines on Mac mini in a multi-site deploy? Or is this a thought experiment? If real, can you point me at any case studies?</p>
+<p>There&rsquo;s a Mac Pro M2 Ultra angle for a regional inference node serving 10–20 clubs from a colocated rack. Same question.</p>
+<hr>
+<h2 id="part-4-competitive-landscape-what-we-found">Part 4: Competitive landscape (what we found)</h2>
+<p>You know Clutch. There are 7–8 European competitors (Clutch, Wingfield, Padelytics, Eyes-On, GAMETRAQ, SPASH, PlaySight). The interesting find this week:</p>
+<p><strong>Epic Padel ($10M seed Sept 2025)</strong> — US-based rollup that OWNS Clutch AI + Padel India (chain of courts) + Red Padel (the world rating) + multiple US club chains. They&rsquo;re launching <strong>Zero.40 in 2026</strong> — &ldquo;club operating system&rdquo; combining all of this. Clutch India is their Bangalore arm — Curved Consistency Technologies Pvt Ltd, co-founded by <strong>Sharath Kumar</strong> (ex-Ninjacart, ex-BharatPe).</p>
+<p><strong>China that I missed in the first pass:</strong>
+- 小球圈 (Xiaoqiuquan) — ex-ByteDance + ex-DJI founders, AI coach for tennis/badminton/table-tennis/pickleball, already top-50 on Chinese sports app charts, ~30% MoM user growth. <strong>They will add padel within 12 months.</strong>
+- Lumistar (Shenzhen) — AI tennis training systems (TERO launched Mar 2026)
+- SenseTime — already runs basketball AI analytics for Chinese pro teams
+- Hikvision/Dahua — they manufacture the cameras we&rsquo;d buy; could vertically integrate</p>
+<p><strong>Our moat thesis</strong> (please critique honestly):
+- ❌ Tech moat — we agree there isn&rsquo;t one; it&rsquo;s commodity ML
+- ✅ India geopolitical wall vs Chinese SaaS (TikTok/PUBG-style)
+- ✅ Federation distribution lock (Asian Games 2026 catalysed national federations forming NOW)
+- ✅ Padel coach co-founder = proprietary rubric dataset
+- ✅ WhatsApp-native distribution + Hindi/Arabic UX depth</p>
+<p><strong>The biggest risk</strong> I see: if Sharath Kumar&rsquo;s team (Epic Padel-funded) moves fast in Mumbai/Bangalore before we get 25 clubs locked, the geographic moat thesis erodes. That&rsquo;s a 6-month race, not a 24-month one.</p>
+<hr>
+<h2 id="part-5-honest-open-questions-for-you">Part 5: Honest open questions for you</h2>
+<p>You can answer these inline below each one, save the file, and send back. Or schedule 30 min and we talk.</p>
+<h3 id="q1-clutch-as-a-user">Q1. Clutch as a user</h3>
+<p>Have you used Clutch enough to tell me <strong>what is genuinely good</strong> about the product and <strong>what is weak</strong>? What would make you switch to a different product if it appeared in your club? What do you wish it did that it doesn&rsquo;t?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q2-the-classifier-approach">Q2. The classifier approach</h3>
+<p>Of the four options I listed in §2.3 (MLP, MotionBERT, multi-modal cross-attention, self-supervised pretraining), which would you bet on for V1? Why? What would you change about the framing of the problem?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q3-edge-inference-path">Q3. Edge inference path</h3>
+<p>Is Mac mini M4 + CoreML a real production CV deploy path in 2026? Or do we go safely with Jetson Orin? If you&rsquo;d pick Apple stack, what&rsquo;s the architecture you&rsquo;d build?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q4-apple-internal-angles">Q4. Apple internal angles</h3>
+<p>Without revealing anything confidential — are there public Apple frameworks (Vision, ARKit body pose, CoreML model zoo) that we should be paying attention to? Anything from VisionPro Body Pose APIs that would shortcut our pose-keypoint work?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q5-the-moat">Q5. The moat</h3>
+<p>Honest critique: does the geopolitical + federation + coach + WhatsApp moat actually hold up under pressure, or am I rationalizing? What would you ADD to the moat thesis if you were investing?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q6-the-build-vs-partner-question">Q6. The build vs partner question</h3>
+<p>There&rsquo;s a real option: <strong>don&rsquo;t compete with Clutch — try to become their India partner instead.</strong> Sharath Kumar is in Bangalore, the company is Indian-incorporated, they likely need install/ops help in Mumbai/Delhi. If we did this, my AX distribution muscle goes into THEIR product, we get revenue share, no fundraise pressure. Less glory, less risk. <strong>What&rsquo;s your take?</strong></p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q7-your-honest-should-i-do-this-view">Q7. Your honest &ldquo;should I do this&rdquo; view</h3>
+<p>You&rsquo;re the closest person to me who plays this sport AND understands the tech. <strong>Should I do this venture?</strong> Or is it a distraction from AutomationXpert and I should send the LinkedIn DM to Sharath to find partnership / advisor / nothing? No need to be polite.</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q8-anything-i-missed">Q8. Anything I missed</h3>
+<p>What would you have asked that I didn&rsquo;t?</p>
+<p><strong>Your answer:</strong></p>
+<h3 id="q9-the-advisory-role">Q9. The advisory role</h3>
+<p>If yes — 0.5–1% advisor equity over 2-yr vest, no time commitment, monthly 30-min sync, you respond when asked specific questions (like in this doc). Acceptable structure? Want to change anything?</p>
+<p><strong>Your answer:</strong></p>
+<hr>
+<h2 id="part-6-reference-reading-only-if-you-want-depth">Part 6: Reference reading (only if you want depth)</h2>
+<ul>
+<li><strong>Strategy:</strong> <code>~/Documents/padel-clone/PADEL_AI_VENTURE_PLAN.md</code> — full venture plan v0.2</li>
+<li><strong>Execution:</strong> <code>~/Documents/padel-clone/PROJECT_REPORT.md</code> — operational plan with 30-day punch list</li>
+<li><strong>Technical feasibility:</strong> <code>~/Documents/padel-clone/TECHNICAL_FEASIBILITY_REPORT.md</code> — formal feasibility report</li>
+<li><strong>OSS we&rsquo;d fork:</strong> https://github.com/Joao-M-Silva/padel_analytics (the base) + https://github.com/yastrebksv/TrackNet (ball)</li>
+</ul>
+<hr>
+<p><strong>Thank you for reading this far.</strong> Even a 20-min skim and 4-line response on the moat (§Q5) and &ldquo;should I do this&rdquo; (§Q7) would be incredibly useful. No pressure, no obligation — just your brain. Love, Papa.</p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

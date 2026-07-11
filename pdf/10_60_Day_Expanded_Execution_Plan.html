@@ -1,0 +1,1892 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>60-Day Expanded Execution Plan — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Operational Source of Truth</div>
+    <h1 class="cover-title">60-Day Expanded Execution Plan</h1>
+    <p class="cover-subtitle">Nine parallel workstreams, six milestone gates, ten-person team roster, and per-workstream owner, scope, day-by-day tasks, deliverables, handoffs, risk, and budget.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Document version</div><div class="cover-meta-value">2.0</div></div>
+<div><div class="cover-meta-label">Companion</div><div class="cover-meta-value">TECH_BRIEFING_FOR_SON · TECHNICAL_FEASIBILITY_REPORT · NSCI_PROPOSAL</div></div>
+<div><div class="cover-meta-label">Target outcome</div><div class="cover-meta-value">Working V1 by Day 60; commercial launch Day 91</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari · 2026-07-03</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="60-Day Expanded Execution Plan" data-brand="PadelMind">
+<h2 id="from-camera-install-to-customer-ready-ui-padelmind-by-automationxpert">From Camera-Install to Customer-Ready UI — PadelMind by AutomationXpert</h2>
+<p><strong>Version:</strong> 2.0 (expanded from <code>60_DAY_EXECUTION_PLAN.md</code> v1.0)
+<strong>Date:</strong> 2026-07-03
+<strong>Author:</strong> Manoj Maheshwari
+<strong>Companion documents:</strong> <code>TECHNICAL_FEASIBILITY_REPORT.md</code>, <code>NSCI_PROPOSAL.md</code>, <code>TECH_BRIEFING_FOR_SON.md</code>
+<strong>Target outcome by Day 60:</strong> A real match played on NSCI court has, by end of day, produced WhatsApp reports to all 4 players, each able to open a full match report on a mobile phone.</p>
+<hr>
+<h2 id="0-how-to-read-this-document">0. How to read this document</h2>
+<p>The 60 days are divided into <strong>9 parallel workstreams (A through I)</strong>. Each workstream is a self-contained module of work with its own owner, budget, deliverables, and hand-offs to other workstreams.</p>
+<p>For every workstream, this document details:</p>
+<ol>
+<li><strong>Objective</strong> — the one sentence that describes why the workstream exists</li>
+<li><strong>Owner</strong> — the person accountable for delivering it; their day-cost; who to escalate to if they miss</li>
+<li><strong>Scope in / scope out</strong> — a bright line on what belongs to this workstream and what does not</li>
+<li><strong>Day-by-day tasks</strong> — concrete work items with dates</li>
+<li><strong>Deliverables</strong> — the artefacts that prove the work is done</li>
+<li><strong>Handoffs</strong> — the specific outputs this workstream hands to other workstreams, in what format</li>
+<li><strong>Risk + contingency</strong> — the top thing that could break this workstream and the plan if it does</li>
+<li><strong>Budget</strong> — cash cost of running this workstream for the full 60 days</li>
+</ol>
+<p>At the end of each workstream is a <strong>definition of done</strong> — the binary check that gates whether the workstream is closed.</p>
+<p>The 60 days are then punctuated by <strong>6 hard milestone gates</strong>: G1 (Day 3), G2 (Day 14), G3 (Day 21), G4 (Day 35), G5 (Day 50), G6 (Day 60). Missing any gate triggers the escalation plan in the last section.</p>
+<hr>
+<h2 id="1-executive-summary-of-the-60-days">1. Executive summary of the 60 days</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Duration</td>
+<td>60 calendar days from installation-approved by NSCI committee</td>
+</tr>
+<tr>
+<td>Courts covered</td>
+<td>Both NSCI padel courts</td>
+</tr>
+<tr>
+<td>Team size (effective FTE)</td>
+<td>5.5 people fully committed for 60 days</td>
+</tr>
+<tr>
+<td>Team size (headcount)</td>
+<td>10 people with varying commitments</td>
+</tr>
+<tr>
+<td>Total cash outlay</td>
+<td>₹7.2 lakh base + ₹1 lakh contingency</td>
+</tr>
+<tr>
+<td>Hardware BOM</td>
+<td>₹1.2 lakh (both courts + spares)</td>
+</tr>
+<tr>
+<td>End state</td>
+<td>Working V1: cameras live, classifier trained, PWA shipped, WhatsApp delivery active</td>
+</tr>
+<tr>
+<td>What Day 61 onwards is for</td>
+<td>Coach blind audit + polish + closed beta with 10 NSCI members before Day 91 commercial launch</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-workstream-a-hardware-install-live-feed">2. Workstream A — Hardware Install &amp; Live Feed</h2>
+<h3 id="21-objective">2.1 Objective</h3>
+<p>Get two NSCI courts filming and streaming to the cloud within 5 days of committee approval, with a player-facing pause switch in place.</p>
+<h3 id="22-owner">2.2 Owner</h3>
+<p><strong>Hardware install lead</strong> — a Mumbai CCTV integrator on retainer for 60 days.
+- Day cost: ₹40,000 flat fee for the 5-day install + ₹5,000/month standby for the remaining ~55 days
+- Escalation: Manoj personally handles NSCI-facing communication; hardware lead handles installation and technical support only
+- Backup: A second CCTV integrator (SPL Technologies as fallback) pre-lined-up before Day 0 so no single point of failure</p>
+<h3 id="23-scope-in">2.3 Scope in</h3>
+<ul>
+<li>Physical camera mounting (2 cameras, one per court)</li>
+<li>Cabling — Cat6 from cameras to edge box</li>
+<li>Weatherproof enclosure for Pi 5 + modem + UPS</li>
+<li>Courtside pause-button installation (1 per court)</li>
+<li>Signage installation</li>
+<li>Initial 12-point court keypoint calibration per court</li>
+<li>Heartbeat monitoring + alerting configured</li>
+</ul>
+<h3 id="24-scope-out">2.4 Scope out</h3>
+<ul>
+<li>Model training (WS-D)</li>
+<li>Any pipeline work (WS-C)</li>
+<li>Any interaction with NSCI members or staff — handled by Manoj</li>
+</ul>
+<h3 id="25-day-by-day-tasks">2.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Task</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−5 to 0</td>
+<td>Order all hardware from Amazon India / Robu.in / Reolink India</td>
+<td>Manoj purchases + tracks</td>
+</tr>
+<tr>
+<td>−2</td>
+<td>Site walk at NSCI with maintenance staff, identify electrical point, confirm mount positions</td>
+<td>Manoj + install lead</td>
+</tr>
+<tr>
+<td>0</td>
+<td>All hardware received at Manoj&rsquo;s office, tested in bench setup</td>
+<td>Install lead</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Pi 5 pre-configured — Ubuntu, MediaMTX, uploader daemon, health beacon — before going to court</td>
+<td>Install lead</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4G/5G modem provisioned with dedicated SIM, tested on hotspot to R2 upload</td>
+<td>Install lead</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Install day at NSCI — single 2-hour morning window agreed with committee. Cameras mounted, cables run, edge box installed, first frame captured</td>
+<td>Install lead + 1 electrician; Manoj present</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12-point court keypoint clicks for both courts, saved to court-config file</td>
+<td>Install lead</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Informational signage put up at both courts</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Courtside pause buttons installed and wired to state-machine service</td>
+<td>Install lead</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Grafana heartbeat dashboard live, alerts wired to Manoj&rsquo;s WhatsApp</td>
+<td>Install lead</td>
+</tr>
+</tbody>
+</table>
+<h3 id="26-deliverables">2.6 Deliverables</h3>
+<ul>
+<li>Both courts streaming RTSP to their respective Pi 5</li>
+<li>First real match MP4 auto-uploaded to Cloudflare R2, timestamped</li>
+<li>Pause button tested (recording pauses within 5 seconds of press, resumes automatically after 2 hours)</li>
+<li>Signage in place at both courts</li>
+<li>Health monitor showing &gt;99% uptime for camera + Pi + modem</li>
+<li>Court keypoint JSON files saved in the config repo</li>
+</ul>
+<h3 id="27-handoffs">2.7 Handoffs</h3>
+<ul>
+<li><strong>To WS-C:</strong> Match MP4 in R2 at path <code>matches/{court_id}/{yyyy-mm-dd}/{match_id}.mp4</code> + webhook payload with <code>{match_id, court_id, start_ts, end_ts, duration_s, size_bytes}</code></li>
+<li><strong>To WS-E:</strong> Court keypoint JSON with 12 (x, y) pairs per court</li>
+<li><strong>To WS-E (audit):</strong> Every pause-button press posts to <code>POST /audit/pause</code> — logged forever, per NSCI proposal transparency commitment</li>
+</ul>
+<h3 id="28-risk-contingency">2.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Camera mounting height or angle proves suboptimal after first day of test matches (e.g., ball too small, blind spots at back walls). <strong>Contingency:</strong> Site walk done at 4pm on a match day so we see actual play conditions before committing to mount positions. Second visit budgeted at Day 10 for adjustment. Spare camera on hand.</p>
+<p><strong>Second risk:</strong> Modem cellular signal weak inside NSCI service niche. <strong>Contingency:</strong> External antenna kit ordered in advance (₹3,000); mount to modem enclosure exterior if internal signal is under −85 dBm.</p>
+<h3 id="29-budget">2.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware BOM (both courts + 1 spare of each)</td>
+<td>₹1,20,000</td>
+</tr>
+<tr>
+<td>Install lead retainer (5 days + 55 days standby)</td>
+<td>₹68,000</td>
+</tr>
+<tr>
+<td>Contingency (antenna, extra cabling, unforeseen)</td>
+<td>₹15,000</td>
+</tr>
+<tr>
+<td><strong>Total WS-A</strong></td>
+<td><strong>₹2,03,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="210-definition-of-done-g1-day-3">2.10 Definition of done (G1, Day 3)</h3>
+<p>Both courts streaming; first match MP4 auto-uploaded to R2; pause button toggles recording; signage up.</p>
+<hr>
+<h2 id="3-workstream-b-data-capture-labelling-operations">3. Workstream B — Data Capture &amp; Labelling Operations</h2>
+<h3 id="31-objective">3.1 Objective</h3>
+<p>Produce 700 coach-labelled shot clips by Day 50 — the training corpus for the shot classifier (Stage 12 of the signal path). This workstream is on the critical path for the whole venture.</p>
+<h3 id="32-owner">3.2 Owner</h3>
+<p><strong>Padel Coach (part-time retainer)</strong> for the taxonomy and audit; <strong>2 labellers (part-time)</strong> for bulk labelling.
+- Coach day cost: ₹40,000/month × 2 months = ₹80,000
+- Labeller day cost: ₹15,000/month × 2 people × 1.7 months = ₹51,000
+- Escalation: Manoj to interview + line up a #2 coach on ₹10k/mo retainer before Day 15 so switching costs are days, not weeks
+- Coach criteria: Level-B PBI-certified coach with ≥5 years of coaching experience, based in Mumbai for weekly in-person sessions</p>
+<h3 id="33-scope-in">3.3 Scope in</h3>
+<ul>
+<li>Authorship of the taxonomy + rubric document (14 shot classes, 1–5 quality rubric, deviation-flag glossary)</li>
+<li>Labelling of 100 &ldquo;gold-standard&rdquo; reference clips</li>
+<li>Training and ongoing management of the 2 labellers</li>
+<li>Weekly 10% audit of labeller output; inter-rater reliability tracked</li>
+<li>Blind audit of the trained classifier on 20 matches (Day 45–55)</li>
+</ul>
+<h3 id="34-scope-out">3.4 Scope out</h3>
+<ul>
+<li>Any code writing (WS-C builds the labelling tool)</li>
+<li>Any modelling decisions (WS-D)</li>
+<li>Direct member interaction beyond passive observation of play</li>
+</ul>
+<h3 id="35-day-by-day-tasks">3.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–7</td>
+<td>Coach authors 15-page taxonomy + rubric document</td>
+<td>Coach</td>
+</tr>
+<tr>
+<td>5–8</td>
+<td>Manoj interviews 3 labeller candidates from padel WhatsApp groups + NSCI community</td>
+<td>Manoj + Coach</td>
+</tr>
+<tr>
+<td>7–12</td>
+<td>Coach labels 100 gold-standard reference clips using Streamlit tool built by WS-C</td>
+<td>Coach</td>
+</tr>
+<tr>
+<td>10–14</td>
+<td>Onboard 2 labellers, train them on the gold-standard set</td>
+<td>Coach</td>
+</tr>
+<tr>
+<td>10–14</td>
+<td>Import ~150 supplementary clips from PadelVic public dataset for class balance</td>
+<td>Full-stack engineer (WS-E)</td>
+</tr>
+<tr>
+<td>14–21</td>
+<td>Labellers ramp: 50 clips each in week 3 → 100 each in week 4 → 150 each week 5 onwards</td>
+<td>Labellers</td>
+</tr>
+<tr>
+<td>Weekly</td>
+<td>Coach 10% audit of labeller output, feedback loop, inter-rater kappa tracking</td>
+<td>Coach</td>
+</tr>
+<tr>
+<td>45–55</td>
+<td>Coach blind audit: score 20 recent matches independently, compare with model output</td>
+<td>Coach</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36-deliverables">3.6 Deliverables</h3>
+<ul>
+<li>Taxonomy + rubric document (15 pages, PDF)</li>
+<li>Gold-standard clip set: 100 clips with coach labels</li>
+<li>Ongoing labelled dataset in <code>labels</code> table on Supabase — 200 clips by Day 21, 400 by Day 35, 600 by Day 42, 700+ by Day 50</li>
+<li>Inter-rater kappa scores tracked weekly (target ≥ 0.7)</li>
+<li>Blind audit report: coach vs. model agreement on per-player skill summary and top-3 weaknesses (target ≥ 80% directional agreement)</li>
+</ul>
+<h3 id="37-handoffs">3.7 Handoffs</h3>
+<ul>
+<li><strong>To WS-D:</strong> Labelled clips as JSONL rows: <code>{shot_id, class, quality, deviations[]}</code> linked to the shot feature vector in <code>shots</code> table</li>
+<li><strong>To WS-I:</strong> Blind audit results file for launch-readiness memo</li>
+</ul>
+<h3 id="38-risk-contingency">3.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Coach retention becomes unreliable (competing engagements, health issues, disagreements). <strong>Contingency:</strong> #2 coach on retainer from Day 15, briefed on the taxonomy so hand-off is 3 days not 3 weeks.</p>
+<p><strong>Second risk:</strong> Labeller velocity below plan (real people are slow at first). <strong>Contingency:</strong> ₹10k buffer to add a third labeller from Day 30 onwards if week-4 velocity is below 100 clips/labeller.</p>
+<p><strong>Third risk:</strong> Class imbalance — some shot types (e.g., bandeja) rare in casual play. <strong>Contingency:</strong> Supplement with PadelVic public dataset; targeted coach-recorded demo clips for rare classes.</p>
+<h3 id="39-budget">3.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coach retainer (2 months)</td>
+<td>₹80,000</td>
+</tr>
+<tr>
+<td>2 labellers (part-time, 1.7 months)</td>
+<td>₹51,000</td>
+</tr>
+<tr>
+<td>Backup coach retainer (Days 15–60)</td>
+<td>₹15,000</td>
+</tr>
+<tr>
+<td>Third labeller contingency</td>
+<td>₹10,000</td>
+</tr>
+<tr>
+<td><strong>Total WS-B</strong></td>
+<td><strong>₹1,56,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="310-definition-of-done">3.10 Definition of done</h3>
+<ul>
+<li>Day 21 (G3): 200 clips labelled, taxonomy locked, all 14 classes represented, inter-rater kappa ≥ 0.7</li>
+<li>Day 50 (G5): 700+ clips banked, held-out 15% test set frozen</li>
+</ul>
+<hr>
+<h2 id="4-workstream-c-cv-pipeline-fork-hardening">4. Workstream C — CV Pipeline Fork &amp; Hardening</h2>
+<h3 id="41-objective">4.1 Objective</h3>
+<p>Turn João&rsquo;s open-source <code>padel_analytics</code> codebase into a production pipeline that ingests NSCI match MP4s and emits per-shot feature vectors ready for classification — running unattended in the cloud with observability and reliability.</p>
+<h3 id="42-owner">4.2 Owner</h3>
+<p><strong>CTO / ML Lead (co-founder, full-time from Day 0)</strong> with support from a <strong>CV engineer (contract, ₹1.2 lakh/month, Days 7–35)</strong>.
+- Ideal profile: João Silva himself as consultant + a Bangalore-based CV engineer as the executing hand. Fallback: senior CV engineer with ByteTrack / YOLO / TrackNet familiarity.
+- Escalation: Manoj to Manoj&rsquo;s son (Apple AI advisor) for architecture judgement calls if CTO stalls.</p>
+<h3 id="43-scope-in">4.3 Scope in</h3>
+<ul>
+<li>Private fork of <code>Joao-M-Silva/padel_analytics</code> → <code>automationxpert/padelmind-pipeline</code></li>
+<li>Retrain of TrackNet for padel ball (yellow, faster than tennis)</li>
+<li>Adaptation of court keypoint logic for padel court geometry</li>
+<li>Shot-impact segmentation algorithm (velocity direction-change detector with padel wall-bounce handling)</li>
+<li>Queue-consumer wrapper: reads R2 events, downloads video, runs stages 6–11, emits shots-JSONL</li>
+<li><strong>Decision on Ultralytics licensing</strong> (Day 5–7) — see <code>TECH_BRIEFING_FOR_SON.md</code> §2 for the framing</li>
+<li>Streamlit labelling tool for WS-B</li>
+<li>Observability: Sentry hooks, per-stage timing metrics, failure-mode dashboards</li>
+<li>Reliability hardening: retry logic, dead-letter queue, graceful &ldquo;no ball detected&rdquo; fallback</li>
+</ul>
+<h3 id="44-scope-out">4.4 Scope out</h3>
+<ul>
+<li>Shot classifier itself (WS-D)</li>
+<li>Application data model (WS-E)</li>
+<li>Any UI (WS-F, WS-G)</li>
+</ul>
+<h3 id="45-day-by-day-tasks">4.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–3</td>
+<td>Fork <code>padel_analytics</code> → private repo, strip UI, keep inference nodes</td>
+</tr>
+<tr>
+<td>3–10</td>
+<td>Wrap pipeline in queue-consumer worker: reads R2 events → downloads video → runs stages 6–11 → writes shots-JSONL to Postgres</td>
+</tr>
+<tr>
+<td>5–7</td>
+<td><strong>Ultralytics licensing decision:</strong> benchmark RTMPose baseline against YOLOv8 on 50 test clips; decide swap or pay</td>
+</tr>
+<tr>
+<td>5–10</td>
+<td>Build Streamlit labelling tool → hand over to WS-B</td>
+</tr>
+<tr>
+<td>7–14</td>
+<td>Retrain TrackNet on padel ball using PadelVic + first NSCI captures</td>
+</tr>
+<tr>
+<td>7–10</td>
+<td>Adapt court keypoint code for padel court; validate against install-day 12-point clicks</td>
+</tr>
+<tr>
+<td>10–18</td>
+<td>Build shot-impact segmentation with padel-specific wall-bounce handling</td>
+</tr>
+<tr>
+<td>15–20</td>
+<td>Pipeline observability: Sentry, per-stage timing, dashboards</td>
+</tr>
+<tr>
+<td>20–30</td>
+<td>Reliability hardening: retries, DLQ, fallbacks</td>
+</tr>
+<tr>
+<td>30–35</td>
+<td>Ship-ready pipeline v1.0 tagged; passes 100-match soak test with &lt;1% crash rate</td>
+</tr>
+</tbody>
+</table>
+<h3 id="46-deliverables">4.6 Deliverables</h3>
+<ul>
+<li>Private repo <code>automationxpert/padelmind-pipeline</code> at commit <code>v1.0.0</code> by Day 35</li>
+<li>Documented feature-vector schema for downstream classifier (390-dim: pose seq + court xy + ball trajectory + opponents + score context)</li>
+<li>Streamlit labelling tool at <code>label.padelmind.internal</code> (staging) by Day 10</li>
+<li>Sentry + Grafana dashboards showing per-stage latency and error rates</li>
+<li>Ultralytics-vs-Apache decision memo by Day 7</li>
+</ul>
+<h3 id="47-handoffs">4.7 Handoffs</h3>
+<ul>
+<li><strong>From WS-A:</strong> Match MP4 with webhook payload (as documented above)</li>
+<li><strong>To WS-B:</strong> Streamlit labelling tool ready for coach use by Day 10</li>
+<li><strong>To WS-D:</strong> Feature vector JSONL per shot in schema locked on Day 15</li>
+<li><strong>To WS-E:</strong> Pipeline writes results to Postgres tables <code>matches</code>, <code>shots</code> (schema owned by WS-E)</li>
+</ul>
+<h3 id="48-risk-contingency">4.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Ball tracking unreliable in NSCI&rsquo;s specific lighting conditions (LEDs vs natural light varies through the day). <strong>Contingency:</strong> Camera upgrade to Hikvision ColorVu (₹6k delta) budgeted; recommend NSCI add 2× 50W LED panels if needed.</p>
+<p><strong>Second risk:</strong> Ultralytics licensing decision goes wrong direction — RTMPose accuracy is materially worse than YOLOv8. <strong>Contingency:</strong> ₹2 lakh reserve for Ultralytics Enterprise Licence in Year-1 budget.</p>
+<h3 id="49-budget">4.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CV engineer contract (1 month)</td>
+<td>₹1,20,000</td>
+</tr>
+<tr>
+<td>RunPod training compute for retrains</td>
+<td>₹15,000</td>
+</tr>
+<tr>
+<td>Camera upgrade contingency (Hikvision if lighting fails)</td>
+<td>₹12,000</td>
+</tr>
+<tr>
+<td>Sentry + Grafana + CI (Cloudflare)</td>
+<td>₹5,000</td>
+</tr>
+<tr>
+<td>Ultralytics Enterprise Licence — if the swap doesn&rsquo;t work</td>
+<td>₹2,00,000 (contingent, not base case)</td>
+</tr>
+<tr>
+<td><strong>Total WS-C (base case)</strong></td>
+<td><strong>₹1,52,000</strong></td>
+</tr>
+<tr>
+<td><strong>Total WS-C (worst case if licensing goes wrong)</strong></td>
+<td><strong>₹3,52,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="410-definition-of-done">4.10 Definition of done</h3>
+<ul>
+<li>Day 14 (G2): Real NSCI match MP4 → pipeline → shots-JSONL in Postgres, all fields populated except <code>class</code></li>
+<li>Day 35: Pipeline runs unattended on queue; P99 crash rate &lt;1%; per-stage latency within budget</li>
+</ul>
+<hr>
+<h2 id="5-workstream-d-shot-classifier-training-the-moat">5. Workstream D — Shot Classifier Training (The Moat)</h2>
+<h3 id="51-objective">5.1 Objective</h3>
+<p>Train the proprietary shot classifier (Stage 12 of the signal path) to ≥70% top-1 accuracy on held-out test set by Day 50 — the acceptance criterion for the moat layer.</p>
+<h3 id="52-owner">5.2 Owner</h3>
+<p><strong>CTO / ML Lead</strong> (full-time, this is the single most important workstream for the CTO)
+- Escalation: Senior CV contractor budget of ₹1 lakh reserved for 2-week engagement if Day-35 accuracy is below 55% (G4 fail)</p>
+<h3 id="53-scope-in">5.3 Scope in</h3>
+<ul>
+<li>Feature extraction module (turns each shot event into a 390-dim vector)</li>
+<li>V0 classifier (14-class head only, small MLP)</li>
+<li>Quality regression head (1–5 stars)</li>
+<li>Deviation-flag multi-label head</li>
+<li>Iteration loop: analyse errors → request specific labels from coach → retrain</li>
+<li>Ensemble modelling if plateau (MLP + temporal CNN, or MotionBERT adaptation)</li>
+<li>Serving the classifier via FastAPI on RunPod</li>
+</ul>
+<h3 id="54-scope-out">5.4 Scope out</h3>
+<ul>
+<li>Labelling itself (WS-B)</li>
+<li>Pipeline plumbing (WS-C)</li>
+<li>Skill-score aggregation across matches (WS-E)</li>
+</ul>
+<h3 id="55-day-by-day-tasks">5.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15–22</td>
+<td>Feature extraction module: shot event → 390-dim vector</td>
+</tr>
+<tr>
+<td>22–28</td>
+<td>V0 classifier — 14-class MLP, trained on first 200 clips</td>
+</tr>
+<tr>
+<td>28</td>
+<td>V0 readout: accuracy on 15% held-out; confusion matrix; identify hardest 3 classes</td>
+</tr>
+<tr>
+<td>28–35</td>
+<td>Add quality-regression head; retrain on 400 clips</td>
+</tr>
+<tr>
+<td>35–42</td>
+<td>Add deviation-flag multi-label head; retrain on 600 clips</td>
+</tr>
+<tr>
+<td>28–50</td>
+<td>Weekly iteration: analyse errors → coach requests → retrain</td>
+</tr>
+<tr>
+<td>42–50</td>
+<td>If G4 pass but plateau visible, ensemble MLP + temporal CNN</td>
+</tr>
+<tr>
+<td>50</td>
+<td>V1 classifier frozen; served via FastAPI on RunPod</td>
+</tr>
+</tbody>
+</table>
+<h3 id="56-deliverables">5.6 Deliverables</h3>
+<ul>
+<li>Trained classifier artefact registered in a model registry (weights + metadata + training run log)</li>
+<li>FastAPI service serving <code>POST /infer/shot</code> at <code>&lt;runpod-endpoint&gt;/infer/shot</code></li>
+<li>Test-set metrics report: top-1 accuracy, top-2 accuracy, quality MAE, per-class F1</li>
+</ul>
+<h3 id="57-handoffs">5.7 Handoffs</h3>
+<ul>
+<li><strong>From WS-C:</strong> Feature vector schema (locked Day 15)</li>
+<li><strong>From WS-B:</strong> Labelled clips as they arrive</li>
+<li><strong>To WS-E:</strong> Classifier inference endpoint URL + API contract</li>
+<li><strong>To WS-I:</strong> Test-set metrics report for launch-readiness memo</li>
+</ul>
+<h3 id="58-risk-contingency">5.8 Risk + contingency</h3>
+<p><strong>Top risk (T1 from the risk register):</strong> Classifier accuracy plateaus below 70%. <strong>Contingency ladder:</strong>
+1. Multi-coach labels (add coach #2 for inter-rater labels)
+2. Dataset expansion to 1,500 clips
+3. Senior CV contractor engagement (₹1L reserve, 2 weeks)
+4. Ensemble of MLP + temporal CNN
+5. If Day 50 still below 65%, propose NSCI extension of training phase to 120 days</p>
+<p><strong>Second risk:</strong> Class-pair confusion (bandeja vs vibora — similar pose, different ball speed). <strong>Contingency:</strong> Use ball trajectory feature more heavily as discriminator; retrain with class-balanced sampling.</p>
+<h3 id="59-budget">5.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RunPod compute for training iterations</td>
+<td>₹20,000</td>
+</tr>
+<tr>
+<td>Senior CV contractor if escalation triggered</td>
+<td>₹1,00,000 (contingent)</td>
+</tr>
+<tr>
+<td><strong>Total WS-D (base case)</strong></td>
+<td><strong>₹20,000</strong></td>
+</tr>
+<tr>
+<td><strong>Total WS-D (worst case)</strong></td>
+<td><strong>₹1,20,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="510-definition-of-done">5.10 Definition of done</h3>
+<ul>
+<li>Day 35 (G4): V0 ≥ 55% top-1 on held-out test</li>
+<li>Day 50 (G5): V1 ≥ 70% top-1 and quality MAE ≤ 0.7</li>
+</ul>
+<hr>
+<h2 id="6-workstream-e-backend-data-model">6. Workstream E — Backend &amp; Data Model</h2>
+<h3 id="61-objective">6.1 Objective</h3>
+<p>Build the Supabase-backed data model, API surface, and player-identity flows that the PWA, dashboard, and WhatsApp delivery all consume.</p>
+<h3 id="62-owner">6.2 Owner</h3>
+<p><strong>Full-stack engineer (contract, ₹1 lakh/month, Days 3–45)</strong> — pulled from the AutomationXpert bench so onboarding is zero.
+- Escalation: CTO if any schema-level decisions are needed.</p>
+<h3 id="63-scope-in">6.3 Scope in</h3>
+<ul>
+<li>Supabase schema: <code>players</code>, <code>clubs</code>, <code>courts</code>, <code>matches</code>, <code>shots</code>, <code>skill_scores</code>, <code>drills</code>, <code>highlights</code>, <code>labels</code>, <code>audit_events</code></li>
+<li>Row-level security policies (players see only their matches; clubs see only their courts)</li>
+<li>Cloudflare Workers: upload webhook, auth token issuance, signed URL generator</li>
+<li>Player identity + tap-in flow (QR code at courtside → WhatsApp OTP → linked to match)</li>
+<li>Skill-score engine (ELO-style updater triggered post-match)</li>
+<li>Drill recommender (rule-based V1: <code>weak_class</code> → mapped drill from coach catalogue)</li>
+<li>Audit-log service for pause events + WhatsApp opt-outs</li>
+<li>REST + Realtime channels for PWA and dashboard</li>
+</ul>
+<h3 id="64-scope-out">6.4 Scope out</h3>
+<ul>
+<li>Frontend UI (WS-F, WS-G)</li>
+<li>ML model itself (WS-D)</li>
+<li>WhatsApp router integration (WS-H)</li>
+</ul>
+<h3 id="65-day-by-day-tasks">6.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3–7</td>
+<td>Supabase project provisioned; all tables + RLS policies committed</td>
+</tr>
+<tr>
+<td>5–14</td>
+<td>Cloudflare Workers: upload webhook, auth, signed URLs</td>
+</tr>
+<tr>
+<td>7–10</td>
+<td>RLS test suite: 4 test tenants, verify data isolation</td>
+</tr>
+<tr>
+<td>14–24</td>
+<td>Player identity + tap-in flow</td>
+</tr>
+<tr>
+<td>20–45</td>
+<td>REST + Realtime API surface for PWA and dashboard</td>
+</tr>
+<tr>
+<td>24–28</td>
+<td>Audit-log service (pause-button events + opt-outs)</td>
+</tr>
+<tr>
+<td>24–32</td>
+<td>Skill-score ELO engine</td>
+</tr>
+<tr>
+<td>32–38</td>
+<td>Drill recommender V1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="66-deliverables">6.6 Deliverables</h3>
+<ul>
+<li>Supabase project <code>padelmind-prod</code> and <code>padelmind-staging</code> with full schema</li>
+<li>4 Cloudflare Workers deployed</li>
+<li>API documentation at <code>docs.padelmind.internal</code></li>
+<li>Postman collection covering every endpoint</li>
+</ul>
+<h3 id="67-handoffs">6.7 Handoffs</h3>
+<ul>
+<li><strong>To WS-F, WS-G:</strong> REST endpoints + Realtime channels</li>
+<li><strong>To WS-H:</strong> Realtime <code>match_complete</code> channel for post-match trigger</li>
+</ul>
+<h3 id="68-risk-contingency">6.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> RLS policy bugs leak one player&rsquo;s data to another. <strong>Contingency:</strong> Automated test suite covering every table + every role combination; run in CI on every schema change.</p>
+<p><strong>Second risk:</strong> Supabase Pro plan tier limits hit during load test. <strong>Contingency:</strong> Prepared migration path to Team plan (~₹9k/mo delta).</p>
+<h3 id="69-budget">6.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full-stack engineer (1.5 months)</td>
+<td>₹1,50,000</td>
+</tr>
+<tr>
+<td>Supabase Pro (2 months)</td>
+<td>₹4,000</td>
+</tr>
+<tr>
+<td>Cloudflare Workers + Pages (paid tier)</td>
+<td>₹1,000</td>
+</tr>
+<tr>
+<td><strong>Total WS-E</strong></td>
+<td><strong>₹1,55,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="610-definition-of-done">6.10 Definition of done</h3>
+<p>Day 45: all PWA-consumable endpoints stable; RLS verified with 4 test tenants; audit log queryable by pause-button event.</p>
+<hr>
+<h2 id="7-workstream-f-player-pwa-customer-facing-ui">7. Workstream F — Player PWA (Customer-Facing UI)</h2>
+<h3 id="71-objective">7.1 Objective</h3>
+<p>Ship a mobile-first Progressive Web App that a player can open from a WhatsApp deep-link and reach their complete match report in under 4 seconds cold-load.</p>
+<h3 id="72-owner">7.2 Owner</h3>
+<p><strong>Frontend engineer (contract, ₹1 lakh/month, Days 15–58)</strong> — pulled from AutomationXpert bench.
+- Design: Manoj drives brand + tone; engineer executes on component library (shadcn/ui + Tailwind)</p>
+<h3 id="73-scope-in">7.3 Scope in</h3>
+<ul>
+<li>React + Vite scaffold on Cloudflare Pages</li>
+<li>PadelMind design system (colour, type, iconography)</li>
+<li>Auth flow: WhatsApp OTP via AX router</li>
+<li>Home screen: current skill score, last match summary, next-match teaser</li>
+<li>Match detail: 4-player scoreboard, per-shot breakdown, quality distribution chart, top-3 weaknesses, drill cards</li>
+<li>Highlight clips player (3 auto-extracted 6-sec MP4s, share buttons)</li>
+<li>Skill trajectory chart (ELO over time, Recharts)</li>
+<li>Post-match survey (NPS + free-text) from match 3 onwards</li>
+<li>Player-side opt-out UI</li>
+<li>PWA install prompt + offline stub</li>
+<li>Cross-device QA</li>
+</ul>
+<h3 id="74-scope-out">7.4 Scope out</h3>
+<ul>
+<li>Club dashboard (WS-G)</li>
+<li>Any backend logic (WS-E)</li>
+<li>Any WhatsApp mechanics (WS-H)</li>
+</ul>
+<h3 id="75-day-by-day-tasks">7.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15–20</td>
+<td>React + Vite scaffold, design tokens, PadelMind theme</td>
+</tr>
+<tr>
+<td>18–24</td>
+<td>Auth flow (WhatsApp OTP → Supabase session)</td>
+</tr>
+<tr>
+<td>20–28</td>
+<td>Home screen with live skill score</td>
+</tr>
+<tr>
+<td>24–36</td>
+<td>Match detail page with all breakdowns</td>
+</tr>
+<tr>
+<td>30–40</td>
+<td>Highlight clips player + share buttons</td>
+</tr>
+<tr>
+<td>32–38</td>
+<td>Skill trajectory chart</td>
+</tr>
+<tr>
+<td>40–46</td>
+<td>Post-match survey + player opt-out UI</td>
+</tr>
+<tr>
+<td>46–52</td>
+<td>PWA install prompt + offline stub</td>
+</tr>
+<tr>
+<td>52–58</td>
+<td>Cross-device QA — iOS Safari, Android Chrome, edge cases</td>
+</tr>
+</tbody>
+</table>
+<h3 id="76-deliverables">7.6 Deliverables</h3>
+<ul>
+<li>PWA live at <code>play.padelmind.in</code> (or equivalent short domain)</li>
+<li>Lighthouse audit: &gt;90 on Performance, Accessibility, Best Practices, SEO</li>
+<li>Cross-device screenshots archive</li>
+<li>WhatsApp share flow producing rich preview cards</li>
+</ul>
+<h3 id="77-handoffs">7.7 Handoffs</h3>
+<ul>
+<li><strong>From WS-E:</strong> REST endpoints stabilised by Day 40 so no schema churn during last 2 weeks</li>
+<li><strong>To WS-H:</strong> Deep-link URLs that the WA router messages will point to</li>
+</ul>
+<h3 id="78-risk-contingency">7.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Cold-load time on 3G / weak-signal conditions at NSCI exceeds 4 seconds. <strong>Contingency:</strong> Aggressive code-splitting; skeleton screens; server-side render summary page.</p>
+<p><strong>Second risk:</strong> iOS PWA install experience is famously worse than Android. <strong>Contingency:</strong> Ship native App Store version in Year 2; PWA is sufficient for V1.</p>
+<h3 id="79-budget">7.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend engineer (1.5 months)</td>
+<td>₹1,50,000</td>
+</tr>
+<tr>
+<td>Design assets + icons</td>
+<td>₹20,000</td>
+</tr>
+<tr>
+<td>Cloudflare Pages (free tier ample)</td>
+<td>₹0</td>
+</tr>
+<tr>
+<td><strong>Total WS-F</strong></td>
+<td><strong>₹1,70,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="710-definition-of-done">7.10 Definition of done</h3>
+<p>Day 58: player goes from WhatsApp deep-link to complete match report on iPhone or Android in under 4 seconds cold-load.</p>
+<hr>
+<h2 id="8-workstream-g-club-dashboard">8. Workstream G — Club Dashboard</h2>
+<h3 id="81-objective">8.1 Objective</h3>
+<p>Give the NSCI committee a live dashboard of court utilisation, active players, pause-log audit, and a preview of the monthly revenue-share statement.</p>
+<h3 id="82-owner">8.2 Owner</h3>
+<p><strong>Frontend engineer</strong> (shared with WS-F, second half of allocation)</p>
+<h3 id="83-scope-in">8.3 Scope in</h3>
+<ul>
+<li>Role-gated <code>/club/*</code> routes in the same React app</li>
+<li>Court occupancy view (live from <code>matches</code> table)</li>
+<li>Active players by day/week charts</li>
+<li>Revenue-share ledger view (with mock data pre-launch, real from Day 91)</li>
+<li>Pause-log viewer (per NSCI audit commitment) — filterable by court and date</li>
+<li>Monthly report export as PDF for committee</li>
+</ul>
+<h3 id="84-scope-out">8.4 Scope out</h3>
+<ul>
+<li>Anything player-facing (WS-F)</li>
+</ul>
+<h3 id="85-day-by-day-tasks">8.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>35–40</td>
+<td>Role-gated routing, club admin login</td>
+</tr>
+<tr>
+<td>38–44</td>
+<td>Court occupancy dashboard</td>
+</tr>
+<tr>
+<td>42–48</td>
+<td>Active players charts</td>
+</tr>
+<tr>
+<td>44–50</td>
+<td>Revenue-share ledger (mock data)</td>
+</tr>
+<tr>
+<td>46–52</td>
+<td>Pause-log viewer</td>
+</tr>
+<tr>
+<td>52–58</td>
+<td>PDF export</td>
+</tr>
+</tbody>
+</table>
+<h3 id="86-deliverables">8.6 Deliverables</h3>
+<ul>
+<li>Dashboard live at <code>club.padelmind.in/nsci</code></li>
+<li>NSCI committee login credentials distributed (via secure channel)</li>
+<li>One printed mock monthly report ready for committee review meeting</li>
+</ul>
+<h3 id="87-handoffs">8.7 Handoffs</h3>
+<ul>
+<li><strong>From WS-A:</strong> Pause-event stream (via WS-E)</li>
+<li><strong>From WS-E:</strong> All API endpoints</li>
+</ul>
+<h3 id="88-risk-contingency">8.8 Risk + contingency</h3>
+<p>Low risk — this is a read-only dashboard on data we control.</p>
+<h3 id="89-budget">8.9 Budget</h3>
+<p>Shared with WS-F.</p>
+<h3 id="810-definition-of-done">8.10 Definition of done</h3>
+<p>Day 58: NSCI committee can log in and see live utilisation + a mock month-1 revenue-share statement.</p>
+<hr>
+<h2 id="9-workstream-h-whatsapp-delivery-layer">9. Workstream H — WhatsApp Delivery Layer</h2>
+<h3 id="91-objective">9.1 Objective</h3>
+<p>Ensure every processed match produces WhatsApp messages to all 4 players within 2 minutes of inference completion, with 95% delivery rate.</p>
+<h3 id="92-owner">9.2 Owner</h3>
+<p><strong>AutomationXpert engineer (20% allocation, part-time from Day 30)</strong> — internal cost, no new hire needed.
+- Escalation: AX Head of Engineering for any router-level changes.</p>
+<h3 id="93-scope-in">9.3 Scope in</h3>
+<ul>
+<li>Design 3 WA message templates: <code>match_ready_intro</code>, <code>weakness_summary</code>, <code>drill_of_the_week</code></li>
+<li>Meta template approval for all 3</li>
+<li>Post-match trigger from Supabase Realtime → AX router</li>
+<li>Delivery telemetry (sent, delivered, read) fed back into Supabase</li>
+<li>STOP-keyword opt-out mechanism</li>
+<li>Load test (20 concurrent match completions → 80 messages in &lt;2 min)</li>
+</ul>
+<h3 id="94-scope-out">9.4 Scope out</h3>
+<ul>
+<li>Any UI (WS-F, WS-G)</li>
+<li>Any classifier work (WS-D)</li>
+<li>Any new AX platform features — reusing existing infrastructure</li>
+</ul>
+<h3 id="95-day-by-day-tasks">9.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30–40</td>
+<td>Design 3 templates + submit for Meta approval</td>
+</tr>
+<tr>
+<td>40–48</td>
+<td>Wire post-match Supabase Realtime trigger → AX router</td>
+</tr>
+<tr>
+<td>45–50</td>
+<td>Delivery telemetry feedback loop</td>
+</tr>
+<tr>
+<td>48–52</td>
+<td>STOP-keyword propagation to Supabase</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Load test</td>
+</tr>
+</tbody>
+</table>
+<h3 id="96-deliverables">9.6 Deliverables</h3>
+<ul>
+<li>3 Meta-approved templates deployed on AX WABA</li>
+<li>End-to-end trigger latency dashboard</li>
+<li>Load test report</li>
+</ul>
+<h3 id="97-handoffs">9.7 Handoffs</h3>
+<ul>
+<li><strong>From WS-E:</strong> Match-complete event on Realtime channel</li>
+<li><strong>To WS-F:</strong> Deep-link URL shape confirmed for message body</li>
+</ul>
+<h3 id="98-risk-contingency">9.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Meta template approval takes &gt;2 weeks (variable). <strong>Contingency:</strong> Submit templates on Day 30 to give 3-week buffer before Day 60. If rejected, iterate content and resubmit; standard patterns like &ldquo;match_ready_intro&rdquo; pass approval reliably.</p>
+<p><strong>Second risk:</strong> Delivery latency spikes when many matches complete simultaneously. <strong>Contingency:</strong> AX router already load-tested to 100 msg/sec; well beyond our expected concurrency.</p>
+<h3 id="99-budget">9.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AX engineer time (internal)</td>
+<td>₹0 (no new spend)</td>
+</tr>
+<tr>
+<td>Meta template testing costs</td>
+<td>₹1,000</td>
+</tr>
+<tr>
+<td><strong>Total WS-H</strong></td>
+<td><strong>₹1,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="910-definition-of-done">9.10 Definition of done</h3>
+<p>Day 55: every processed match produces 4 WA messages with 95% delivery in &lt;2 min post-inference.</p>
+<hr>
+<h2 id="10-workstream-i-qa-coach-blind-audit-launch-readiness">10. Workstream I — QA, Coach Blind Audit &amp; Launch Readiness</h2>
+<h3 id="101-objective">10.1 Objective</h3>
+<p>Prove the end-to-end system works to acceptance criteria and deliver the launch-readiness memo to the NSCI committee.</p>
+<h3 id="102-owner">10.2 Owner</h3>
+<p><strong>Manoj</strong> (with Coach + CTO)</p>
+<h3 id="103-scope-in">10.3 Scope in</h3>
+<ul>
+<li>20-match blind audit: coach vs. model on skill summary and top-3 weaknesses</li>
+<li>Highlight clip relevance audit (50 clips)</li>
+<li>End-to-end system test (fake match by staff → all 4 players receive report)</li>
+<li>Day-75 launch-readiness memo to NSCI committee (delivered Day 60, dated Day 75)</li>
+<li>Monthly remittance format for NSCI + AX billing pipeline setup</li>
+<li>Member onboarding playbook for the Day-91 commercial launch</li>
+</ul>
+<h3 id="104-scope-out">10.4 Scope out</h3>
+<ul>
+<li>Building anything (that&rsquo;s WS-A through WS-H)</li>
+</ul>
+<h3 id="105-day-by-day-tasks">10.5 Day-by-day tasks</h3>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>45–55</td>
+<td>Coach blind audit on 20 matches, agreement scored</td>
+</tr>
+<tr>
+<td>50–55</td>
+<td>Highlight clip relevance audit (50 clips)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>End-to-end system test with staff-played match</td>
+</tr>
+<tr>
+<td>55–60</td>
+<td>NSCI remittance format + AX billing pipeline preparation</td>
+</tr>
+<tr>
+<td>55–60</td>
+<td>Member onboarding playbook (comms, pricing, ID linking, first-time UX)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Launch-readiness memo drafted for delivery on Day 75</td>
+</tr>
+</tbody>
+</table>
+<h3 id="106-deliverables">10.6 Deliverables</h3>
+<ul>
+<li>Blind audit report</li>
+<li>Highlight clip audit report</li>
+<li>End-to-end test video</li>
+<li>Day-75 launch-readiness memo (approved by CTO + Coach + Manoj)</li>
+<li>Member onboarding playbook</li>
+</ul>
+<h3 id="107-handoffs">10.7 Handoffs</h3>
+<ul>
+<li><strong>From all workstreams:</strong> Their deliverables feed into the memo</li>
+</ul>
+<h3 id="108-risk-contingency">10.8 Risk + contingency</h3>
+<p><strong>Top risk:</strong> Coach audit reveals classifier systematically wrong on a specific class (e.g., bandeja). <strong>Contingency:</strong> One more classifier iteration budgeted in Days 60–75 buffer window.</p>
+<h3 id="109-budget">10.9 Budget</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coach audit time (10 hours)</td>
+<td>₹10,000</td>
+</tr>
+<tr>
+<td>Staff test-match sessions</td>
+<td>₹5,000</td>
+</tr>
+<tr>
+<td><strong>Total WS-I</strong></td>
+<td><strong>₹15,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1010-definition-of-done-g6-day-60">10.10 Definition of done (G6, Day 60)</h3>
+<p>A real match played on NSCI court that morning has, by end of day, produced WhatsApp messages to 4 players and each has been able to open a full match report on the PWA.</p>
+<hr>
+<h2 id="11-milestone-gates-with-responsibility-split">11. Milestone gates with responsibility split</h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Day</th>
+<th>Owner accountable</th>
+<th>Deliverable that proves it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>G1</strong> — First frame captured</td>
+<td>Day 3</td>
+<td>WS-A owner (Install lead)</td>
+<td>First MP4 in R2 with valid webhook payload</td>
+</tr>
+<tr>
+<td><strong>G2</strong> — First shot detected end-to-end</td>
+<td>Day 14</td>
+<td>WS-C owner (CTO/ML Lead)</td>
+<td>Postgres query returns shots rows for a real NSCI match</td>
+</tr>
+<tr>
+<td><strong>G3</strong> — 200 clips labelled</td>
+<td>Day 21</td>
+<td>WS-B owner (Coach)</td>
+<td>Labels table in Postgres shows 200 valid rows</td>
+</tr>
+<tr>
+<td><strong>G4</strong> — Classifier V0 ≥ 55% top-1</td>
+<td>Day 35</td>
+<td>WS-D owner (CTO/ML Lead)</td>
+<td>Test-set metrics report signed by CTO</td>
+</tr>
+<tr>
+<td><strong>G5</strong> — Classifier V1 ≥ 70% top-1</td>
+<td>Day 50</td>
+<td>WS-D owner (CTO/ML Lead)</td>
+<td>Test-set metrics report + model registered</td>
+</tr>
+<tr>
+<td><strong>G6</strong> — End-to-end demo to player WA</td>
+<td>Day 60</td>
+<td>Manoj</td>
+<td>Screenshot of received WA message + PWA screenshot + coach sign-off</td>
+</tr>
+</tbody>
+</table>
+<p>Missing any gate triggers Section 12 escalation.</p>
+<hr>
+<h2 id="12-escalation-plan-what-to-do-if-a-gate-is-missed">12. Escalation plan (what to do if a gate is missed)</h2>
+<h3 id="121-g1-miss-day-3-install">12.1 G1 miss (Day 3, install)</h3>
+<p>Move to single-court install. Second court comes online Day 5–7. Data-capture volume halves; G3 date slips by ~5 days but classifier still viable on 700 clips at revised pace.</p>
+<h3 id="122-g2-miss-day-14-pipeline-end-to-end">12.2 G2 miss (Day 14, pipeline end-to-end)</h3>
+<p>Bring the CV engineer contract forward and extend by 2 weeks. Manoj personally reviews CTO&rsquo;s blockers within 24 hours; if fundamental, engage a senior CV contractor for 2-week emergency engagement (₹1L pulled from contingency).</p>
+<h3 id="123-g3-miss-day-21-labels">12.3 G3 miss (Day 21, labels)</h3>
+<p>Add third labeller. Coach shifts more time to labelling (from 15 hrs/week to 25 hrs/week). Manoj personally labels 20 clips/week to backfill.</p>
+<h3 id="124-g4-miss-day-35-classifier-v0">12.4 G4 miss (Day 35, classifier V0)</h3>
+<ol>
+<li>Ship senior CV contractor within 48 hours (₹1L reserve).</li>
+<li>Expand labelling target from 700 → 1,500 clips; add second coach for inter-rater labels.</li>
+<li>Add temporal CNN or MotionBERT ensemble head.</li>
+<li>If Day 45 still below 65% → propose to NSCI committee to extend training phase from 90 to 120 days; retain original commercial terms.</li>
+</ol>
+<h3 id="125-g5-miss-day-50-classifier-v1">12.5 G5 miss (Day 50, classifier V1)</h3>
+<p>Extend Day 60 target to Day 75. Use the Day 61–75 window that was reserved for coach blind audit for further classifier iteration. Coach audit compressed into Days 75–90.</p>
+<h3 id="126-g6-miss-day-60-end-to-end">12.6 G6 miss (Day 60, end-to-end)</h3>
+<p>Diagnose which specific stage failed (delivery? PWA? classifier? pipeline?) and remediate within a 2-week extension. Day 91 commercial launch date is the immovable deadline; work back from there.</p>
+<hr>
+<h2 id="13-handshake-contracts-between-workstreams-frozen-on-day-0">13. Handshake contracts between workstreams (frozen on Day 0)</h2>
+<p>Changing these mid-flight is the #1 source of delay. All contracts locked before Day 3.</p>
+<table>
+<thead>
+<tr>
+<th>From → To</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WS-A → WS-C</td>
+<td>Match MP4 in R2 at <code>matches/{court_id}/{yyyy-mm-dd}/{match_id}.mp4</code> + webhook <code>{match_id, court_id, start_ts, end_ts, duration_s, size_bytes}</code></td>
+</tr>
+<tr>
+<td>WS-C → WS-D</td>
+<td>Per-shot feature vector JSONL: <code>{match_id, shot_idx, player_id, ts_ms, pose_seq[13×30×3], court_xy, ball_traj, opponents[4], score_ctx}</code></td>
+</tr>
+<tr>
+<td>WS-C → WS-B</td>
+<td>Streamlit UI plays MP4 clip [ts−1s, ts+1s]; labeller emits <code>{shot_idx, class, quality, deviations[]}</code></td>
+</tr>
+<tr>
+<td>WS-D → WS-E</td>
+<td>Classifier serves <code>POST /infer/shot</code> → <code>{class, class_conf, quality, quality_conf, deviations[]}</code></td>
+</tr>
+<tr>
+<td>WS-E → WS-F</td>
+<td>REST <code>GET /matches/:id/report</code> returns full report JSON — schema locked Day 20</td>
+</tr>
+<tr>
+<td>WS-E → WS-H</td>
+<td>Post-match: Supabase Realtime channel <code>match_complete</code> → AX router consumer</td>
+</tr>
+<tr>
+<td>WS-A → WS-E</td>
+<td>Pause-button press posts <code>POST /audit/pause</code> — logged forever</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="14-full-budget-consolidation">14. Full budget consolidation</h2>
+<table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>Base case</th>
+<th>Worst case (contingencies)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WS-A — Hardware Install</td>
+<td>₹2,03,000</td>
+<td>₹2,03,000</td>
+</tr>
+<tr>
+<td>WS-B — Labelling Ops</td>
+<td>₹1,56,000</td>
+<td>₹1,66,000</td>
+</tr>
+<tr>
+<td>WS-C — CV Pipeline</td>
+<td>₹1,52,000</td>
+<td>₹3,52,000</td>
+</tr>
+<tr>
+<td>WS-D — Classifier</td>
+<td>₹20,000</td>
+<td>₹1,20,000</td>
+</tr>
+<tr>
+<td>WS-E — Backend</td>
+<td>₹1,55,000</td>
+<td>₹1,64,000</td>
+</tr>
+<tr>
+<td>WS-F — Player PWA</td>
+<td>₹1,70,000</td>
+<td>₹1,70,000</td>
+</tr>
+<tr>
+<td>WS-G — Club Dashboard</td>
+<td>(shared)</td>
+<td>(shared)</td>
+</tr>
+<tr>
+<td>WS-H — WhatsApp Delivery</td>
+<td>₹1,000</td>
+<td>₹1,000</td>
+</tr>
+<tr>
+<td>WS-I — QA &amp; Launch</td>
+<td>₹15,000</td>
+<td>₹15,000</td>
+</tr>
+<tr>
+<td><strong>Subtotal</strong></td>
+<td><strong>₹8,72,000</strong></td>
+<td><strong>₹11,91,000</strong></td>
+</tr>
+<tr>
+<td>Reserve buffer (10%)</td>
+<td>₹87,000</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Grand total</strong></td>
+<td><strong>~₹9,60,000</strong></td>
+<td><strong>~₹12,00,000</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: v1 of the plan estimated ₹7.2L base; this expanded v2 with full per-workstream detail arrives at ₹9.6L base. The delta is (a) hardware install lead standby retainer, (b) backup coach retainer, (c) camera upgrade contingency, (d) reserve buffer. All numbers now explicit.</em></p>
+<hr>
+<h2 id="15-team-roster-10-people-55-fte-for-60-days">15. Team roster (10 people, ~5.5 FTE for 60 days)</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Commitment</th>
+<th>Duration</th>
+<th>Cost</th>
+<th>Sourcing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CEO / product owner</td>
+<td>Full-time</td>
+<td>60 days</td>
+<td>Founder</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>CTO / ML lead</td>
+<td>Full-time</td>
+<td>60 days</td>
+<td>Co-founder equity + ₹1.5L/mo stipend</td>
+<td>Target João Silva (consultant/co-founder); fallback Bangalore senior CV hire</td>
+</tr>
+<tr>
+<td>Padel Coach</td>
+<td>Part-time (~15 hrs/wk)</td>
+<td>60 days</td>
+<td>₹80k</td>
+<td>Mumbai coach circuit</td>
+</tr>
+<tr>
+<td>CV engineer</td>
+<td>Full-time contract</td>
+<td>Days 7–35</td>
+<td>₹1.2L</td>
+<td>Toptal / TopHire India</td>
+</tr>
+<tr>
+<td>Full-stack engineer</td>
+<td>Full-time contract</td>
+<td>Days 3–45</td>
+<td>₹1.5L</td>
+<td>AX bench</td>
+</tr>
+<tr>
+<td>Frontend engineer</td>
+<td>Full-time contract</td>
+<td>Days 15–58</td>
+<td>₹1.5L</td>
+<td>AX bench</td>
+</tr>
+<tr>
+<td>AX dev (WA)</td>
+<td>20% allocation</td>
+<td>Days 30–55</td>
+<td>Internal</td>
+<td>Existing AX team</td>
+</tr>
+<tr>
+<td>Labellers × 2</td>
+<td>Part-time</td>
+<td>Days 10–60</td>
+<td>₹51k</td>
+<td>NSCI + padel WA groups</td>
+</tr>
+<tr>
+<td>Backup coach</td>
+<td>Retainer standby</td>
+<td>Days 15–60</td>
+<td>₹15k</td>
+<td>Interviewed pre-Day 15</td>
+</tr>
+<tr>
+<td>Hardware install lead</td>
+<td>5 days + standby</td>
+<td>Days 0–5 + 60</td>
+<td>₹68k</td>
+<td>Mumbai CCTV integrator</td>
+</tr>
+<tr>
+<td>Senior CV contractor</td>
+<td>Contingent</td>
+<td>Days 42–50 if triggered</td>
+<td>₹1L reserve</td>
+<td>Fractal / Ideas2IT / Toptal</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="16-what-manoj-must-lock-this-week">16. What Manoj must lock this week</h2>
+<p>Everything else runs off these decisions.</p>
+<ol>
+<li><strong>CTO/ML co-founder outreach</strong> — João Silva Meet call + fallback pipeline. Decision by Day 5.</li>
+<li><strong>Coach hire</strong> — 3 candidate interviews by Day 3; retainer signed by Day 7. Backup coach identified by Day 10.</li>
+<li><strong>Hardware order</strong> — cameras + Pi 5 + accessories ordered Day 0 to allow install Day 3.</li>
+<li><strong>NSCI approval</strong> — 2026-07-02 proposal must be minuted before Day 0. If slips, all dates slip 1:1.</li>
+<li><strong>Budget release</strong> — ₹9.6L cash committed with ₹2L classifier/licensing contingency ring-fenced.</li>
+<li><strong>Ultralytics licensing decision</strong> — resolved by Day 7 based on son&rsquo;s technical opinion (see <code>TECH_BRIEFING_FOR_SON.md</code>) + WS-C benchmark result.</li>
+</ol>
+<hr>
+<h2 id="17-what-days-6190-are-for-bridge-to-commercial-launch">17. What Days 61–90 are for (bridge to commercial launch)</h2>
+<p>The 60-day plan ends with the platform working. Days 61–90 are the bridge to public commercial launch on Day 91 per the NSCI proposal.</p>
+<table>
+<thead>
+<tr>
+<th>Days</th>
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60–75</td>
+<td>Coach blind audit on 20 matches; classifier iteration on any systemic errors; fix top-5 PWA UX papercuts</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Launch-readiness memo delivered to NSCI committee — model quality, delivery latency, pause-log audit, member UX walkthrough, final pricing sheet</td>
+</tr>
+<tr>
+<td>75–85</td>
+<td>Onboard first 10 NSCI members onto commercial pipes (still free — friends-of-committee style)</td>
+</tr>
+<tr>
+<td>85–90</td>
+<td>Fix beta feedback; freeze v1.0</td>
+</tr>
+<tr>
+<td>91</td>
+<td>Public commercial launch. First WhatsApp broadcast to NSCI members. Monthly 30% revenue-remittance clock starts</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>End of 60-Day Expanded Execution Plan v2.0</strong></p>
+<p><em>Companion to <code>TECHNICAL_FEASIBILITY_REPORT.md</code>, <code>NSCI_PROPOSAL.md</code>, and <code>TECH_BRIEFING_FOR_SON.md</code>. This document is the operational source of truth once approved.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

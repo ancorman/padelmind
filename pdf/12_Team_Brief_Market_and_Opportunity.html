@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Team Brief — Market & Opportunity — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Team Briefing — Founding Group</div>
+    <h1 class="cover-title">The Padel AI Opportunity</h1>
+    <p class="cover-subtitle">Mumbai market read, current statistics, economic playbook, competitive landscape, tie-up prospects, and the technical partner shortlist — brief for the founding team.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Prepared for</div><div class="cover-meta-value">Manoj · Aayush · Tanisha</div></div>
+<div><div class="cover-meta-label">Companion</div><div class="cover-meta-value">Scope Reset — Technical Deltas (follows separately)</div></div>
+<div><div class="cover-meta-label">Reading time</div><div class="cover-meta-value">20–25 minutes</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari + AI research · 2026-07-04</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Team Brief — Market & Opportunity" data-brand="PadelMind">
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Padel is India&rsquo;s fastest-growing racket sport. Mumbai alone has <strong>~44 padel venues and ~80–95 courts</strong> live today, on track for <strong>~140 courts by mid-2027</strong>. Hudle&rsquo;s platform data shows <strong>505 active players per court in Mumbai</strong> — nearly double the national average — and weekend availability is chronically over-subscribed.</p>
+<p>Despite this heat, <strong>no AI camera / match-analytics product is live at any Mumbai club today</strong>. The three EU incumbents (Matchlytics in Portugal, SportAI/Padelytics in Norway, SPASH in Spain, plus GameCam globally) have zero India installs. That whitespace is real, and it is closing — SportAI&rsquo;s post-acquisition mandate explicitly names &ldquo;emerging markets,&rdquo; which puts us on a <strong>12–18 month clock</strong> before an incumbent lands here via a distributor.</p>
+<p>Our first anchor is <strong>NSCI (Worli, Mumbai)</strong> — proposal live, awaiting reply — with a 90-day training phase followed by a 2-year commercial phase (30% gross revenue share to the club). NSCI is the credential; the money engine is the network — Padel Park&rsquo;s 5-venue chain, Courtside Worli, and the heritage clubs (Bombay Gymkhana, CCI) that follow the NSCI precedent.</p>
+<p>This document is what the founding team (Manoj, Aayush, Tanisha) needs to align on before we spend the next 60 days building. A companion document (&ldquo;Scope Reset — Technical Deltas&rdquo;) follows separately.</p>
+<hr>
+<h2 id="2-the-local-infrastructure">2. The Local Infrastructure</h2>
+<h3 id="21-venue-census-mumbai">2.1 Venue census — Mumbai</h3>
+<p>Consolidated from Hudle, KheloMore, Padel Park, Courtside, and press coverage. We identified <strong>~38 commercial padel venues</strong> plus <strong>6 heritage / members clubs</strong> that have added padel.</p>
+<p><strong>Commercial venues (top 15 by visibility, 38 total):</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Venue</th>
+<th>Area</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Padel Park — Malabar Hill</td>
+<td>Priyadarshini Park</td>
+<td>Flagship</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Padel Park — Worli</td>
+<td>Lala Lajpatrai Marg</td>
+<td>Flagship</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Padel Park — Cooperage Stadium</td>
+<td>Colaba</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Padel Park — Bandra (KC Marg)</td>
+<td>Bandra</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Padel Park — Andheri (Celebrations SC)</td>
+<td>Lokhandwala</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Courtside Padel Social Club</td>
+<td>Atria Mall rooftop, Worli</td>
+<td>3 padel + 1 pickleball, invite-only</td>
+</tr>
+<tr>
+<td>7</td>
+<td>SkyPadel @ Sahara Star</td>
+<td>Vile Parle</td>
+<td>Indoor</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Padel Project</td>
+<td>Supreme Business Park, Powai</td>
+<td>Indoor</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Padel 360</td>
+<td>Worli</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Ace Padel Bandra / Ace Padel Andheri</td>
+<td>Bandra W / Andheri E</td>
+<td>Two sites</td>
+</tr>
+<tr>
+<td>11</td>
+<td>7Padel × Super Sports Park</td>
+<td>Mulund</td>
+<td>Premium tier</td>
+</tr>
+<tr>
+<td>12</td>
+<td>The CourtRoom (R Odeon)</td>
+<td>Ghatkopar</td>
+<td>Rooftop mall</td>
+</tr>
+<tr>
+<td>13</td>
+<td>BandrArcade @ Taj Lands End</td>
+<td>Bandra</td>
+<td>Rooftop</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Serve Society Kohinoor</td>
+<td>Dadar W</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Racquet Republic @ Sacred Heart</td>
+<td>Khar / Santa Cruz W</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Plus ~23 more mid- and budget-tier venues across Andheri, Powai, Ghatkopar, Bhandup, Mulund, Goregaon, Borivali, and Navi Mumbai.</p>
+<p><strong>Heritage members clubs that have added padel:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Club</th>
+<th>Location</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NSCI Padel Club</strong></td>
+<td>Worli</td>
+<td><strong>Our Client #0.</strong> 2 courts, members-only.</td>
+</tr>
+<tr>
+<td>Cricket Club of India (CCI)</td>
+<td>Churchgate</td>
+<td>Padel live on Hudle</td>
+</tr>
+<tr>
+<td>Willingdon Sports Club</td>
+<td>Maali Khata</td>
+<td>Padel bookable</td>
+</tr>
+<tr>
+<td>Bombay Gymkhana</td>
+<td>Fort</td>
+<td>Padel court unveiled 2026</td>
+</tr>
+<tr>
+<td>Wodehouse Gymkhana</td>
+<td>Colaba</td>
+<td>Padel live</td>
+</tr>
+<tr>
+<td>Breach Candy Swimming Bath Trust</td>
+<td>Breach Candy</td>
+<td>Padel + pickleball, members-only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-tier-stratification">2.2 Tier stratification</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Rate/hr</th>
+<th>Venues</th>
+<th>Fit for paid AI product</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Budget</strong></td>
+<td>₹400–1,000</td>
+<td>Urban Sports network, TSG, PickPad, Radio Club, Padelverse</td>
+<td>Low — hardware-included freemium at best</td>
+</tr>
+<tr>
+<td><strong>Mid</strong></td>
+<td>₹1,500–1,800</td>
+<td>Ace Padel, Serve Society, Padel 360, BandrArcade</td>
+<td>Good — main paid segment</td>
+</tr>
+<tr>
+<td><strong>Premium</strong></td>
+<td>₹2,500–3,000+</td>
+<td>Padel Project Powai, 7Padel × Super, Courtside Worli</td>
+<td>High — brand-conscious, low price sensitivity</td>
+</tr>
+</tbody>
+</table>
+<p>Heritage members clubs (NSCI, CCI, Willingdon, Bombay Gymkhana) run ₹10–₹400 subsidised member rates but hold the highest-value roster in the city.</p>
+<hr>
+<h2 id="3-current-statistics">3. Current Statistics</h2>
+<h3 id="31-growth-signal">3.1 Growth signal</h3>
+<ul>
+<li><strong>India padel market</strong>: USD 25–30M today → USD 250–300M projected by 2036 (Hudle Report / MediaBrief).</li>
+<li><strong>Player base</strong>: 100× growth in 3 years → ~1 lakh active players.</li>
+<li><strong>National courts</strong>: 48 new venues opened Jan–Apr 2026 — annualised ~70% court growth.</li>
+<li><strong>Investor money</strong>: JSW Sports invested in Padel Park (Aug 2024). A federation-analytics startup raised ₹28 Cr Pre-Series A May 2024 (Centre Court Capital + PeerCapital).</li>
+</ul>
+<h3 id="32-absorption-demand-pressure">3.2 Absorption / demand pressure</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Mumbai</th>
+<th>Delhi NCR</th>
+<th>India avg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Active players / court</strong></td>
+<td><strong>505</strong></td>
+<td>636</td>
+<td>305</td>
+</tr>
+<tr>
+<td>Avg session length</td>
+<td>1.75 hrs</td>
+<td>1.75 hrs</td>
+<td>1.75 hrs (longest of any Hudle sport)</td>
+</tr>
+<tr>
+<td>12-month retention</td>
+<td>55%</td>
+<td>55%</td>
+<td>55%</td>
+</tr>
+<tr>
+<td>Games per user / year</td>
+<td>9.2</td>
+<td>9.2</td>
+<td>+73% YoY</td>
+</tr>
+</tbody>
+</table>
+<p>Press language across coverage: <em>&ldquo;jam-packed like sardines every weekend&rdquo;</em>, <em>&ldquo;book 5–7 days in advance&rdquo;</em>, <em>&ldquo;waitlists are the new normal for weekend nights.&rdquo;</em></p>
+<h3 id="33-padel-park-financial-anchor-only-indian-padel-pl-in-the-public-domain">3.3 Padel Park financial anchor (only Indian padel P&amp;L in the public domain)</h3>
+<p>From Inc42 disclosure — Padel Park FY24:</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Revenue</strong></td>
+<td>₹2.5 Cr</td>
+</tr>
+<tr>
+<td>EBITDA</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td>MoM revenue growth</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Court bookings share</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>Events &amp; tournaments share</td>
+<td><strong>30%</strong></td>
+</tr>
+<tr>
+<td>Training / coaching share</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Monthly footfall per court</td>
+<td>~500 users</td>
+</tr>
+<tr>
+<td>Booking lead time</td>
+<td>2–3 weeks in advance (fully booked)</td>
+</tr>
+<tr>
+<td>Coach training pack</td>
+<td>₹8,000–9,000/month/player</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reads</strong>: revenue per court ≈ <strong>₹2 lakh/month</strong> at Padel Park. Events + coaching alone = 40% of revenue — this is the layer we can attack with an AI product without disturbing the club&rsquo;s court-rental base.</p>
+<hr>
+<h2 id="4-the-opportunity">4. The Opportunity</h2>
+<h3 id="41-gamecam-as-the-benchmark">4.1 GameCam as the benchmark</h3>
+<p>GameCam (EU, 250+ clubs claimed) pitches a <strong>€900–1,200/court/month</strong> revenue uplift to clubs via analytics subscriptions + AI-court booking premiums. Translated at PPP-adjusted India pricing, that same envelope collapses to <strong>₹65–100K/court/month gross</strong> with a different mix — India can approach the number, but the levers invert: highlights + coaching + tournaments carry more weight; court-booking premium carries less.</p>
+<h3 id="42-what-makes-india-uniquely-attractive-vs-the-eu">4.2 What makes India uniquely attractive vs the EU</h3>
+<ol>
+<li><strong>Zero incumbent to displace.</strong> No GameCam, no Matchlytics, no PlaySight, no SPASH live in Mumbai. Whiteboard, not a war.</li>
+<li><strong>Hopper culture is the norm.</strong> Hudle&rsquo;s whole model is cross-venue booking; players don&rsquo;t stay loyal to one club. This <em>forces</em> a player-following network as the product shape — exactly what a new entrant should build, but a legacy club-side product can&rsquo;t.</li>
+<li><strong>Demographic density</strong>: padel in Mumbai skews ₹12K+/mo discretionary sport spend, 25–45, urban, HNI-adjacent. One brand deal with Head / Bullpadel / Wilson / Red Bull / HSBC pays for a year of ops.</li>
+<li><strong>Coaching underserved</strong>: no Indian padel-coach-discovery layer exists. Padel Park&rsquo;s academy is the closest, but it&rsquo;s their own coaches, their own venues.</li>
+<li><strong>NSCI as credential</strong>: once &ldquo;as used at NSCI&rdquo; is on the pitch deck, Bombay Gymkhana, CCI, and Willingdon close on governance-envy alone.</li>
+</ol>
+<h3 id="43-the-one-non-obvious-insight">4.3 The one non-obvious insight</h3>
+<blockquote>
+<p><strong>Players hop. The club doesn&rsquo;t own the player — the peer group does.</strong>
+A camera at a single venue tracks half a player&rsquo;s games. A network of 8–10 venues tracks nearly all of them. The product only becomes valuable at the network level. Which is exactly why an EU incumbent selling club-by-club into India is slower than a local team building the network first.</p>
+</blockquote>
+<hr>
+<h2 id="5-economics-playbook">5. Economics Playbook</h2>
+<h3 id="51-player-affordability-today">5.1 Player affordability today</h3>
+<p>Court-time cost per player per session (rate ÷ 4 players × 1.75 hrs):</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Court/hr</th>
+<th>Per-player/session</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Budget</td>
+<td>₹600–1,000</td>
+<td>₹260–440</td>
+</tr>
+<tr>
+<td>Mid</td>
+<td>₹1,500–1,800</td>
+<td>₹655–790</td>
+</tr>
+<tr>
+<td>Premium</td>
+<td>₹2,500–3,000</td>
+<td>₹1,095–1,315</td>
+</tr>
+</tbody>
+</table>
+<p>A committed player also spends ₹5–10K/mo on coaching + racquets + apparel.</p>
+<h3 id="52-frequency-segmentation">5.2 Frequency segmentation</h3>
+<p>Only the <strong>Engaged + Serious + Obsessed</strong> segments (roughly the top 15–25% of a club&rsquo;s roster) will pay for analytics.</p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Sessions / wk</th>
+<th>Court spend / mo (premium)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Curious</td>
+<td>0.5</td>
+<td>₹2,000–2,600</td>
+<td>Try-once corporates, tourists</td>
+</tr>
+<tr>
+<td>Casual regular</td>
+<td>1</td>
+<td>₹4,400–5,200</td>
+<td>Weekend social players</td>
+</tr>
+<tr>
+<td><strong>Engaged</strong></td>
+<td><strong>2</strong></td>
+<td><strong>₹8,800–13,000</strong></td>
+<td>Core target — improvers, tournament-curious</td>
+</tr>
+<tr>
+<td><strong>Serious</strong></td>
+<td><strong>3–4</strong></td>
+<td><strong>₹13,000–20,000+</strong></td>
+<td>Ex-tennis converts, ranking-conscious</td>
+</tr>
+<tr>
+<td><strong>Obsessed</strong></td>
+<td><strong>5+</strong></td>
+<td><strong>₹22,000+</strong></td>
+<td>Coach candidates, brand ambassadors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-subscription-tier-structure-proposed">5.3 Subscription tier structure (proposed)</h3>
+<p>Rule of thumb: 8–12% of primary-activity spend goes to enrichment. Cross-checked against Cult Sport (₹499–999), Cult Pass (₹1,499–2,499), Trackman/Arccos India (₹1,500–2,500), and the international padel benchmark (GameCam player app ~₹950–1,400).</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Price / mo</th>
+<th>Includes</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Free</strong></td>
+<td>₹0</td>
+<td>1 highlight/mo, basic score</td>
+<td>Curious/Casual — conversion funnel</td>
+</tr>
+<tr>
+<td><strong>Pro</strong></td>
+<td>₹499</td>
+<td>Unlimited highlights, heatmap, shot mix, spider chart</td>
+<td>Engaged — bulk of paid base</td>
+</tr>
+<tr>
+<td><strong>Pro+</strong></td>
+<td>₹999</td>
+<td>Everything + city ranking + opponent scout + coach-shareable link</td>
+<td>Serious</td>
+</tr>
+<tr>
+<td><strong>Elite / Coached</strong></td>
+<td>₹2,499</td>
+<td>Personal coach seat, drill prescriptions, monthly review call</td>
+<td>Obsessed + parent-of-junior</td>
+</tr>
+</tbody>
+</table>
+<p>Blended target ARPU: <strong>~₹650/mo/paying player.</strong> À-la-carte per-match unlock at ₹149 as the entry ramp.</p>
+<h3 id="54-revenue-mix-at-maturity-y23-40-court-network">5.4 Revenue mix at maturity (Y2–3, ~40-court network)</h3>
+<table>
+<thead>
+<tr>
+<th>Stream</th>
+<th>Share</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Player subscriptions</td>
+<td>30%</td>
+<td>Recurring, high margin</td>
+</tr>
+<tr>
+<td>Per-match unlocks</td>
+<td>10%</td>
+<td>Casual funnel</td>
+</tr>
+<tr>
+<td><strong>Booking take rate</strong></td>
+<td>20%</td>
+<td>5–7% commission on network bookings</td>
+</tr>
+<tr>
+<td><strong>Tournament / ladder fees</strong></td>
+<td>15%</td>
+<td>Padel Park proves 30% for court-only players — we&rsquo;re leaner</td>
+</tr>
+<tr>
+<td><strong>Coach discovery</strong></td>
+<td>10%</td>
+<td>15% take × ₹8–9K/mo × ~2,000 coached players</td>
+</tr>
+<tr>
+<td><strong>Brand sponsorship</strong></td>
+<td>15%</td>
+<td>Optionality kicker — one deal / quarter / brand</td>
+</tr>
+</tbody>
+</table>
+<p>Blended ARPU per active paying player pushes to <strong>₹1,100–1,300/mo</strong> when marketplace layers activate — nearly 2× subscription-only.</p>
+<h3 id="55-unit-economics-year-1-mumbai-indicative">5.5 Unit economics — Year 1 Mumbai (indicative)</h3>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Venues live end-of-Y1</td>
+<td>8–9</td>
+</tr>
+<tr>
+<td>Courts live</td>
+<td>16–18</td>
+</tr>
+<tr>
+<td>Player pool (deduped for hopping)</td>
+<td>~5,500 unique</td>
+</tr>
+<tr>
+<td>Paid conversion</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>Paying subs</td>
+<td>~825</td>
+</tr>
+<tr>
+<td>Blended ARPU</td>
+<td>₹650</td>
+</tr>
+<tr>
+<td>Subscription revenue / yr</td>
+<td>~₹65 L</td>
+</tr>
+<tr>
+<td>Per-match unlocks</td>
+<td>+40% of sub revenue</td>
+</tr>
+<tr>
+<td><strong>Gross topline (subs + unlocks)</strong></td>
+<td><strong>₹90 L – 1 Cr</strong></td>
+</tr>
+<tr>
+<td>Less 30% club rev-share (NSCI + peers)</td>
+<td>~₹27–30 L</td>
+</tr>
+<tr>
+<td>Less hardware amortisation (18 courts × ₹1.2L rig ÷ 24 mo)</td>
+<td>~₹13 L</td>
+</tr>
+<tr>
+<td>Less cloud + team</td>
+<td>~₹35–45 L</td>
+</tr>
+<tr>
+<td><strong>Net Y1</strong></td>
+<td><strong>~break-even to small loss</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Year 2 (Delhi NCR replication + coaching upsell + first sponsorship deal) is where the model flips to material profit.</p>
+<hr>
+<h2 id="6-competitive-landscape">6. Competitive Landscape</h2>
+<p><strong>Confirmed as of 2026-07-04:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Player</th>
+<th>HQ</th>
+<th>Product</th>
+<th>India presence</th>
+<th>Threat level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matchlytics</strong> (matchlytics.ai) — João Silva</td>
+<td>Portugal</td>
+<td>Single 180° wide-angle MatchCam + AI + TieSports booking. 7 clubs live. Early.</td>
+<td>None</td>
+<td><strong>Direct</strong> — same architecture, different geography</td>
+</tr>
+<tr>
+<td><strong>SportAI + Padelytics</strong> (sportai.com)</td>
+<td>Norway (acquired 2026)</td>
+<td>API + CV infrastructure. Integrations: MATCHi, Save My Play, Rackety. Stated focus: &ldquo;EU, NA, emerging markets&rdquo;</td>
+<td>None yet</td>
+<td><strong>High</strong> — best-funded, stated intent</td>
+</tr>
+<tr>
+<td><strong>SPASH Match Analyzer</strong> (spash.com)</td>
+<td>Spain</td>
+<td>~20 stats within minutes of match end, no sensors</td>
+<td>None</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>GameCam / GAMETRAQ</strong> (gamecam.io)</td>
+<td>EU</td>
+<td>Ceiling-mounted 4K/90fps, on-device 12 TOPS AI. 250+ clubs. €900–1,200/court/mo revenue claim</td>
+<td>None</td>
+<td>Low near-term (hardware complexity), watch</td>
+</tr>
+<tr>
+<td><strong>Padex</strong> (github.com/rondo-labs/Padex)</td>
+<td>Madrid (solo dev)</td>
+<td>OSS pipeline — only production-shaped padel CV outside João&rsquo;s. 16★, 61 commits solo. MIT-licensed.</td>
+<td>Fork target</td>
+<td>Not a competitor — <strong>a partner</strong></td>
+</tr>
+<tr>
+<td><strong>Padelize, Padelplay</strong></td>
+<td>EU</td>
+<td>Sensor + app</td>
+<td>None</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strategic reads:</strong></p>
+<ul>
+<li><strong>The window before an EU incumbent enters India is 12–18 months.</strong> SportAI&rsquo;s post-acquisition mandate explicitly names emerging markets. India will not stay whitespace forever.</li>
+<li><strong>João Silva (Matchlytics) is now a direct competitor</strong>, not a potential collaborator. The Jul 3 outreach is dead — no follow-up. We do not reveal our India plan to any Matchlytics channel.</li>
+<li><strong>Padex (Dreaner) is the safest OSS foundation</strong> — MIT-licensed, purpose-built for padel, solo dev likely responsive to a paid pilot.</li>
+<li><strong>JSW Sports has money in Padel Park.</strong> Two possibilities: they become our best distribution partner (5 → 200 sites), or they build the AI layer in-house. Which one depends on who calls whom first, and how ready our proof is when the call happens.</li>
+</ul>
+<hr>
+<h2 id="7-tie-up-prospects">7. Tie-Up Prospects</h2>
+<h3 id="71-distribution-venue-partners-india">7.1 Distribution &amp; venue partners (India)</h3>
+<table>
+<thead>
+<tr>
+<th>Partner</th>
+<th>Path</th>
+<th>Signal</th>
+<th>First ask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NSCI (Worli)</strong></td>
+<td>Client #0 — proposal live</td>
+<td>Awaiting reply. 90-day free training + 2-yr commercial, 30% gross share.</td>
+<td>Follow up 2026-07-08 if no reply. Credential secured on signing.</td>
+</tr>
+<tr>
+<td><strong>Padel Park network</strong></td>
+<td>JSW-backed. 5 Mumbai sites + national franchise pipeline of 200 courts</td>
+<td>Owner runs Indian Padel Academy → coaching-tool angle</td>
+<td>Approach post-NSCI-live: &ldquo;we&rsquo;ve built what your JSW deck probably promised, want to integrate before someone asks you to build it.&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Courtside Padel Social Club (Worli)</strong></td>
+<td>Invite-only lifestyle brand</td>
+<td>Wellness-brand DNA, has an app</td>
+<td>Positioning: member-only Insta-clip feature reinforcing exclusivity</td>
+</tr>
+<tr>
+<td><strong>Bombay Gymkhana</strong></td>
+<td>Heritage members club, unveiled padel 2026</td>
+<td>Committee-buy governance identical to NSCI</td>
+<td>Post-NSCI, sell prestige: &ldquo;the AI system NSCI is running&rdquo;</td>
+</tr>
+<tr>
+<td><strong>CCI (Cricket Club of India)</strong></td>
+<td>Padel live</td>
+<td>Members-only, ₹200+ subsidised</td>
+<td>Same governance pitch as Bombay Gym</td>
+</tr>
+<tr>
+<td><strong>Willingdon Sports Club</strong></td>
+<td>Padel bookable</td>
+<td>Same archetype</td>
+<td>Follow-on after Bombay Gym/CCI</td>
+</tr>
+<tr>
+<td><strong>Ace Padel Bandra + Andheri</strong></td>
+<td>2 mid-tier commercial sites</td>
+<td>Bandra + Andheri E footprint</td>
+<td>Mid-tier pilot after network alpha</td>
+</tr>
+<tr>
+<td><strong>7Padel × Super Sports Park (Mulund)</strong></td>
+<td>Premium tier</td>
+<td>₹3,000/hr — willing to pay for premium</td>
+<td>Sell hardware-free installation in exchange for revenue share</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-platform-integrations-india">7.2 Platform integrations (India)</h3>
+<table>
+<thead>
+<tr>
+<th>Partner</th>
+<th>Value</th>
+<th>Ask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hudle</strong></td>
+<td>India&rsquo;s dominant sports-booking platform (Mumbai + Delhi + 18 cities) — the discovery/booking layer everyone hops through</td>
+<td>Deep-link booking integration + Hudle-account SSO for PadelMind ID</td>
+</tr>
+<tr>
+<td><strong>KheloMore</strong></td>
+<td>Secondary booking aggregator</td>
+<td>Same integration pattern; lower priority</td>
+</tr>
+<tr>
+<td><strong>JSW Sports</strong></td>
+<td>Capital + Padel Park distribution</td>
+<td>Board observer seat in exchange for 5-site distribution commit?</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-white-label-licensing-paths-fallback">7.3 White-label / licensing paths (fallback)</h3>
+<p>If we choose not to build our own CV stack, the three real licensing options:</p>
+<table>
+<thead>
+<tr>
+<th>Principal</th>
+<th>What we get</th>
+<th>What we give</th>
+<th>Fit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SportAI (post-Padelytics)</strong></td>
+<td>Best-funded, most complete stack, ambitious</td>
+<td>25–40% rev-share, brand co-existence, India country-manager style deal</td>
+<td>Best strategic fit — they&rsquo;ve said &ldquo;emerging markets&rdquo;; we&rsquo;re the emerging market they haven&rsquo;t landed in yet</td>
+</tr>
+<tr>
+<td><strong>SPASH</strong></td>
+<td>Working product, Spanish team, quiet</td>
+<td>Similar rev-share</td>
+<td>Backup</td>
+</tr>
+<tr>
+<td><strong>Matchlytics</strong></td>
+<td>João&rsquo;s stack, closest to our thesis</td>
+<td>Awkward — competitor + no India intent visible</td>
+<td>Skip. Do not approach.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74-brand-sponsor-prospects-y1y2">7.4 Brand / sponsor prospects (Y1–Y2)</h3>
+<table>
+<thead>
+<tr>
+<th>Sponsor</th>
+<th>Fit</th>
+<th>Product</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head, Bullpadel, Wilson</td>
+<td>Padel-native brands</td>
+<td>Racquet + gear affiliate</td>
+<td>Post-network-alpha</td>
+</tr>
+<tr>
+<td>Red Bull</td>
+<td>Aspirational sports lifestyle</td>
+<td>Tournament title sponsor</td>
+<td>Post-city-ranking-launch</td>
+</tr>
+<tr>
+<td>HSBC / Standard Chartered</td>
+<td>Padel demographic matches private-banking segment</td>
+<td>Membership tier co-brand</td>
+<td>Post-heritage-club signings</td>
+</tr>
+<tr>
+<td>Local sportswear (Boat, Bewakoof, Bombay Shirt Co.)</td>
+<td>Match-day apparel</td>
+<td>Court-side overlays</td>
+<td>Y2 city-ranking sponsor</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-technical-partner-shortlist">8. Technical Partner Shortlist</h2>
+<p>Sourced from GitHub commit graph (stargazers + forkers of Joao-M-Silva/padel_analytics and adjacent racket-sport CV repos), academic authors, and India-diaspora CV engineers. LinkedIn login-wall made direct search low-yield; GitHub was denser signal.</p>
+<h3 id="81-priority-list-reach-out-this-week">8.1 Priority list — reach out this week</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Candidate</th>
+<th>Role / signal</th>
+<th>Ask</th>
+<th>Contact channel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>&ldquo;Dreaner&rdquo; / Rondo Labs</strong> — author of Padex</td>
+<td>Only production-shaped padel-CV OSS besides João&rsquo;s. Solo builder, Madrid, founder DNA. MIT-licensed.</td>
+<td>Paid pilot on NSCI courts + equity if it works</td>
+<td>github.com/rondo-labs/Padex → GitHub profile → email</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Amey Narwadkar</strong></td>
+<td>Heidelberg Masters (India diaspora). Author of Tennis-Analysis-System (88★). Graduating soon. Tennis-CV is 80% padel-portable.</td>
+<td>8-week paid port from tennis to padel + founding-CV-engineer offer post-Masters, Mumbai relocation</td>
+<td>github.com/ameynarwadkar</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Michele Vitale</strong></td>
+<td>Whitehall AI Reply consultant (Rome). Author of ball_tracking_padel — cleanest padel ball tracker on GitHub.</td>
+<td>4 hrs/mo advisor retainer + small equity slice. Doesn&rsquo;t leave day job.</td>
+<td>github.com/michele98</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Anil John</strong></td>
+<td>Indian, starred <code>Joao-M-Silva/padel_analytics</code> — one of only ~5 Indians to do so. Almost certainly a padel player.</td>
+<td>30-min coffee. Softest ask, highest hit rate.</td>
+<td>github.com/anilujohn</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-second-wave-india-based-padel-cv-stargazers-rare-signal">8.2 Second wave — India-based padel-CV stargazers (rare signal)</h3>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Signal</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gaurav (Gaurav23V)</strong> — gaurav23v.app</td>
+<td>India, full-stack + ML, 86 repos. Padel_analytics starrer.</td>
+<td>Coffee ask + build-partner pitch</td>
+</tr>
+<tr>
+<td><strong>Subham Agrawal (Neurabit)</strong> — neurabitsolution.com</td>
+<td>Runs a CV consultancy in India. Padel_analytics starrer.</td>
+<td>Paid POC / delivery partner scope</td>
+</tr>
+<tr>
+<td><strong>Akash &ldquo;sky-akash&rdquo;</strong></td>
+<td>India, 41 repos, padel_analytics starrer</td>
+<td>Coffee + early-hire pitch</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83-bench-keep-warm">8.3 Bench — keep warm</h3>
+<ul>
+<li><strong>Muhammad Moin Faisal</strong> (Lahore) — 929 GitHub followers, tennis_analysis, prolific CV tutorials.</li>
+<li><strong>Harsh Tomar</strong> (@HarshTomar1234, India) — Tennis-Vision 38★, 71 repos across CV/GenAI/MLOps.</li>
+<li><strong>Nikhil Devanathan (@nikhil-dev)</strong> — <code>hawkeye</code> cricket + tennis ball tracking (54★). India-relevant crossover.</li>
+<li><strong>Fernando Navales Merino</strong> (Granada) — university, padel research hub, potential PhD sourcing channel.</li>
+<li><strong>Kishore Patlolla (@kvnptl)</strong> — India-born, Germany robotics/CV. Not padel-native but production muscle.</li>
+<li><strong>TrackNet lineage authors</strong> (Chang-Chia-Chi, alenzenx, yastrebksv, mareksubocz) — racket-sport ball tracking. Twitter DM sweep for Y2 hires.</li>
+</ul>
+<h3 id="84-outreach-playbook">8.4 Outreach playbook</h3>
+<p>Each candidate gets a different tone — no template:</p>
+<ul>
+<li><strong>Dreaner / Padex</strong>: <em>&ldquo;Padex is the only production-shaped padel CV pipeline outside of João&rsquo;s. We&rsquo;ve locked NSCI Mumbai as our first venue with a 40-court roadmap. Ready to run a paid pilot. Can we cut you a check to deploy Padex on our first two courts, and talk equity if it works?&rdquo;</em></li>
+<li><strong>Amey</strong>: <em>&ldquo;Your YOLO + court-line + ball-speed stack is 80% of what padel needs. NSCI Mumbai is our anchor, 40-court roadmap. Open to an 8-week paid port from tennis to padel, with a founding CV engineer offer in Mumbai after your Masters?&rdquo;</em></li>
+<li><strong>Michele</strong>: <em>&ldquo;Your <code>ball_tracking_padel</code> is the cleanest padel ball tracker on GitHub. Not asking you to leave Reply — asking for 4 hrs/month at an advisor rate plus a small equity slice, and access to your dataset annotations under a mutual licence. Interested?&rdquo;</em></li>
+<li><strong>Anil John</strong>: <em>&ldquo;There are five Indians who starred <code>Joao-M-Silva/padel_analytics</code>. You&rsquo;re one. I&rsquo;m another. Coffee or Zoom this week?&rdquo;</em></li>
+</ul>
+<hr>
+<h2 id="9-what-this-document-doesnt-cover">9. What This Document Doesn&rsquo;t Cover</h2>
+<p>A companion document — <strong>Scope Reset: Technical Deltas &amp; Commercial Launch Timeline</strong> — is being prepared separately. It addresses:</p>
+<ul>
+<li>Hardware architecture changes (single 180° wide-angle vs multi-camera ceiling rig)</li>
+<li>CV pipeline decision (Padex fork vs licensed stack vs build-from-scratch)</li>
+<li>Product must-haves that shifted from Y2 to Day-1 (cross-venue player ID, Hudle integration, rally detection, gesture-tag highlights)</li>
+<li>Revised commercial-launch milestone: Day 91 NSCI (proof) → Day 180 network commercial launch</li>
+<li>The three strategic paths (build our own · license &amp; wrap · become the master franchisee) with honest tradeoffs and cost envelopes</li>
+</ul>
+<p>Read this brief first for alignment on <em>why</em> and <em>where</em>. Read the Scope Reset next for alignment on <em>how</em> and <em>when</em>.</p>
+<hr>
+<h2 id="10-immediate-actions-this-week">10. Immediate Actions (this week)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Action</th>
+<th>Owner</th>
+<th>Deadline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Follow up NSCI committee if no reply</td>
+<td>Manoj</td>
+<td>2026-07-08</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Email Dreaner (Padex) — paid pilot pitch</td>
+<td>Manoj + Aayush</td>
+<td>2026-07-06</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Email Amey Narwadkar — founding CV engineer offer</td>
+<td>Manoj</td>
+<td>2026-07-06</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Email Michele Vitale — advisor retainer</td>
+<td>Manoj</td>
+<td>2026-07-06</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Email Anil John + 3 other Indian padel_analytics stargazers — soft coffee ask</td>
+<td>Manoj / Tanisha</td>
+<td>2026-07-07</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Do NOT contact João Silva — competitor, not collaborator</td>
+<td>—</td>
+<td>Ongoing</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Team review of Scope Reset companion doc</td>
+<td>All three</td>
+<td>2026-07-05</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Decision meeting: Path A (build) vs B (license) vs C (franchise)</td>
+<td>All three</td>
+<td>2026-07-10</td>
+</tr>
+</tbody>
+</table>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

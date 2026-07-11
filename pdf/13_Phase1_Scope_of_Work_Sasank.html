@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Phase 1 — Scope of Work — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+/* Fonts loaded via pdf_render.js font injection — no remote @import to avoid headless layout shift */
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  width: 100%;
+  height: 297mm;
+  background: linear-gradient(160deg, #0A1F17 0%, #1B4D3E 45%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 28mm 22mm 20mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 18mm 20mm 20mm 20mm;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Development Partner Brief — For Quotation</div>
+    <h1 class="cover-title">Phase 1 Development Brief</h1>
+    <p class="cover-subtitle">Post-match highlight reel and court heatmap delivery — complete scope of work for development partner, with division of responsibilities, integration contracts, and acceptance criteria per component.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Prepared by</div><div class="cover-meta-value">Manoj Maheshwari · PadelMind</div></div>
+<div><div class="cover-meta-label">Phase</div><div class="cover-meta-value">Phase 1 — Highlights + Heatmap (no shot classifier)</div></div>
+<div><div class="cover-meta-label">Target delivery</div><div class="cover-meta-value">12 weeks from engagement</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">2026-07-09</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Phase 1 — Scope of Work" data-brand="PadelMind">
+<h2 id="padelmind-post-match-highlight-heatmap-delivery-system">PadelMind: Post-Match Highlight &amp; Heatmap Delivery System</h2>
+<hr>
+<blockquote>
+<p><strong>Purpose of this document:</strong> We are building an AI-assisted padel match analysis platform. This brief defines the exact scope we need a development partner to quote on for Phase 1. It also clearly states what our team will build and integrate at our end, so there is no confusion about ownership, interface contracts, or overlap.</p>
+<p><strong>Camera configuration locked — Plan A:</strong> Phase 1 uses a single IP camera per court, mounted 4–5 metres high behind one back glass wall. This is the deliberate choice for the pilot. Dual-camera (two-Pi, position-merge) is a Phase 2 upgrade once the first club is paying. Do not design or quote for multi-camera support in this phase.</p>
+</blockquote>
+<hr>
+<h2 id="1-what-we-are-building-the-plain-language-version">1. What We Are Building — The Plain-Language Version</h2>
+<p>A padel player finishes their match at 7:30pm. At 7:42pm, their WhatsApp receives three messages automatically:</p>
+<ol>
+<li>A <strong>text summary</strong> — how long the match was, how many rallies, which zones of the court they covered most.</li>
+<li>A <strong>heatmap image</strong> — a top-down court diagram with a heat overlay showing where they spent each rally.</li>
+<li>A <strong>60-second highlight reel</strong> — the top five rallies from the match, auto-clipped and stitched.</li>
+</ol>
+<p>No app to download. No login during the match. The club staff sends one WhatsApp command when the match starts and one when it ends. The rest is automatic.</p>
+<p>This is Phase 1. There is no shot classification, no skill scoring, and no drill recommendations in Phase 1. Those are Phase 2 features that depend on having a domain-expert coach on the team. Phase 1&rsquo;s job is to prove the &ldquo;wow moment&rdquo; and sign the first paying club.</p>
+<hr>
+<h2 id="2-full-system-architecture">2. Full System Architecture</h2>
+<p>The system has six layers. The table below shows who owns each layer — <strong>us (PadelMind team)</strong> or <strong>you (development partner)</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it does</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Edge box</strong> (Raspberry Pi 5)</td>
+<td>Records match from IP camera; detects match start/end; uploads MP4 to cloud storage</td>
+<td><strong>You (Sasank)</strong></td>
+</tr>
+<tr>
+<td><strong>Cloud storage</strong> (Cloudflare R2)</td>
+<td>Stores match video; triggers processing job</td>
+<td>Us</td>
+</tr>
+<tr>
+<td><strong>Job orchestration</strong> (Cloudflare Worker + Upstash Redis)</td>
+<td>Receives webhook from R2; queues job for GPU worker</td>
+<td>Us</td>
+</tr>
+<tr>
+<td><strong>GPU inference worker</strong> (RunPod)</td>
+<td>Downloads match; runs player tracking; produces positions JSON, heatmap PNG, highlight MP4</td>
+<td><strong>You (Sasank)</strong></td>
+</tr>
+<tr>
+<td><strong>Database</strong> (Supabase)</td>
+<td>Stores match metadata, player identities, heatmap URLs, highlight URLs</td>
+<td>Us</td>
+</tr>
+<tr>
+<td><strong>WhatsApp delivery</strong> (AX Meta Cloud API)</td>
+<td>Sends heatmap + highlight + summary to all 4 players post-match</td>
+<td>Us</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The handshake between your work and ours:</strong></p>
+<ul>
+<li>Your Pi daemon → uploads <code>match.mp4</code> to our R2 bucket → fires our webhook</li>
+<li>Our Worker → queues a job → your RunPod worker picks it up</li>
+<li>Your RunPod worker → writes <code>heatmap_p1.png</code>, <code>heatmap_p2.png</code>, <code>heatmap_p3.png</code>, <code>heatmap_p4.png</code>, <code>highlights.mp4</code> back to our R2 → calls our webhook with the output URLs</li>
+<li>Our Worker → reads those URLs → sends the WhatsApp messages via our existing delivery infrastructure</li>
+</ul>
+<p>You do not touch Supabase, the WhatsApp API, Cloudflare Workers, or the React PWA. We do not touch the Pi, the GPU inference code, or the media generation pipeline. Clean boundary.</p>
+<hr>
+<h2 id="3-what-our-team-brings-not-in-your-scope">3. What Our Team Brings (Not In Your Scope)</h2>
+<p>We are not starting from zero. The following is already built and running in production on other products we operate:</p>
+<h3 id="31-whatsapp-delivery-infrastructure">3.1 WhatsApp Delivery Infrastructure</h3>
+<p>We operate a WhatsApp Cloud API router (Meta BSP, our own WABA) that handles outbound messages including text, images, and video files. It currently serves a live B2B SaaS product with multiple tenants. Adding a <code>padel-match-report</code> message type to this router is a 2–3 hour integration on our end — not new infrastructure.</p>
+<h3 id="32-cloudflare-r2-workers">3.2 Cloudflare R2 + Workers</h3>
+<p>We use Cloudflare R2 as our primary object store and Cloudflare Workers for serverless edge logic on existing products. We will provision the R2 bucket, configure CORS, and write the job-dispatch Worker that receives your Pi&rsquo;s upload notification and queues the RunPod job.</p>
+<h3 id="33-supabase-backend">3.3 Supabase Backend</h3>
+<p>We use Supabase (Postgres + Auth + Realtime) as our primary database and auth layer. We will design and own the schema:</p>
+<pre><code>padel_clubs         — club name, city, WhatsApp number, camera config
+padel_courts        — court name, club reference, homography keypoints (JSON)
+padel_matches       — match start/end, R2 video URL, processing status
+padel_players       — player WhatsApp number, display name, club
+padel_match_players — join table: which players played in which match;
+                       stores heatmap URL + highlight URL per player
+</code></pre>
+<p>We own all reads and writes to these tables. Your RunPod worker will POST a JSON payload to one of our Cloudflare Worker endpoints when processing is complete — it does not need database credentials.</p>
+<h3 id="34-player-pwa-progressive-web-app">3.4 Player PWA (Progressive Web App)</h3>
+<p>We will build a mobile-first web application where players can review all their past matches, see full heatmap history, re-watch highlights, and share a stats card. Authentication is phone OTP (Supabase). The link sent in every WhatsApp message opens this PWA on the player&rsquo;s phone. This replaces any need for an App Store app. We build this in React on Cloudflare Pages.</p>
+<h3 id="35-ffmpeg-media-foundation-knowledge">3.5 ffmpeg — Media Foundation Knowledge</h3>
+<p>Our team has built ffmpeg-based video pipelines for other products (segment concat, trim, 9:16 crop, caption burn, BGM mix). We can advise on and review the ffmpeg commands in your highlight clipper, but you own the implementation and the rally-detection logic that drives it.</p>
+<h3 id="36-club-registration-flow">3.6 Club Registration Flow</h3>
+<p>The club sends one WhatsApp command to register a match:</p>
+<pre><code>PADEL START court1 +91XXXXXXXXXX +91XXXXXXXXXX +91XXXXXXXXXX +91XXXXXXXXXX
+PADEL END court1
+</code></pre>
+<p>Our router parses this, creates the <code>padel_matches</code> row, and signals your Pi daemon to start/stop recording. We own this command parsing. You own the Pi daemon that listens for the signal.</p>
+<hr>
+<h2 id="4-what-we-need-from-you-your-scope">4. What We Need From You (Your Scope)</h2>
+<p>There are six components in your scope. Each has its own acceptance criteria in Section 7.</p>
+<hr>
+<h3 id="component-1-raspberry-pi-edge-software">Component 1 — Raspberry Pi Edge Software</h3>
+<p><strong>What it does:</strong> The Pi (Model 5, 8GB RAM, 1TB NVMe) sits in a weatherproof enclosure at the club. It receives the RTSP stream from the Reolink RLC-823A IP camera (4K H.265), segments it into 10-minute MP4 chunks, detects when a match ends, concatenates the full match video, and uploads it to our R2 bucket.</p>
+<p><strong>Inputs:</strong> RTSP stream from camera (local network); a trigger signal from our system (HTTP POST or file-write) indicating match start/end.</p>
+<p><strong>Outputs:</strong> One concatenated <code>match_{id}.mp4</code> file uploaded to our R2 bucket; an HTTP POST to our Cloudflare Worker webhook confirming the upload is complete.</p>
+<p><strong>Key technical points:</strong></p>
+<ul>
+<li><strong>MediaMTX</strong> (formerly rtsp-simple-server) is the RTSP relay and segment recorder. Configuration is a single YAML file. We can provide a template.</li>
+<li><strong>Motion-based end detection</strong> is the Phase 1 shortcut: a Python watchdog monitors the latest chunk for mean inter-frame pixel difference. When activity falls below threshold for 10 consecutive minutes after a live-match period, the match is considered over.</li>
+<li><strong>Primary trigger</strong> for Phase 1: our system sends an HTTP POST to the Pi (<code>/match/start</code>, <code>/match/stop</code>) when the club sends the WhatsApp command. Motion detection is the fallback.</li>
+<li>Upload via <code>boto3</code> (Cloudflare R2 is S3-compatible). Credentials stored in <code>.env</code> on the Pi.</li>
+<li>The Pi must handle a reboot cleanly — daemon runs as a <code>systemd</code> service, auto-restarts.</li>
+<li><strong>4G/5G modem</strong> (Jio or Airtel SIM) provides uplink. We handle SIM provisioning and modem hardware. You configure the Pi networking.</li>
+</ul>
+<p><strong>Dependencies we provide:</strong>
+- R2 bucket name, access key, secret key
+- Webhook URL to call on upload completion
+- Pi hardware (we procure; you configure)</p>
+<hr>
+<h3 id="component-2-gpu-inference-worker-runpod">Component 2 — GPU Inference Worker (RunPod)</h3>
+<p><strong>What it does:</strong> A Docker container that runs on a RunPod RTX 3090 instance. It is invoked by our job queue, downloads the match video from R2, runs the computer vision pipeline, and produces structured position data for all four players plus a summary JSON.</p>
+<p><strong>Base library:</strong> <code>padel_analytics</code> (open-source, MIT licence). Repository: <code>github.com/Joao-M-Silva/padel_analytics</code>. You fork this, strip the Streamlit UI, and adapt it to run headlessly from the command line.</p>
+<p><strong>Pipeline stages your worker runs:</strong></p>
+<ol>
+<li><strong>Court keypoints load</strong> — read the 12 stored keypoint pixel coordinates from the JSON payload we include in the job. These were captured at camera install time using the calibration tool (Component 6 below). No re-clicking at runtime.</li>
+<li><strong>Court homography compute</strong> — from the 12 keypoints, compute the perspective transform matrix that maps pixel positions to real-world court metres. This is already implemented in <code>padel_analytics/analytics/projected_court.py</code>.</li>
+<li><strong>Player detection + tracking</strong> — YOLOv8m (person detection) + ByteTrack (multi-object tracking across frames). Already in <code>padel_analytics/trackers/players_tracker/</code>. Run at 1080p30 (downsample the 4K source before inference — saves 75% GPU time with negligible accuracy loss).</li>
+<li><strong>Position projection</strong> — for every frame, for each tracked player: use the homography matrix to convert the player&rsquo;s <code>feet</code> pixel position to court metres (x, y). The <code>Player.projection</code> attribute in <code>players_tracker.py</code> already does this when a <code>ProjectedCourt</code> object is passed.</li>
+<li><strong>Output</strong> — one JSON file per match: a list of frames, each containing player ID, court position (x_metres, y_metres), and frame timestamp. This is the input to Components 3 and 4.</li>
+</ol>
+<p><strong>Runtime target:</strong> 90-minute match processed in under 6 minutes on an RTX 3090.</p>
+<p><strong>Docker image requirements:</strong>
+- CUDA 12.x base
+- Python 3.11
+- <code>ultralytics</code> (YOLOv8), <code>supervision</code>, <code>opencv-python-headless</code>, <code>numpy</code>, <code>scipy</code>
+- <code>boto3</code> for R2 access
+- Image must pull cold and be ready to process in under 90 seconds</p>
+<p><strong>Job interface (we call you):</strong></p>
+<p>We POST this JSON to your RunPod endpoint via HTTP:</p>
+<pre><code class="language-json">{
+  &quot;job_id&quot;: &quot;match_abc123&quot;,
+  &quot;video_r2_url&quot;: &quot;https://r2.padelmind.com/matches/match_abc123.mp4&quot;,
+  &quot;court_keypoints&quot;: {
+    &quot;k1&quot;: [120, 980], &quot;k2&quot;: [1800, 980],
+    &quot;k3&quot;: [120, 800], &quot;k4&quot;: [960, 800], &quot;k5&quot;: [1800, 800],
+    &quot;k6&quot;: [120, 540], &quot;k7&quot;: [1800, 540],
+    &quot;k8&quot;: [120, 280], &quot;k9&quot;: [960, 280], &quot;k10&quot;: [1800, 280],
+    &quot;k11&quot;: [120, 100], &quot;k12&quot;: [1800, 100]
+  },
+  &quot;match_id&quot;: &quot;match_abc123&quot;,
+  &quot;callback_url&quot;: &quot;https://workers.padelmind.com/inference-complete&quot;
+}
+</code></pre>
+<p><strong>Your callback to us (when done):</strong></p>
+<pre><code class="language-json">{
+  &quot;job_id&quot;: &quot;match_abc123&quot;,
+  &quot;status&quot;: &quot;success&quot;,
+  &quot;positions_r2_url&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_positions.json&quot;,
+  &quot;heatmap_urls&quot;: {
+    &quot;player_1&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_heatmap_p1.png&quot;,
+    &quot;player_2&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_heatmap_p2.png&quot;,
+    &quot;player_3&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_heatmap_p3.png&quot;,
+    &quot;player_4&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_heatmap_p4.png&quot;
+  },
+  &quot;highlight_r2_url&quot;: &quot;https://r2.padelmind.com/inference/match_abc123_highlights.mp4&quot;,
+  &quot;stats&quot;: {
+    &quot;duration_minutes&quot;: 87,
+    &quot;rally_count&quot;: 12,
+    &quot;avg_rally_shots_est&quot;: 14
+  }
+}
+</code></pre>
+<hr>
+<h3 id="component-3-heatmap-renderer">Component 3 — Heatmap Renderer</h3>
+<p><strong>What it does:</strong> Reads the positions JSON from Component 2 and renders one heatmap PNG per player. Each PNG is delivered to players via WhatsApp and displayed full-width in the PWA.</p>
+<p><strong>Technical specification:</strong></p>
+<ul>
+<li>Input: positions JSON (one (x, y) in metres per frame, per player)</li>
+<li>Output: 4 PNG files, 800×1600px, dark background, fire/heat colour map</li>
+<li>Court dimensions: 10m × 20m (standard padel court)</li>
+<li>Library: <code>matplotlib</code> with <code>scipy.ndimage.gaussian_filter</code> for smooth heat distribution</li>
+<li>Court line overlay: baseline (y=0, y=20), service lines (y=3, y=17), net (y=10, dashed), side-wall lines (x=0, x=10)</li>
+<li>Player label at top of image (e.g. &ldquo;Player 1 — Left Side&rdquo;)</li>
+<li>White text on dark background. Looks premium on a phone screen.</li>
+<li>File size: under 300KB per PNG (WhatsApp media limit compliance)</li>
+</ul>
+<p>The heatmap generation is part of the RunPod worker Docker image (runs inline after tracking, before the callback). It does not require a separate service.</p>
+<hr>
+<h3 id="component-4-rally-detector">Component 4 — Rally Detector</h3>
+<p><strong>What it does:</strong> Given the positions JSON, identifies the time windows when a rally was in progress. A rally is any continuous period where at least 2 players are visible AND their average movement velocity exceeds a threshold.</p>
+<p><strong>Algorithm (suggested — you may refine):</strong></p>
+<pre><code>For each frame:
+  - Compute per-player velocity: |position[t] - position[t-5]| / (5/fps)
+  - If &gt;= 2 players visible AND avg_velocity &gt; 0.15 m/s: mark as RALLY
+  - If &lt; 2 players visible OR avg_velocity &lt; 0.05 m/s: mark as REST
+Apply 3-second minimum rally duration filter
+Apply 30-second maximum gap merger (brief rests between shots in same rally)
+Output: list of (start_frame, end_frame, duration_seconds) sorted by duration descending
+</code></pre>
+<p><strong>Output:</strong> Top 8 rally windows by duration, embedded in the positions JSON. These are consumed by Component 5.</p>
+<p><strong>Edge cases to handle:</strong>
+- Players walking off court between games (not a rally)
+- One player retrieving a ball alone at the wall (not a rally)
+- Partial player occlusion reducing detected count to 3 temporarily</p>
+<hr>
+<h3 id="component-5-ffmpeg-highlight-clipper">Component 5 — ffmpeg Highlight Clipper</h3>
+<p><strong>What it does:</strong> Takes the top 5 rally windows from Component 4, clips those segments from the original match video, adds a 1-second buffer before and after each clip, and concatenates them into a single highlight reel.</p>
+<p><strong>Technical specification:</strong></p>
+<ul>
+<li>Input: <code>match_{id}.mp4</code> (from R2) + rally window list from Component 4</li>
+<li>Output: <code>highlights.mp4</code> — a single continuous MP4</li>
+<li>Resolution: 1080×1920 (9:16 vertical) — crop from the 4K source</li>
+<li>Duration: 60–90 seconds total (5 clips × 12–18 seconds average)</li>
+<li>File size: under 15MB (WhatsApp video limit is 16MB)</li>
+<li>Codec: H.264 (libx264), AAC audio, CRF 26–28, preset <code>fast</code></li>
+<li>Between clips: 0.3-second black frame fade</li>
+</ul>
+<p><strong>ffmpeg approach (per clip):</strong></p>
+<pre><code class="language-bash">ffmpeg -ss {start_s} -i match.mp4 -t {duration_s + 2} \
+       -vf &quot;scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,
+            fade=t=in:st=0:d=0.2,fade=t=out:st={duration_s}:d=0.2&quot; \
+       -c:v libx264 -crf 27 -preset fast -c:a aac -b:a 128k \
+       clip_{n}.mp4
+</code></pre>
+<p>Then concatenate with <code>ffmpeg -f concat -safe 0 -i clips.txt</code>.</p>
+<p>The video crop should favour the half of the court where the most action occurred (use position data to determine dominant zone). This is a nice-to-have, not a blocker.</p>
+<hr>
+<h3 id="component-6-court-calibration-tool">Component 6 — Court Calibration Tool</h3>
+<p><strong>What it does:</strong> A lightweight browser-based tool used once at camera install time. The installer opens this page, uploads a still frame from the camera, and clicks on 12 predefined court keypoints. The tool stores the pixel coordinates to our Supabase database under the relevant <code>padel_courts</code> record. These coordinates are then included in every job payload so the GPU worker knows the court geometry without re-clicking.</p>
+<p><strong>The 12 keypoints (standard padel court layout):</strong></p>
+<pre><code>k11────────────────────k12
+ │                      │
+k8────────k9───────────k10
+ │         │            │
+ │         │            │
+k6─────────────────────k7
+ │         │            │
+ │         │            │
+k3────────k4────────────k5
+ │                      │
+k1─────────────────────k2
+</code></pre>
+<p><strong>Technical specification:</strong></p>
+<ul>
+<li>Simple HTML page with <code>&lt;canvas&gt;</code> overlay on the uploaded frame</li>
+<li>Click to place each of 12 numbered markers in sequence</li>
+<li>Markers draggable to refine position</li>
+<li>&ldquo;Save&rdquo; button POSTs <code>{ court_id, keypoints: { k1: [x,y], ... k12: [x,y] } }</code> to our Cloudflare Worker endpoint, which writes to Supabase</li>
+<li>No auth required (tool is used once per court, behind a private URL)</li>
+<li>Works on laptop browser only (no mobile requirement)</li>
+<li>Stack: vanilla HTML + JS — no framework needed</li>
+</ul>
+<p>This is the simplest component in your scope. ~200 lines of vanilla JS.</p>
+<hr>
+<h2 id="5-integration-contract-summary">5. Integration Contract Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>From</th>
+<th>To</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Match start trigger</td>
+<td>Our WA router</td>
+<td>Pi daemon</td>
+<td>HTTP POST <code>{ match_id, court_id }</code> to Pi local IP</td>
+</tr>
+<tr>
+<td>Match end trigger</td>
+<td>Our WA router</td>
+<td>Pi daemon</td>
+<td>HTTP POST <code>{ match_id }</code> to Pi local IP</td>
+</tr>
+<tr>
+<td>Match MP4 upload complete</td>
+<td>Pi daemon</td>
+<td>Our Cloudflare Worker</td>
+<td>HTTP POST <code>{ match_id, r2_url }</code></td>
+</tr>
+<tr>
+<td>Job dispatch</td>
+<td>Our Cloudflare Worker</td>
+<td>RunPod endpoint</td>
+<td>HTTP POST (see Section 4.2 job interface)</td>
+</tr>
+<tr>
+<td>Inference complete</td>
+<td>RunPod worker</td>
+<td>Our Cloudflare Worker</td>
+<td>HTTP POST (see Section 4.2 callback)</td>
+</tr>
+<tr>
+<td>Keypoints save</td>
+<td>Calibration tool</td>
+<td>Our Cloudflare Worker</td>
+<td>HTTP POST <code>{ court_id, keypoints }</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>No direct database access is needed by any of your components.</strong> All persistence goes through our Cloudflare Worker endpoints, which you call via HTTP. We provide those endpoint URLs before development begins.</p>
+<hr>
+<h2 id="6-infrastructure-runtime-environment">6. Infrastructure &amp; Runtime Environment</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Spec</th>
+<th>Provisioned by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IP Camera</td>
+<td>Reolink RLC-823A 4K PoE</td>
+<td>Us</td>
+</tr>
+<tr>
+<td>Raspberry Pi 5</td>
+<td>8GB RAM, 1TB NVMe, IP66 enclosure</td>
+<td>Us</td>
+</tr>
+<tr>
+<td>4G/5G modem</td>
+<td>Jio/Airtel SIM, unlimited data</td>
+<td>Us</td>
+</tr>
+<tr>
+<td>R2 bucket</td>
+<td>Cloudflare R2, <code>padelmind-dev</code></td>
+<td>Us</td>
+</tr>
+<tr>
+<td>GPU worker endpoint</td>
+<td>RunPod RTX 3090, on-demand</td>
+<td>Us (we provision; you build the Docker image)</td>
+</tr>
+<tr>
+<td>Redis queue</td>
+<td>Upstash free tier</td>
+<td>Us</td>
+</tr>
+<tr>
+<td>Docker registry</td>
+<td>GitHub Container Registry</td>
+<td>You (push image; we pull)</td>
+</tr>
+<tr>
+<td>Supabase database</td>
+<td><code>padelmind</code> project</td>
+<td>Us</td>
+</tr>
+</tbody>
+</table>
+<p>We will provide you with:
+- R2 bucket credentials (access key + secret for dev and prod buckets)
+- RunPod API key + endpoint ID
+- Webhook URLs for each integration point
+- A test match video (20 minutes, real padel footage) for integration testing
+- A reference court keypoints JSON for the test video</p>
+<hr>
+<h2 id="7-acceptance-criteria-per-component">7. Acceptance Criteria — Per Component</h2>
+<p>Each component is accepted when it passes the following test on the supplied test video.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Acceptance Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pi edge software</strong></td>
+<td>Match MP4 appears in R2 within 3 minutes of receiving the <code>/match/stop</code> signal; file is playable; size is within 10% of expected for match duration</td>
+</tr>
+<tr>
+<td><strong>GPU inference worker</strong></td>
+<td>Processes 90-minute match in under 6 minutes on RTX 3090; positions JSON has entries for at least 3 of 4 players in &gt;70% of frames; court coordinates are within the 10m×20m boundary</td>
+</tr>
+<tr>
+<td><strong>Heatmap renderer</strong></td>
+<td>4 PNG files generated; each under 300KB; court lines clearly visible; heat zones correspond visually to where players spent time (verified by watching the video)</td>
+</tr>
+<tr>
+<td><strong>Rally detector</strong></td>
+<td>Identifies at least 5 distinct rally windows in a 90-minute match; fewer than 3 false positives (walking, single-player warmup) in the top-8 output</td>
+</tr>
+<tr>
+<td><strong>Highlight clipper</strong></td>
+<td>Produces a single MP4 under 15MB; 5 clips visible; clips correspond to the rally windows; video is watchable on an Android WhatsApp at 1080p</td>
+</tr>
+<tr>
+<td><strong>Calibration tool</strong></td>
+<td>Clicking 12 points on a test frame and saving results in correct JSON in the database; the same keypoints used in the GPU job produce a valid homography (player walks from baseline to net, position in output JSON follows expected trajectory)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-what-is-explicitly-out-of-scope-for-this-phase">8. What Is Explicitly Out of Scope for This Phase</h2>
+<p>The following will not be built in Phase 1 and should not be quoted:</p>
+<ul>
+<li>Shot classification (forehand, backhand, smash, bandeja, etc.) — requires trained model, Phase 2</li>
+<li>Quality scoring or coaching feedback — requires domain coach input, Phase 2</li>
+<li>Ball tracking (TrackNet) — requires retraining for padel ball, Phase 2</li>
+<li>Player skill score or rating — requires classifier, Phase 2</li>
+<li>Player-facing mobile app (iOS / Android native) — we ship a PWA instead</li>
+<li>Live streaming or real-time analysis — Phase 3</li>
+<li>Multi-camera per court — Phase 3</li>
+<li>Booking system integration (Hudle, Playo) — Phase 2</li>
+</ul>
+<hr>
+<h2 id="9-questions-you-will-likely-have">9. Questions You Will Likely Have</h2>
+<p><strong>Q: Which YOLOv8 model size?</strong>
+YOLOv8m (medium). Large is more accurate but doesn&rsquo;t fit within the 6-minute processing budget on RTX 3090 for a 90-minute match. If you find accuracy is insufficient at medium, raise it — we&rsquo;ll discuss budget impact.</p>
+<p><strong>Q: The padel_analytics repo has a Streamlit UI. Do I need to preserve it?</strong>
+No. Fork the repo, strip the UI entirely. You need only the tracker classes and analytics modules. The UI code is irrelevant to the headless Docker worker.</p>
+<p><strong>Q: What if fewer than 4 players are detected in some frames?</strong>
+That is expected — players go near walls, get partially occluded. Minimum 2 detected players is sufficient to determine a rally is happening. The heatmap for a player with sparse data will just show a more concentrated heat zone rather than a full-court spread.</p>
+<p><strong>Q: Can the Pi handle 4K RTSP decoding?</strong>
+No, and it doesn&rsquo;t need to. MediaMTX relays and segments the stream without decoding it — pure bitstream passthrough to file. The Pi never decodes frames. Decoding happens on the RunPod GPU.</p>
+<p><strong>Q: What is the network bandwidth requirement for the Pi upload?</strong>
+A 90-minute 4K H.265 match is approximately 3–4 GB. On a Jio 5G SIM with ~50 Mbps uplink, that is about 10 minutes upload time. The Pi should begin upload as soon as the match ends — the RunPod job is queued but waits for upload to complete before starting.</p>
+<p><strong>Q: Do I need to handle multiple cameras per court?</strong>
+No. Phase 1 is one camera per court. The architecture supports multiple cameras later but you should not design for it now.</p>
+<hr>
+<h2 id="10-summary-division-of-work-at-a-glance">10. Summary — Division of Work at a Glance</h2>
+<table>
+<thead>
+<tr>
+<th>What Sasank builds</th>
+<th>What PadelMind team builds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pi recording daemon + upload</td>
+<td>R2 bucket + Cloudflare Worker job dispatch</td>
+</tr>
+<tr>
+<td>GPU inference worker (Docker)</td>
+<td>Upstash queue management</td>
+</tr>
+<tr>
+<td>Player tracking pipeline</td>
+<td>Supabase schema + all DB operations</td>
+</tr>
+<tr>
+<td>Heatmap PNG renderer</td>
+<td>WhatsApp delivery (all 4 players)</td>
+</tr>
+<tr>
+<td>Rally detector algorithm</td>
+<td>Player PWA (React, all match history)</td>
+</tr>
+<tr>
+<td>ffmpeg highlight clipper</td>
+<td>Club registration WA command parser</td>
+</tr>
+<tr>
+<td>Court calibration web tool</td>
+<td>Infrastructure provisioning (RunPod, R2, Supabase)</td>
+</tr>
+<tr>
+<td>Docker image on GHCR</td>
+<td>Monitoring + alerting</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<h2 id="11-phase-1-camera-hardware-plan-a-specification">11. Phase 1 Camera Hardware — Plan A Specification</h2>
+<p>Single camera per court. No multi-camera in this phase.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Spec</th>
+<th>Approx. INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IP Camera</td>
+<td>Reolink RLC-823A, 4K H.265, PoE, IP66 weatherproof</td>
+<td>₹12,000–18,000</td>
+</tr>
+<tr>
+<td>PoE Switch</td>
+<td>TP-Link TL-SG1005P (5-port, 65W total)</td>
+<td>₹3,000</td>
+</tr>
+<tr>
+<td>Raspberry Pi 5</td>
+<td>8GB RAM + official active cooler</td>
+<td>₹8,500</td>
+</tr>
+<tr>
+<td>NVMe SSD</td>
+<td>1TB WD Green M.2 2242 + Pi 5 NVMe HAT</td>
+<td>₹5,500</td>
+</tr>
+<tr>
+<td>4G/5G Modem</td>
+<td>Jio or Airtel USB dongle + unlimited SIM</td>
+<td>₹3,000 hardware + ₹1,000/mo</td>
+</tr>
+<tr>
+<td>Weatherproof enclosure</td>
+<td>IP65 DIN box, 200×160×75mm</td>
+<td>₹1,500</td>
+</tr>
+<tr>
+<td>Cat6 cable + PoE run</td>
+<td>20m run from switch to camera mount point</td>
+<td>₹1,500</td>
+</tr>
+<tr>
+<td>Camera mount</td>
+<td>Heavy-duty articulating wall bracket</td>
+<td>₹800</td>
+</tr>
+<tr>
+<td><strong>Total per court (hardware only)</strong></td>
+<td></td>
+<td><strong>₹36,000–42,000</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="12-effort-matrix-your-estimate-with-our-technical-context">12. Effort Matrix — Your Estimate, With Our Technical Context</h2>
+<h3 id="how-to-read-this-section">How to read this section</h3>
+<p>We have done a full technical review of every component in your scope — including reading the open-source <code>padel_analytics</code> repository that forms the core of the GPU inference work. The table below describes each task, its complexity, and the specific technical reasons we think it is the way it is.</p>
+<p><strong>We are not giving you our day estimates.</strong> We want your honest assessment of how long each task will take you, given how you work and what tools you use.</p>
+<p><strong>One assumption we are making explicitly:</strong> We expect you to use AI coding tools — Claude Code, Cursor, Copilot, or equivalent — to accelerate the implementation. This is not a criticism; it is a baseline expectation. Code generation tools significantly compress effort on well-defined tasks. Please factor that into your estimate and include any AI tool subscription costs (monthly cost of whatever you use) as a line item in your quote. We will cover that cost as part of the engagement.</p>
+<p><strong>What we are asking from you:</strong></p>
+<p>For each task, give us your estimate in days. If your technical reading of the task differs from the reasoning we have stated, tell us why — with a verifiable fact. We have done our homework on this architecture and we will check any claim you make. A well-reasoned challenge to our technical framing is valuable. An inflated number without explanation is not.</p>
+<p>Complexity key: <strong>L</strong> = Low (standard tooling, well-understood problem) · <strong>M</strong> = Medium (design decisions, some unknowns) · <strong>H</strong> = High (architectural risk, external dependencies, potential rework)</p>
+<hr>
+<h3 id="component-1-raspberry-pi-edge-software_1">Component 1 — Raspberry Pi Edge Software</h3>
+<p><strong>Context:</strong> This is plumbing. MediaMTX is a zero-config binary. The match daemon is a short Python script. The integration test takes the most clock-time because it requires a live camera — but the code itself is simple.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MediaMTX install + RTSP relay + segment config</td>
+<td>L</td>
+<td>Single YAML file; binary runs as a systemd service; no custom code required</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP endpoint on Pi: <code>/match/start</code>, <code>/match/stop</code></td>
+<td>L</td>
+<td>Flask or FastAPI; ~30 lines; stores state to a local file</td>
+<td></td>
+</tr>
+<tr>
+<td>Chunk detection + ffmpeg concat on match end</td>
+<td>M</td>
+<td>Scan segment directory; <code>ffmpeg -f concat</code>; handle the partial last chunk</td>
+<td></td>
+</tr>
+<tr>
+<td>Motion-based fallback end detection</td>
+<td>M</td>
+<td>Mean inter-frame pixel diff on latest chunk; two configurable thresholds (live / idle)</td>
+<td></td>
+</tr>
+<tr>
+<td>R2 upload via boto3 + retry with backoff</td>
+<td>L</td>
+<td>Cloudflare R2 is S3-compatible; standard <code>upload_file</code> with exponential backoff on 5xx</td>
+<td></td>
+</tr>
+<tr>
+<td>Webhook POST to our Worker on upload complete</td>
+<td>L</td>
+<td>Single HTTP POST; payload format pre-specified (Section 5)</td>
+<td></td>
+</tr>
+<tr>
+<td>systemd service + auto-restart on reboot</td>
+<td>L</td>
+<td>Standard unit file; <code>Restart=always</code>; <code>WantedBy=multi-user.target</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test: camera → chunk → concat → R2 playable</td>
+<td>M</td>
+<td>Requires live camera; verify MP4 lands in R2 and plays cleanly</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 1 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="component-2-gpu-inference-worker-runpod_1">Component 2 — GPU Inference Worker (RunPod)</h3>
+<p><strong>Context:</strong> This is the heaviest component. The <code>padel_analytics</code> repo (MIT licence) already has YOLOv8 player tracking, ByteTrack, and court homography implemented — but the codebase is Streamlit-first and batch-style. Your job is to strip the UI, containerise it for RunPod, wire it to R2, and hit the performance target. The CUDA environment setup and performance tuning are where the real risk lives.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fork <code>padel_analytics</code>; strip <code>app.py</code> + <code>ui.py</code>; add <code>worker.py</code> headless entry</td>
+<td>L</td>
+<td>No logic change; pure file deletion + new entry point</td>
+<td></td>
+</tr>
+<tr>
+<td>Docker image: CUDA 12 base + ultralytics + supervision + boto3</td>
+<td>M</td>
+<td>Layer ordering matters for image size; CUDA base images from nvcr.io are known; first build is slow</td>
+<td></td>
+</tr>
+<tr>
+<td>RunPod serverless HTTP endpoint: receive job JSON, parse</td>
+<td>L</td>
+<td>RunPod serverless handler pattern is documented; straightforward wrapper</td>
+<td></td>
+</tr>
+<tr>
+<td>R2 video download at job start</td>
+<td>L</td>
+<td><code>boto3.download_file</code>; 3–4 GB takes 2–4 min on RunPod network — plan for this in timeout config</td>
+<td></td>
+</tr>
+<tr>
+<td>Court keypoints JSON → homography matrix</td>
+<td>L</td>
+<td><code>ProjectedCourtKeypoints</code> + <code>ProjectedCourt</code> already implemented in <code>analytics/projected_court.py</code>; pass keypoints in, get matrix out</td>
+<td></td>
+</tr>
+<tr>
+<td>YOLOv8m + ByteTrack player tracking (headless)</td>
+<td>M</td>
+<td><code>PlayersTracker</code> already written in <code>trackers/players_tracker/</code>; remove UI drawing calls, add frame-stride option to meet perf target</td>
+<td></td>
+</tr>
+<tr>
+<td>Player position projection to court metres per frame</td>
+<td>M</td>
+<td><code>Player.projection</code> is already computed when a <code>ProjectedCourt</code> object is passed in; wire it up and serialize per frame</td>
+<td></td>
+</tr>
+<tr>
+<td>Output: positions JSON (all players, all frames) → R2</td>
+<td>L</td>
+<td>Standard <code>json.dumps</code> + <code>boto3.upload_fileobj</code></td>
+<td></td>
+</tr>
+<tr>
+<td>R2 upload all outputs: positions JSON + 4 PNGs + highlight MP4</td>
+<td>L</td>
+<td>Same boto3 pattern as Pi upload; 5 files in sequence</td>
+<td></td>
+</tr>
+<tr>
+<td>Callback POST to our webhook with all output URLs</td>
+<td>L</td>
+<td>Single HTTP POST; payload format pre-specified (Section 5)</td>
+<td></td>
+</tr>
+<tr>
+<td>Performance tuning: 90-min match processed in under 6 min on RTX 3090</td>
+<td>H</td>
+<td>Profile frame-stride (every 3rd frame is a known approach); verify tracking accuracy holds; GPU utilisation check with <code>nvidia-smi</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test on supplied test video + keypoints</td>
+<td>M</td>
+<td>We provide a 20-min match MP4 and court keypoints JSON; verify positions file, 4 PNGs, and highlight MP4 arrive in R2</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 2 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="component-3-heatmap-renderer_1">Component 3 — Heatmap Renderer</h3>
+<p><strong>Context:</strong> The position data from Component 2 gives you (x, y) in court metres for every player, every frame. The heatmap is a gaussian density render over a court diagram. Standard matplotlib + scipy. The output must look good on a phone screen — dark background, fire colourmap, clear court lines.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Court diagram base: matplotlib figure with all line markings</td>
+<td>L</td>
+<td>6 horizontal lines + 2 side verticals; court is 10m wide × 20m long; fixed</td>
+<td></td>
+</tr>
+<tr>
+<td>Gaussian heatmap from positions: <code>np.histogram2d</code> + <code>gaussian_filter</code></td>
+<td>L</td>
+<td>Standard density estimation; sigma tuning for visual spread</td>
+<td></td>
+</tr>
+<tr>
+<td>4-player PNG generation: dark background, fire colourmap, 800×1600px</td>
+<td>L</td>
+<td>Loop over 4 player IDs; <code>plt.savefig</code> per player</td>
+<td></td>
+</tr>
+<tr>
+<td>Player label + court-side annotation (Left / Right half)</td>
+<td>L</td>
+<td><code>ax.set_title</code>; side derived from player&rsquo;s average x-position</td>
+<td></td>
+</tr>
+<tr>
+<td>File size under 300KB per PNG</td>
+<td>L</td>
+<td><code>dpi=120</code> + <code>optimize=True</code> on save; test on a real output</td>
+<td></td>
+</tr>
+<tr>
+<td>Inline in RunPod worker — not a separate service</td>
+<td>L</td>
+<td>Function call after tracking loop; no new infrastructure</td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test: hot-zones match where player actually stood</td>
+<td>L</td>
+<td>Visual comparison against test video</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 3 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="component-4-rally-detector_1">Component 4 — Rally Detector</h3>
+<p><strong>Context:</strong> No ML. Pure algorithmic work on the positions JSON from Component 2. The state machine is straightforward; the effort is in threshold calibration against real footage. That calibration loop is the hardest part to compress with AI tooling — it requires watching video and iterating.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-player per-frame velocity: <code>|pos[t] − pos[t−5]| / (5/fps)</code></td>
+<td>M</td>
+<td>Sliding window; handle frames where player is not detected</td>
+<td></td>
+</tr>
+<tr>
+<td>Rally state machine: LIVE / REST transitions with hysteresis</td>
+<td>M</td>
+<td>Two configurable floats (live_threshold, rest_threshold); hysteresis prevents flicker between states</td>
+<td></td>
+</tr>
+<tr>
+<td>Minimum rally duration filter: discard windows &lt; 3 seconds</td>
+<td>L</td>
+<td>Single filter pass on state machine output</td>
+<td></td>
+</tr>
+<tr>
+<td>Short-gap merger: join windows separated by &lt; 30 seconds</td>
+<td>M</td>
+<td>Prevents one long rally being split by a brief ball retrieval</td>
+<td></td>
+</tr>
+<tr>
+<td>False positive suppression: fewer than 2 players detected = not a rally</td>
+<td>M</td>
+<td>Count players per frame window; apply before state machine</td>
+<td></td>
+</tr>
+<tr>
+<td>Output: top-8 rally windows by duration, appended to positions JSON</td>
+<td>L</td>
+<td>Sort by duration descending; slice top 8</td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test: manually verify top-8 against test video</td>
+<td>M</td>
+<td>Watch the video; count false positives (walking, single-player warm-up); thresholds likely need 2–3 iteration passes</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 4 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="component-5-ffmpeg-highlight-clipper_1">Component 5 — ffmpeg Highlight Clipper</h3>
+<p><strong>Context:</strong> We use ffmpeg ourselves for reel stitching and media pipelines, so we know this territory. The work is straightforward. The one non-trivial constraint is hitting under 15MB reliably across different match footage without visible degradation — CRF tuning varies by content.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-rally clip extraction with 1-second padding</td>
+<td>L</td>
+<td><code>ffmpeg -ss {start-1} -t {dur+2} -c copy</code> — stream copy, no re-encode</td>
+<td></td>
+</tr>
+<tr>
+<td>9:16 vertical crop (1080×1920) from 4K source</td>
+<td>L</td>
+<td><code>scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920</code>; crop centred</td>
+<td></td>
+</tr>
+<tr>
+<td>Fade in/out: 0.2 seconds at head and tail of each clip</td>
+<td>L</td>
+<td><code>fade=t=in:st=0:d=0.2</code> and <code>fade=t=out</code>; standard parameter</td>
+<td></td>
+</tr>
+<tr>
+<td>Multi-clip concat to single MP4</td>
+<td>L</td>
+<td>ffmpeg concat demuxer with a clips list file</td>
+<td></td>
+</tr>
+<tr>
+<td>File size under 15MB: CRF 26–28 + preset fast</td>
+<td>M</td>
+<td>Content density affects bitrate; test on real match footage; may need 2-pass</td>
+<td></td>
+</tr>
+<tr>
+<td>Inline in RunPod worker after Component 4 completes</td>
+<td>L</td>
+<td>Sequential function call; no new infrastructure</td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test: MP4 under 15MB, watchable, WhatsApp-deliverable</td>
+<td>L</td>
+<td>Send to our WA test number; verify receipt and full playback</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 5 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="component-6-court-calibration-tool_1">Component 6 — Court Calibration Tool</h3>
+<p><strong>Context:</strong> A single HTML page used once per court at camera install time. No framework, no backend. The installer uploads a still frame from the camera and clicks 12 court keypoints in sequence. Draggable refinement is standard canvas mouse-event code. The Save button fires one HTTP POST to our endpoint.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML page: file upload + canvas overlay on uploaded frame</td>
+<td>L</td>
+<td><code>FileReader</code> API → <code>canvas.drawImage</code>; single self-contained HTML file</td>
+<td></td>
+</tr>
+<tr>
+<td>Sequential click-to-place: 12 numbered markers in order</td>
+<td>M</td>
+<td>Canvas click handler; marker index auto-advances; draw marker circle at click position</td>
+<td></td>
+</tr>
+<tr>
+<td>Draggable marker refinement</td>
+<td>M</td>
+<td><code>mousedown</code> → hit-test nearest marker → <code>mousemove</code> → update position → <code>mouseup</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Reference diagram sidebar: court layout with k1–k12 labels</td>
+<td>L</td>
+<td>Static SVG showing which point to click next; prevents install errors</td>
+<td></td>
+</tr>
+<tr>
+<td>Save: POST <code>{ court_id, keypoints }</code> to our endpoint</td>
+<td>L</td>
+<td>Single <code>fetch</code> POST; we provide the URL and expected JSON shape</td>
+<td></td>
+</tr>
+<tr>
+<td>Integration test: saved keypoints produce valid homography in worker</td>
+<td>M</td>
+<td>We run the worker with the saved keypoints on the test video; verify player positions land within court bounds</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Component 6 Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="end-to-end-integration">End-to-End Integration</h3>
+<p><strong>Context:</strong> Once all six components pass their own acceptance tests, the full pipeline needs a joint smoke test end-to-end. This is where the boundary bugs always appear — timing mismatches between the Pi upload and the job queue, callback payload format mismatches, WhatsApp file-size rejections. The bug-fix cycle here is real.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Complexity</th>
+<th>Our Technical Notes</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Joint smoke test: real match, full pipeline, WA messages delivered</td>
+<td>H</td>
+<td>First live run across the Pi → R2 → RunPod → WA boundary; timing and format issues are expected</td>
+<td></td>
+</tr>
+<tr>
+<td>Bug-fix cycle post smoke test</td>
+<td>H</td>
+<td>Most issues surface at the integration boundaries, not inside individual components</td>
+<td></td>
+</tr>
+<tr>
+<td>README per component + complete environment variable list</td>
+<td>L</td>
+<td>Required for our ongoing ops; must cover every config knob</td>
+<td></td>
+</tr>
+<tr>
+<td>Handover + knowledge transfer call</td>
+<td>L</td>
+<td>1-hour recorded video call; walkthrough of each component</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Integration Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="effort-summary-your-numbers">Effort Summary — Your Numbers</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Your Estimate (days)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Pi Edge Software</td>
+<td></td>
+</tr>
+<tr>
+<td>2 — GPU Inference Worker</td>
+<td></td>
+</tr>
+<tr>
+<td>3 — Heatmap Renderer</td>
+<td></td>
+</tr>
+<tr>
+<td>4 — Rally Detector</td>
+<td></td>
+</tr>
+<tr>
+<td>5 — ffmpeg Highlight Clipper</td>
+<td></td>
+</tr>
+<tr>
+<td>6 — Court Calibration Tool</td>
+<td></td>
+</tr>
+<tr>
+<td>End-to-End Integration</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="what-we-need-back-from-you">What We Need Back From You</h3>
+<p><strong>Step 1 — Effort estimates.</strong>
+Fill in your day estimates in the tables above. Where your reading of a task differs technically from what we have written, flag it — with the specific technical reason. We will verify any factual claim.</p>
+<p><strong>Step 2 — Overall workability verdict.</strong>
+After reviewing the full system architecture (Sections 2–10) and the task breakdown above:</p>
+<ul>
+<li>Is the overall plan technically sound as designed?</li>
+<li>Are there any architectural decisions you would approach differently, and why?</li>
+<li>Are there any risks we have not identified that you consider real?</li>
+</ul>
+<p>We want your honest technical opinion. If you see something wrong with our approach, say so before build — not after.</p>
+<p><strong>Step 3 — Cost estimate.</strong>
+Based on your effort estimates above:</p>
+<ol>
+<li>Your <strong>rate</strong> — daily rate or fixed-price per component, in INR</li>
+<li>Your <strong>AI tooling costs</strong> — monthly subscription cost of any AI coding tools you use (Claude Code, Cursor, Copilot, etc.); list the tool and the cost; we cover this as a project expense</li>
+<li>Your <strong>total cost</strong> in INR</li>
+<li>Your <strong>payment milestones</strong> — we prefer milestone-based payment tied to the acceptance tests in Section 7, not time-based</li>
+<li>Your <strong>earliest start date</strong></li>
+<li>Any <strong>dependencies on us</strong> before you can begin — test video, R2 credentials, Pi hardware access, etc.</li>
+</ol>
+<p><strong>Target:</strong> A working end-to-end pipeline at one pilot court within <strong>12 weeks of engagement start.</strong></p>
+<hr>
+<p><em>Prepared by Manoj Maheshwari · PadelMind by AutomationXpert · 2026-07-09</em>
+<em>Single source of truth at <code>~/Documents/padel-clone/SASANK_SOW_PHASE1.md</code></em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

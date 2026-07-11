@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+*.pyc
+__pycache__/
+.env
+*.mp4
+*.jpg
+*.png
+yolov8*.pt
+.DS_Store

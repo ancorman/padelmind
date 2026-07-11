@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Founding-Club Pilot Proposal — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">For [Club Name] Committee</div>
+    <h1 class="cover-title">A 60-Day AI Coaching Pilot</h1>
+    <p class="cover-subtitle">Bringing personalised, expert-coach-grade match analysis to every member of your club — at zero cost during the trial.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Prepared for</div><div class="cover-meta-value">[Club Name] Committee</div></div>
+<div><div class="cover-meta-label">Pilot duration</div><div class="cover-meta-value">60 days, fully covered by us</div></div>
+<div><div class="cover-meta-label">Member cost</div><div class="cover-meta-value">Zero during pilot</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari · 2026-07-01</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Founding-Club Pilot Proposal" data-brand="PadelMind">
+<h2 id="bringing-ai-powered-coaching-to-every-member-of-your-club">Bringing AI-Powered Coaching to Every Member of Your Club</h2>
+<p><strong>To:</strong> [Club Owner / Committee — placeholder]
+<strong>From:</strong> Manoj Maheshwari
+<strong>Date:</strong> [Pitch date]
+<strong>Reading time:</strong> 5 minutes</p>
+<hr>
+<h2 id="what-this-is">What this is</h2>
+<p>I am proposing to install — at no cost to your club — an AI-powered match-analysis system on one of your padel courts for 60 days. Every match played on that court will be automatically recorded, analysed by computer vision, and your members will receive personalised technique feedback on WhatsApp within ten minutes of finishing play.</p>
+<p><strong>Free for 60 days. No commitment. If your members don&rsquo;t love it, we remove the hardware and you owe nothing.</strong></p>
+<p>You&rsquo;ll be the founding club for a platform that will, over the next 24 months, become the default coaching layer for Indian racket sports. I want [CLUB NAME] to be #1 on that journey — not just because we play here, but because your 200 active members deserve world-class coaching technology before any other club in [CITY].</p>
+<hr>
+<h2 id="why-im-bringing-this-to-you-first">Why I&rsquo;m bringing this to you first</h2>
+<p>Three reasons, ranked by honesty:</p>
+<p><strong>1. You have 200 active members and no current assessment system.</strong>
+That&rsquo;s the cleanest demand signal I&rsquo;ve seen anywhere. Your members are committed enough to keep playing every week but currently have no way to know whether they&rsquo;re actually improving. Every other thoughtful padel club in India struggles with this same gap. <strong>We can solve it together.</strong></p>
+<p><strong>2. You are my home club.</strong>
+I trust you and you trust me. If this works at [CLUB NAME], I have a credible foundation to take it to 25 clubs across Mumbai, Pune, and Bangalore over the next 12 months. I will be transparent with you at every step, because your members ARE the validation panel.</p>
+<p><strong>3. Padel is at a once-per-sport-lifecycle moment in India.</strong>
+The sport just entered the 2026 Asian Games. India has gone from 80 courts in 2023 to 500 today, growing at 70% year-over-year. National federations are forming. Coaching infrastructure is the bottleneck. The clubs that adopt analytics early — like [CLUB NAME] — will be the ones members talk about as &ldquo;the club that takes player development seriously.&rdquo;</p>
+<hr>
+<h2 id="what-you-and-your-members-get">What you and your members get</h2>
+<h3 id="for-every-member-of-club-name-free-during-pilot">For every member of [CLUB NAME] — free during pilot</h3>
+<p>After every match they play on the equipped court, members receive on WhatsApp:</p>
+<ul>
+<li>A <strong>technique-quality scorecard</strong> for each shot type they played — bandeja, vibora, smash, volley, drive, etc. Each shot scored 1–5 stars against an expert padel coach&rsquo;s rubric</li>
+<li><strong>Specific drill recommendations</strong> — &ldquo;Your bandeja arm angle is 18° below ideal. 5-minute shadow-swing drill with hip cue.&rdquo; Real, actionable, repeatable feedback</li>
+<li>A <strong>personal Skill Score</strong> that tracks their improvement month over month — like a credit score for padel</li>
+<li>The <strong>best three rallies of their match as 6-second video clips</strong>, ready to share to WhatsApp or Instagram with one tap</li>
+<li>A monthly <strong>&ldquo;how you&rsquo;re improving&rdquo; summary</strong> with charts</li>
+</ul>
+<h3 id="for-the-club-operator-you">For the club operator (you)</h3>
+<ul>
+<li>A <strong>dashboard</strong> showing court utilisation, active players, churn signals, and member engagement trends</li>
+<li>A <strong>monthly engagement report</strong> you can show prospective members (&ldquo;our players analyse 300 matches a month, here&rsquo;s their average improvement&rdquo;)</li>
+<li>A <strong>sponsorship overlay tool</strong> — for any sponsor you bring on, their logo gets embedded into highlight clips members share. New revenue line, immediate.</li>
+<li>A <strong>retention insight feature</strong> — &ldquo;Five members haven&rsquo;t played in 21 days. Here&rsquo;s a one-click WhatsApp template inviting them back, branded as a personal note from the club.&rdquo;</li>
+<li><strong>Direct line to me</strong> for any feedback. You shape the product.</li>
+</ul>
+<h3 id="for-your-coaches">For your coaches</h3>
+<ul>
+<li>A <strong>per-student progress dashboard</strong> — your coaches can see exactly which shots each of their students is improving on, which they&rsquo;re plateauing on, and prescribe targeted drills with one click</li>
+<li><strong>More credible coaching sessions</strong> — your coach walks into a private session armed with the player&rsquo;s data from the last week&rsquo;s matches, instead of starting from &ldquo;how have you been playing?&rdquo;</li>
+</ul>
+<hr>
+<h2 id="what-we-install">What we install</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Where it goes</th>
+<th>Visibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1× 4K weather-resistant IP camera</td>
+<td>Behind back glass, ~5m high, mounted on existing wall fixture</td>
+<td>Subtle; same footprint as a CCTV camera</td>
+</tr>
+<tr>
+<td>1× Edge-buffer box (Raspberry Pi-class)</td>
+<td>In your existing networking cupboard or any locked storage area</td>
+<td>Invisible to members</td>
+</tr>
+<tr>
+<td>Cabling — single Cat6 from camera to switch</td>
+<td>Run along existing cable trays</td>
+<td>Invisible after install</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Power:</strong> One existing 230V outlet near the network point.
+<strong>Internet:</strong> Uses your existing club WiFi.
+<strong>Install time:</strong> 90 minutes by a single electrician + our install lead. We schedule around your court availability — typically a Monday morning.</p>
+<hr>
+<h2 id="what-you-have-to-give-us">What you have to give us</h2>
+<p>Three small commitments — none monetary:</p>
+<p><strong>1. Court access for installation.</strong> 90 minutes on one court, scheduled by you. No disruption beyond that.</p>
+<p><strong>2. A member introduction.</strong> A single WhatsApp announcement to your members (template provided) introducing the platform — that we&rsquo;re piloting AI match analysis, opt-in by tapping a QR code at the court, free during the trial.</p>
+<p><strong>3. Honest feedback.</strong> A 30-minute monthly call where you tell us what&rsquo;s working and what isn&rsquo;t. Your input directly shapes the product.</p>
+<p><strong>That&rsquo;s it.</strong> No exclusivity clause. No commitment to continue. No marketing obligations. No data-resale rights. We never sell your members&rsquo; data to anyone, ever.</p>
+<hr>
+<h2 id="the-60-day-timeline">The 60-day timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Week 1</td>
+<td>Hardware install on Monday morning. Calibration of court keypoints (one-time, 15 min). Member opt-in WhatsApp goes out same day.</td>
+</tr>
+<tr>
+<td>Week 2</td>
+<td>First matches captured and analysed. Members start receiving WhatsApp feedback. Our coach co-founder runs a 1-hour &ldquo;introduction to AI coaching&rdquo; session at the club (open to all members, free).</td>
+</tr>
+<tr>
+<td>Week 3–6</td>
+<td>Continuous operation. Daily summaries to you. Weekly check-in with us. Members engage organically.</td>
+</tr>
+<tr>
+<td>Week 7</td>
+<td>Mid-pilot review. We show you engagement metrics: how many members are using it, retention impact, what they&rsquo;re saying.</td>
+</tr>
+<tr>
+<td>Week 8</td>
+<td>Decision conversation — see below.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="what-happens-at-day-60">What happens at Day 60</h2>
+<p>You choose one of two paths. Both are easy on you.</p>
+<h3 id="path-1-continue-as-a-paying-customer">Path 1 — Continue as a paying customer</h3>
+<ul>
+<li>₹5,000 per court per month</li>
+<li>Hardware stays (₹35k value, included)</li>
+<li>Player free tier continues for all members</li>
+<li>Members who want more (unlimited analyses, cross-club skill identity) can upgrade to ₹399/month Pro — entirely optional, no obligation on you</li>
+<li>12-month commitment with a <strong>90-day exit clause</strong> — you can leave any time after 3 months of paying</li>
+</ul>
+<h3 id="path-2-walk-away">Path 2 — Walk away</h3>
+<ul>
+<li>We remove the hardware at no cost to you</li>
+<li>You keep a final-report summary of all the analytics generated during the pilot</li>
+<li>No invoice, no penalty, no awkward conversation</li>
+<li>You&rsquo;ve cost us hardware + 60 days of cloud compute. We accept that as the risk of bringing this to market — it&rsquo;s how we earn the right to be your partner.</li>
+</ul>
+<p><strong>Either way, your club benefits and your members get 60 free days of AI coaching.</strong></p>
+<hr>
+<h2 id="why-this-is-genuinely-zero-risk-for-you">Why this is genuinely zero-risk for you</h2>
+<p>I want to address every concern an experienced club operator should be asking.</p>
+<p><strong>&ldquo;What if the system doesn&rsquo;t work / produces bad data?&rdquo;</strong>
+You see the engagement metrics weekly. If members aren&rsquo;t using it, you tell me at the mid-pilot check-in, we cut the experiment short, hardware comes off, no harm done.</p>
+<p><strong>&ldquo;What if members don&rsquo;t like having a camera on the court?&rdquo;</strong>
+The camera only records during matches — players opt in by tapping a QR code to start the recording. Off otherwise. No audio is captured. No facial recognition. We share the full privacy policy upfront with all members.</p>
+<p><strong>&ldquo;What about data and privacy?&rdquo;</strong>
+We are an Indian Pvt Ltd company subject to India&rsquo;s Data Protection Act (DPDPA 2023). Member data is encrypted, accessed only by them, deleted on request, and never sold or shared. The full data-handling policy is annexed to this proposal.</p>
+<p><strong>&ldquo;What if you go out of business / get acquired and the product changes?&rdquo;</strong>
+At our pilot stage, you&rsquo;d be a founding club. We are bound — by both ethics and the contract — to either (a) continue serving you at locked-in pricing, or (b) give you 90 days&rsquo; notice and full data export if we&rsquo;re unable to continue. Your data is portable and yours.</p>
+<p><strong>&ldquo;What about uptime and support?&rdquo;</strong>
+24-hour replacement SLA on any failed hardware. Direct WhatsApp line to me personally during the pilot. Two-person dedicated install + ops team monitoring every match processed.</p>
+<hr>
+<h2 id="why-now-why-this-club">Why now, why this club</h2>
+<p>The Indian padel category will see a massive shake-out in the next 18 months. Within 12 months, every serious padel club in [CITY] will have some form of AI camera setup — either from a European company like Clutch (expensive, generic, not built for India) or from our platform (Indian, coach-led, WhatsApp-native, far better priced).</p>
+<p><strong>You can be the first club in [CITY] to offer this</strong>, or the third, or the tenth. The earlier you adopt, the more cleanly you separate from peer clubs on the player-experience dimension. And the earlier you start, the more your members&rsquo; Skill Scores compound — which becomes a member-retention asset over time.</p>
+<p>I am genuinely asking for [CLUB NAME] to be <strong>founding club #1 of this entire venture</strong>. Your name in our launch materials. Your members as our first 200 testers. Your honest feedback as the input that shapes everything we build after.</p>
+<p>That position is offered to one club only. To you first.</p>
+<hr>
+<h2 id="what-im-asking-for-today">What I&rsquo;m asking for today</h2>
+<p>A <strong>30-minute coffee or call</strong> — at your convenience this week or next — to walk through this proposal in detail and answer every question you have.</p>
+<p>If after that meeting it feels right, we can target installation in the following Monday morning, get the first matches running by the same evening, and have your first WhatsApp reports going to members by the end of that week.</p>
+<p>If it doesn&rsquo;t feel right, you&rsquo;ve given me 30 minutes and I&rsquo;ve given you a thoughtful proposal. Either way, no awkwardness.</p>
+<hr>
+<h2 id="how-to-reach-me">How to reach me</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Contact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WhatsApp (preferred)</td>
+<td>+91 98200 27850 (personal)</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>[TBD]</td>
+</tr>
+<tr>
+<td>Reference for credibility</td>
+<td>AutomationXpert (<code>automationxpert.in</code>) — my existing SaaS platform serving Indian SMBs</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="one-paragraph-if-you-want-to-share-with-your-committee">One paragraph if you want to share with your committee</h2>
+<blockquote>
+<p><em>Manoj Maheshwari — a [CLUB NAME] member who runs AutomationXpert, an established Indian SaaS platform — has proposed a 60-day free pilot of an AI-powered padel coaching system at our club. The system records matches via a single fixed camera, analyses player technique using computer vision, and delivers personalised improvement feedback to each player on WhatsApp. The proposal is fully cost-free during the pilot, with no obligation to continue. Privacy is opt-in per match, no audio is captured, no facial recognition is used, and all data remains the property of the players. We are being offered &ldquo;founding club&rdquo; status with input on product design. Recommend evaluating with a meeting to walk through the technology and operational specifics.</em></p>
+</blockquote>
+<hr>
+<h2 id="appendix-the-technology-in-plain-english">Appendix — The technology in plain English</h2>
+<p>For technically-curious members of the committee:</p>
+<ul>
+<li>A single 4K outdoor camera, weather-rated, connects via PoE to a small computer in your network cupboard</li>
+<li>The computer buffers match recordings locally (so it works even if your WiFi has a brief outage), then uploads completed matches to our secure cloud</li>
+<li>In the cloud, computer vision models track every player, the ball, and where each shot lands. A trained AI classifier — designed in partnership with a senior padel coach — assigns a class and quality score to every shot</li>
+<li>The output is a structured per-player report delivered via WhatsApp</li>
+<li>The same pattern is used by professional sports broadcasters (Hawk-Eye, Wingfield, Clutch) — we&rsquo;re bringing it to recreational play at recreational prices</li>
+</ul>
+<p>For the full technical details, see the companion document: TECHNICAL_FEASIBILITY_REPORT.md (available on request).</p>
+<hr>
+<p><strong>Thank you for considering this proposal. [CLUB NAME] has a chance to lead India&rsquo;s racket-sports technology adoption — and I would be honoured to make that happen with you.</strong></p>
+<p><em>— Manoj</em></p>
+<hr>
+<p><em>This is a working draft. Before formal presentation, replace <code>[CLUB NAME]</code>, <code>[CITY]</code>, dates, and email placeholders. Add club logo. Recommend converting to PDF for the formal meeting.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

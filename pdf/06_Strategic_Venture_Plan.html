@@ -1,0 +1,1704 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Strategic Venture Plan — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Master Strategy Document</div>
+    <h1 class="cover-title">Strategic Venture Plan</h1>
+    <p class="cover-subtitle">Mission, market analysis, competitive landscape, moat thesis, product strategy, capital plan, and the path from India to Asia to the world.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Document version</div><div class="cover-meta-value">0.2</div></div>
+<div><div class="cover-meta-label">Last major update</div><div class="cover-meta-value">China + moat sharpening 2026-07-01</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari + AI drafting · 2026-07-01</div></div>
+<div><div class="cover-meta-label">Single Point of Truth</div><div class="cover-meta-value">Yes — read this before refining anywhere</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Strategic Venture Plan" data-brand="PadelMind">
+<p><strong>Status:</strong> Draft — pre-commit
+<strong>Working title:</strong> TBD (placeholder: <strong>PadelMind</strong> / <strong>PadelGuru</strong> / <strong>CourtIQ</strong>)
+<strong>Authored:</strong> 2026-07-01
+<strong>Authors:</strong> Manoj Maheshwari + Claude (planning), padel coach TBD, ML co-founder TBD
+<strong>Single Point of Truth:</strong> This file. Update here before anywhere else. Memory pointer in <code>MEMORY.md</code>.</p>
+<hr>
+<h2 id="1-mission-vision">1. Mission &amp; Vision</h2>
+<h3 id="mission">Mission</h3>
+<p><strong>Make world-class padel coaching universally accessible — by turning every smartphone-equipped player into a data-driven student of the game, and every club into a smart venue.</strong></p>
+<h3 id="vision-10-year">Vision (10-year)</h3>
+<p>The default AI coaching infrastructure for padel in Asia. The system every serious player checks after a match the way runners check Strava and chess players check Lichess. A category-defining brand born in India that exports to the world — not the other way round.</p>
+<h3 id="what-we-will-not-be">What we will NOT be</h3>
+<ul>
+<li>A recording-and-storage service (commoditized, no moat, no defensibility)</li>
+<li>A booking app (Hudle owns that lane in India; we partner, we don&rsquo;t compete)</li>
+<li>A scoreboard / scoring app (saturated, free alternatives)</li>
+<li>A B2C consumer-only app without club distribution (impossible CAC at our scale)</li>
+</ul>
+<hr>
+<h2 id="2-strategic-objectives-3-year-horizon">2. Strategic Objectives (3-Year Horizon)</h2>
+<table>
+<thead>
+<tr>
+<th>Horizon</th>
+<th>Objective</th>
+<th>Measurable Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Year 1 (2026–27)</strong></td>
+<td>Validate product + 1 paying anchor city</td>
+<td>25 clubs live in Mumbai/Pune/Bangalore; 5,000 unique players analysed; ₹50L MRR by Q4</td>
+</tr>
+<tr>
+<td><strong>Year 2 (2027–28)</strong></td>
+<td>Pan-India scale + first Asia foothold</td>
+<td>200 clubs in India; 50,000 players; entry into UAE/Saudi via partnership; ₹3 Cr MRR; Series A closed</td>
+</tr>
+<tr>
+<td><strong>Year 3 (2028–29)</strong></td>
+<td>Asia-wide dominance + global pilots</td>
+<td>1,000 clubs across India + UAE + KSA + SE Asia; 250,000 players; pilots in EU/LATAM; ₹15 Cr MRR; Series B ready</td>
+</tr>
+</tbody>
+</table>
+<h3 id="north-star-metric">North Star Metric</h3>
+<p><strong>Weekly active analysed players (WAAP).</strong> Not court installs, not bookings, not revenue. A player whose match has been analysed and who has opened the resulting feedback within 7 days. This is the only number that proves the moat is real.</p>
+<hr>
+<h2 id="3-market-analysis">3. Market Analysis</h2>
+<h3 id="31-india-home-market-beachhead">3.1 India (home market — beachhead)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>2023</th>
+<th>2026 (now)</th>
+<th>2036 projection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Padel courts</td>
+<td>~80–100</td>
+<td><strong>~500</strong></td>
+<td>5,000+</td>
+</tr>
+<tr>
+<td>Active players</td>
+<td>&lt;5,000</td>
+<td><strong>~100,000</strong></td>
+<td>1.5M+</td>
+</tr>
+<tr>
+<td>Market size</td>
+<td>~$3M</td>
+<td><strong>$25–30M</strong></td>
+<td>$250–300M</td>
+</tr>
+<tr>
+<td>New venues</td>
+<td>12</td>
+<td><strong>48 in first 4 months alone</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Growth rate</td>
+<td>—</td>
+<td><strong>70% YoY annualised</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Engagement signal:</strong> Games-per-player rose 73% YoY (5.3 → 9.2/year). Regular+heavy users = <strong>34.5% of base — highest of any racket sport on Hudle</strong>.</p>
+<p><strong>Capital signals:</strong>
+- Hudle closed <strong>$2.5M Series A in early 2025</strong> — investors include <strong>Mahesh Bhupathi</strong> and <strong>Ajinkya Rahane</strong>
+- KheloMore: seed-stage, Clear Bridge Ventures
+- CAA Portas partnered with Hudle on India Padel Report 2026 — institutional money paying attention</p>
+<p><strong>Why India is the right beachhead for us:</strong>
+1. Market is early-explosive (70% YoY) but still small enough that 25 clubs is meaningful penetration
+2. No India-headquartered AI camera company exists — open category
+3. English-medium, low-cost labour pool for labelling and BD
+4. Founder credibility in India (existing AX network, WhatsApp distribution)
+5. Bollywood / cricket adjacency = built-in influencer ecosystem (Bhupathi, Rahane already in the cap table of the booking layer)</p>
+<h3 id="32-asia-middle-east-year-2-expansion">3.2 Asia + Middle East (Year 2 expansion)</h3>
+<table>
+<thead>
+<tr>
+<th>Country</th>
+<th>Courts</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UAE</strong></td>
+<td><strong>950+</strong></td>
+<td>Largest single-country market in Asia. Affluent, expat-heavy, English-speaking. Easy first export</td>
+</tr>
+<tr>
+<td><strong>Saudi Arabia</strong></td>
+<td><strong>900+ courts, 320 clubs</strong></td>
+<td>Vision 2030 sport-infra capex. Hosts Premier Padel. Projected $162.8M domestic market by 2034. Sovereign-fund money</td>
+</tr>
+<tr>
+<td>Indonesia, Thailand, Pakistan, China</td>
+<td>Combined ~1,000+</td>
+<td>Emerging, low-competition, lower ASP but volume play</td>
+</tr>
+<tr>
+<td><strong>Asia total</strong></td>
+<td><strong>4,600+ courts, 1,700+ clubs across 30+ countries</strong></td>
+<td>Big enough to be a real second market</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Massive catalyst:</strong> <strong>Padel ratified for the 2026 Asian Games</strong> (Nov 2025). Every Asian national federation now scrambling to form. National training centres about to receive government budget. <strong>This is a once-per-sport-lifecycle window.</strong> We must be visible to the new federations within 12 months.</p>
+<h3 id="33-global-year-3">3.3 Global (Year 3+)</h3>
+<ul>
+<li><strong>58,300 courts globally</strong> (2026), projected <strong>91,000 by 2028</strong></li>
+<li><strong>19–25M active players</strong> worldwide</li>
+<li>Europe = 55% of courts (saturated, competitive); LATAM = 23% (Argentina, Mexico — home of the sport)</li>
+<li>Search interest <strong>+1,026%</strong> since 2004 — fastest-growing sport on the planet</li>
+<li>Padel market projected <strong>CAGR 12.93%</strong> through 2035</li>
+</ul>
+<p>We don&rsquo;t need to win globally. We need to win Asia (~5,000+ courts addressable). Global is bonus / acquisition surface.</p>
+<hr>
+<h2 id="4-competitive-landscape">4. Competitive Landscape</h2>
+<h3 id="41-direct-ai-camera-competitors-global">4.1 Direct AI-camera competitors (global)</h3>
+<table>
+<thead>
+<tr>
+<th>Player</th>
+<th>HQ</th>
+<th>Funding</th>
+<th>Clubs</th>
+<th>Strengths</th>
+<th>Weaknesses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clutch</strong></td>
+<td>Denmark / Lebanon</td>
+<td>Pre-seed (small)</td>
+<td>125+ worldwide</td>
+<td>Best UX, gesture-trigger moat, mature highlights</td>
+<td>No Asia footprint, expensive in INR (~€179/court/mo), no domain expert visible</td>
+</tr>
+<tr>
+<td><strong>Wingfield</strong></td>
+<td>Germany</td>
+<td>Unknown (likely $5–20M raised)</td>
+<td>Several hundred</td>
+<td>Best-known brand in EU, multi-sport (tennis/padel/pickleball)</td>
+<td>Tennis-first DNA, EU-only, premium pricing</td>
+</tr>
+<tr>
+<td><strong>Padelytics</strong></td>
+<td>Spain</td>
+<td>Partnered with SportAI</td>
+<td>Europe/US/LATAM</td>
+<td>Cloud-based AI, real-time deployed</td>
+<td>Now dependent on SportAI partnership; no India presence</td>
+</tr>
+<tr>
+<td><strong>Eyes-On</strong></td>
+<td>Spain</td>
+<td>Unknown</td>
+<td>EU</td>
+<td>Established brand in Spanish padel</td>
+<td>Spanish-language-first; no Asia</td>
+</tr>
+<tr>
+<td><strong>Save My Play</strong></td>
+<td>USA</td>
+<td>Integrated SportAI</td>
+<td>US clubs</td>
+<td>Strong US distribution</td>
+<td>No padel-specific depth, no Asia</td>
+</tr>
+<tr>
+<td><strong>PlaySight (SmartCourt)</strong></td>
+<td>Israel</td>
+<td>$40M+ raised</td>
+<td>Global</td>
+<td>Multi-sport, well-funded</td>
+<td>Expensive enterprise install, slow to ship; padel is a side-arm</td>
+</tr>
+<tr>
+<td><strong>GAMETRAQ / GameCam</strong></td>
+<td>UK</td>
+<td>Unknown</td>
+<td>UK/EU</td>
+<td>Coach-focused</td>
+<td>Niche, no scale</td>
+</tr>
+<tr>
+<td><strong>PB Vision</strong></td>
+<td>USA</td>
+<td>Unknown</td>
+<td>Pickleball-first</td>
+<td>Backend used by other apps</td>
+<td>Not padel-native</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-india-specific-landscape">4.2 India-specific landscape</h3>
+<ul>
+<li><strong>No India-headquartered AI camera competitor exists</strong> (verified 2026-07-01)</li>
+<li><strong>Hudle</strong> — booking + community, ~90% of India bookings, <strong>complement not competitor</strong>. Joint case for a partnership: their booking → our post-match analytics</li>
+<li><strong>KheloMore</strong> — booking app, same pattern as Hudle, smaller scale</li>
+<li><strong>Padel India / Padel.in / regional brands</strong> — operate courts, not tech players</li>
+<li><strong>Cricket-adjacent infra companies</strong> (Decathlon, Sports Mechanics, etc.) — no overlap</li>
+</ul>
+<h3 id="43-adjacent-threats-could-pivot-in">4.3 Adjacent threats (could pivot in)</h3>
+<ul>
+<li><strong>Hudle itself</strong> could build analytics (low probability — capital-intensive, not their muscle)</li>
+<li><strong>SwingVision</strong> (tennis app) could expand to padel (medium probability — well-funded, consumer DNA)</li>
+<li><strong>Epic Padel / Padel India / Zero.40</strong> — Already revealed (see 4.2.1) — vertically integrated US-backed rollup, $10M raised, India presence via Curved Consistency Technologies Pvt Ltd (Bangalore), co-founded by Sharath Kumar (ex-Ninjacart, ex-BharatPe)</li>
+</ul>
+<h3 id="421-the-indian-clutch-operation-full-disclosure-added-2026-07-01">4.2.1 The Indian Clutch operation — full disclosure (added 2026-07-01)</h3>
+<p>The Indian arm is <strong>not a distributor — it&rsquo;s part of a vertically integrated global rollup</strong>:</p>
+<ul>
+<li><strong>Indian entity:</strong> Curved Consistency Technologies Private Limited</li>
+<li><strong>Brand:</strong> The Clutch Sports (<code>theclutchsports.com</code>)</li>
+<li><strong>Office:</strong> Indiranagar, Bangalore</li>
+<li><strong>Co-founder in India:</strong> <strong>Sharath Kumar</strong> (ex-Ninjacart, ex-BharatPe, HBS Online exec ed)</li>
+<li><strong>Parent ecosystem:</strong> Epic Padel ($10M seed Sept 2025, led by NowaisWorld + Stryde Ventures) — also owns Padel India clubs, Red Padel (World Padel Rating), Pro Padel League, Padel Haus, Two Two</li>
+<li><strong>Imminent launch:</strong> Zero.40 (2026) — &ldquo;club operating system&rdquo; combining Clutch AI + Red Padel rating + booking + community</li>
+</ul>
+<p><strong>Implication:</strong> what looked like &ldquo;a Danish startup with no India presence&rdquo; is actually a US-backed vertically integrated rollup whose Indian arm is a Bangalore-incorporated entity. They could lock up courts, players, ratings, AND camera tech in one stack. The window is months, not years.</p>
+<p><strong>Reach-out plan:</strong> LinkedIn DM to Sharath Kumar as a peer (AX founder + padel enthusiast) — see live message thread for draft.</p>
+<h3 id="44-china-the-threat-i-missed-in-v01-added-2026-07-01">4.4 China — the threat I missed in v0.1 (added 2026-07-01)</h3>
+<p>China padel is bigger, more state-backed, and producing competitors faster than initially briefed.</p>
+<p><strong>Market signals:</strong>
+- ~$120M annual market today, projected top-5 globally by court density
+- <strong>State-backed</strong> youth pipeline: 12,000 athletes trained across 200 schools in 15 provinces since 2023 (Chinese Tennis Association initiative)
+- Youth tournament participation +300% YoY
+- Beijing National Tennis Center → 8 padel courts; Shanghai Xuhui → 6 glass-court flagship</p>
+<p><strong>Chinese competitors — ranked by threat horizon:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Who</th>
+<th>Why</th>
+<th>Time to padel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HIGH (12 months)</strong></td>
+<td><strong>小球圈 (Xiaoqiuquan)</strong></td>
+<td>ex-ByteDance + ex-DJI founders. Already AI-coaches tennis/badminton/table-tennis/<strong>pickleball</strong>. Phone-side light model + cloud large-model arch. Top-50 China sports app. ~30% MoM user growth.</td>
+<td>Adding padel = config change</td>
+</tr>
+<tr>
+<td><strong>MEDIUM (18 months)</strong></td>
+<td><strong>Lumistar (Shenzhen)</strong></td>
+<td>TERO tennis AI training system launched Mar 2026. 4K dual-cam + sensor array.</td>
+<td>Cloud-analytics extension</td>
+</tr>
+<tr>
+<td><strong>MEDIUM (variable)</strong></td>
+<td><strong>SenseTime</strong></td>
+<td>Already does AI analytics for Chinese pro basketball, 3D motion capture for table tennis/archery.</td>
+<td>Sponsored entry</td>
+</tr>
+<tr>
+<td><strong>LOW (giants)</strong></td>
+<td><strong>Alibaba Cloud</strong></td>
+<td>Olympics bullet-time multi-cam replays. Won&rsquo;t enter directly but white-labels to whoever wins China.</td>
+<td>Infra-only</td>
+</tr>
+<tr>
+<td><strong>LATENT</strong></td>
+<td><strong>Hikvision, Dahua, Reolink, Uniview</strong></td>
+<td>They make the cameras every padel AI startup buys. Vertically integrated padel play is technically trivial for them.</td>
+<td>Strategic choice not capability</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-reality-check-what-are-the-real-moats-added-2026-07-01">4.5 Reality check — what are the real moats? (added 2026-07-01)</h3>
+<p>Pre-China analysis was too optimistic about tech as a moat. Hard truth:</p>
+<p><strong>MOATS THAT DO NOT WORK against capable Chinese/global competition:</strong>
+- ❌ AI quality (commodity ML pieces glued together; CV talent is global)
+- ❌ Hardware (Chinese ODMs make the cameras anyway)
+- ❌ Pricing (Chinese players can match or beat us at any tier)
+- ❌ Dataset size (volume can be matched within 12 months by anyone funded)</p>
+<p><strong>MOATS THAT DO WORK:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Moat</th>
+<th>Strength</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>India geopolitical wall</strong></td>
+<td><strong>HIGH</strong></td>
+<td>India app bans (TikTok 2020, PUBG, WeChat, SHEIN-class) extend to Chinese sports SaaS. Indian clubs face procurement risk choosing Chinese tech. <strong>This is our shield in India.</strong></td>
+</tr>
+<tr>
+<td><strong>Federation distribution lock</strong></td>
+<td><strong>HIGH (if won early)</strong></td>
+<td>Asian Games 2026 catalysed national padel federations forming NOW (India, UAE, KSA, SE Asia). Lock procurement at federation level → blocks Chinese entry by policy.</td>
+</tr>
+<tr>
+<td><strong>Coach co-founder + domain rubric</strong></td>
+<td><strong>MEDIUM</strong></td>
+<td>A WPT-trained-coach-led rubric is hard to replicate without their own sport credibility hire. Buys 12–18 months.</td>
+</tr>
+<tr>
+<td><strong>WhatsApp-native distribution + Hindi/Arabic UX depth</strong></td>
+<td><strong>MEDIUM</strong></td>
+<td>AX-style cultural-distribution muscle Chinese SaaS rarely matches.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strategic question this raises (logged in Open Questions):</strong> Should we deliberately be &ldquo;India + Middle East only&rdquo;, explicitly anti-China by geography, and partner-or-license China rather than compete? Defending one geographic moat well &gt; losing across three.</p>
+<h3 id="46-china-watch-list-monthly-monitoring-added-2026-07-01">4.6 China watch list — monthly monitoring (added 2026-07-01)</h3>
+<p>Add to ops cadence — review monthly, escalate any padel-pivot signal within 24 hrs:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>What to watch</th>
+<th>Signal threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小球圈 (Xiaoqiuquan)</td>
+<td>App store listings, blog posts, partnerships</td>
+<td>&ldquo;Padel&rdquo; mentioned anywhere in product copy</td>
+</tr>
+<tr>
+<td>Lumistar</td>
+<td>Press releases, CES, racket-sport announcements</td>
+<td>Padel hardware SKU</td>
+</tr>
+<tr>
+<td>SenseTime sports</td>
+<td>Pro team partnerships, demo videos</td>
+<td>Padel federation deal</td>
+</tr>
+<tr>
+<td>Hikvision / Dahua</td>
+<td>Vertical product launches</td>
+<td>Padel-specific SKU or partnership</td>
+</tr>
+<tr>
+<td>Padel-Magazine, Wamda, Sports Tech feeds</td>
+<td>Funding announcements, China deals</td>
+<td>Any China-padel-tech raise &gt; $5M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-our-positioning-vs-incumbents">4.4 Our positioning vs incumbents</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Clutch / Wingfield</th>
+<th><strong>Us</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Geography</td>
+<td>EU-first</td>
+<td><strong>Asia-first, India-native</strong></td>
+</tr>
+<tr>
+<td>Pricing</td>
+<td>€179/court/mo (~₹17,000)</td>
+<td><strong>₹3,000–7,000/court/mo</strong> (Indian SMB-priced)</td>
+</tr>
+<tr>
+<td>Domain expertise</td>
+<td>Tech team only</td>
+<td><strong>Sport-expert co-founder (coach)</strong></td>
+</tr>
+<tr>
+<td>Language</td>
+<td>EN, ES, IT</td>
+<td><strong>EN + Hindi + (later) Arabic, Bahasa, Mandarin</strong></td>
+</tr>
+<tr>
+<td>Feedback model</td>
+<td>Highlights + stats</td>
+<td><strong>Coaching feedback (&ldquo;drill X for 5 min&rdquo;)</strong></td>
+</tr>
+<tr>
+<td>Distribution</td>
+<td>Direct sales</td>
+<td><strong>Hudle partnership + WhatsApp-native funnel</strong></td>
+</tr>
+<tr>
+<td>Hardware cost</td>
+<td>Hidden (bundled)</td>
+<td><strong>Transparent ₹15–20k camera + ₹500/mo (camera optional after Y2)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Core differentiator: We are an AI padel COACH, not an AI padel CAMERA.</strong> That framing wins on every dimension above.</p>
+<hr>
+<h2 id="5-product-strategy">5. Product Strategy</h2>
+<h3 id="51-three-product-surfaces-sequenced">5.1 Three product surfaces — sequenced</h3>
+<p><strong>Surface 1: Club System (Year 1 focus, B2B2C)</strong>
+- IP camera + edge buffer + cloud AI per court
+- Club dashboard: court usage, recording index, sponsor overlay tools, player engagement
+- Player PWA: post-match feedback, shot histogram, skill score, drill recommendations
+- <strong>Pricing:</strong> ₹3,000–7,000/court/mo subscription; hardware ₹15–20k upfront or rolled into 24-mo plan</p>
+<p><strong>Surface 2: Coach Tool (Year 2, B2C2B)</strong>
+- Coach-facing dashboard: review labelled clips from their students; assign drills; track progress over months
+- <strong>The lock-in.</strong> Once a coach has 30 students on the platform, their workflow is on us
+- <strong>Pricing:</strong> ₹500–1,500/coach/mo, or free if they bring N students (acquisition lever)</p>
+<p><strong>Surface 3: Player Skill Identity (Year 2–3, B2C)</strong>
+- The &ldquo;Clutch Score&rdquo; equivalent that follows a player across clubs and cities
+- Cross-club leaderboards; skill-matched matchmaking; tournament seeding feed
+- <strong>The network effect.</strong> Hudle has bookings; we have <em>skill identity</em> — these are complementary, not competing
+- <strong>Pricing:</strong> Freemium. Free tier = score + 5 analyses/mo. Pro = ₹399/mo, unlimited</p>
+<h3 id="52-what-we-build-in-v1-next-12-weeks-locked">5.2 What we build in V1 (next 12 weeks — locked)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rubric document (shot taxonomy + form-quality criteria)</td>
+<td>TBD</td>
+<td>Coach</td>
+</tr>
+<tr>
+<td>Camera install at 1 pilot court</td>
+<td>TBD</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td><code>padel_analytics</code> fork — streaming refactor</td>
+<td>TBD</td>
+<td>ML lead</td>
+</tr>
+<tr>
+<td>Shot classifier (V1, ~70% accuracy target)</td>
+<td>TBD</td>
+<td>ML lead</td>
+</tr>
+<tr>
+<td>Player PWA (mobile-first React)</td>
+<td>TBD</td>
+<td>Manoj + AI pair</td>
+</tr>
+<tr>
+<td>Club dashboard (basic)</td>
+<td>TBD</td>
+<td>Manoj + AI pair</td>
+</tr>
+<tr>
+<td>Highlight auto-clipper</td>
+<td>TBD</td>
+<td>Manoj + AI pair</td>
+</tr>
+<tr>
+<td>Skill score calc engine</td>
+<td>TBD</td>
+<td>Manoj + AI pair</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-what-we-do-not-build-in-v1">5.3 What we DO NOT build in V1</h3>
+<ul>
+<li>Native Android/iOS apps (PWA is enough; saves 8 weeks)</li>
+<li>Live-streaming integration (Year 2)</li>
+<li>Gesture-trigger (&ldquo;save the last point&rdquo; hand wave) — clever, but Clutch&rsquo;s moat, copy in Y2</li>
+<li>Sponsorship overlay tools — Year 2</li>
+<li>Multi-camera / 3D ball depth — Year 3 (Series B feature)</li>
+<li>Line-calling / officiating — explicitly not in scope; high failure cost</li>
+</ul>
+<hr>
+<h2 id="6-technical-architecture-feasibility">6. Technical Architecture &amp; Feasibility</h2>
+<h3 id="61-the-stack-validated-by-padel_analytics-audit-done-2026-07-01">6.1 The stack (validated by <code>padel_analytics</code> audit done 2026-07-01)</h3>
+<pre><code>[IP Camera @ court]
+    │ RTSP H.265
+    ▼
+[Edge Buffer — Raspberry Pi 5 + 1TB NVMe]
+    │ Match-end trigger uploads MP4
+    ▼
+[Cloudflare R2 — match storage]
+    │
+    ▼
+[RunPod / Lambda GPU worker]
+  - YOLOv8m player detection
+  - YOLOv8-pose keypoints
+  - TrackNet ball tracking
+  - Court homography (from 12 fixed keypoints clicked at install)
+  - Shot classifier (our trained model) ← THE MOAT
+  - Skill scoring engine ← THE MOAT
+    │
+    ▼
+[Supabase: structured analytics + player identity]
+    │
+    ▼
+[Player PWA — Cloudflare Pages] + [Club dashboard]
+    │
+    ▼
+[WhatsApp delivery — AX router or Twilio]
+</code></pre>
+<h3 id="62-feasibility-verdict-per-repo-audit">6.2 Feasibility verdict (per repo audit)</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Risk</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Camera + RTSP</td>
+<td>Low</td>
+<td>Off-the-shelf Reolink RLC-823A handles 4K RTSP. Validated by hobbyist sports projects</td>
+</tr>
+<tr>
+<td>Court homography</td>
+<td>Low</td>
+<td><code>padel_analytics</code> already supports click-once-cache-forever flow</td>
+</tr>
+<tr>
+<td>Player tracking</td>
+<td>Low</td>
+<td>YOLOv8m + ByteTrack is a solved problem</td>
+</tr>
+<tr>
+<td>Pose keypoints</td>
+<td>Low</td>
+<td>YOLOv8-pose is mature</td>
+</tr>
+<tr>
+<td>Ball tracking</td>
+<td>Medium</td>
+<td>TrackNet works but needs retraining on padel-specific data (ball lighter colour vs tennis)</td>
+</tr>
+<tr>
+<td><strong>Shot classification</strong></td>
+<td><strong>HIGH</strong></td>
+<td><strong>No OSS solution exists. Must train. ~70% V1 target.</strong> This is the project&rsquo;s central technical risk</td>
+</tr>
+<tr>
+<td>Skill scoring</td>
+<td>Medium</td>
+<td>Composite of pose-quality + outcome + context. Algorithmic, not ML, but tricky to tune to coach intuition</td>
+</tr>
+<tr>
+<td>Streaming refactor of <code>padel_analytics</code></td>
+<td>Medium</td>
+<td>Batch-style today; ~3 weeks of work to make single-pass-per-frame</td>
+</tr>
+<tr>
+<td>Mobile PWA</td>
+<td>Low</td>
+<td>Standard React work</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-hardware-bill-of-materials-per-court">6.3 Hardware bill of materials — per court</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Spec</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Camera</td>
+<td>Reolink RLC-823A 16x (4K, PoE, IP66) — or Hikvision premium variant for 50% more</td>
+<td>12,000–22,000</td>
+</tr>
+<tr>
+<td>PoE switch</td>
+<td>TP-Link TL-SG1005P</td>
+<td>3,000</td>
+</tr>
+<tr>
+<td>Edge buffer</td>
+<td>Raspberry Pi 5 8GB + 1TB NVMe + case</td>
+<td>15,000</td>
+</tr>
+<tr>
+<td>Cabling + mount</td>
+<td>Generic</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td><strong>Total per court</strong></td>
+<td></td>
+<td><strong>~₹32,000–42,000</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="64-cloud-cost-per-court-per-month-at-120-matchescourtmo">6.4 Cloud cost — per court per month (at 120 matches/court/mo)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R2 storage + egress</td>
+<td>~150</td>
+</tr>
+<tr>
+<td>RunPod GPU inference (~3 min/match × ₹2.5/min)</td>
+<td>~360</td>
+</tr>
+<tr>
+<td>Supabase free tier</td>
+<td>0</td>
+</tr>
+<tr>
+<td>WhatsApp delivery (AX router)</td>
+<td>~30</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~₹540/court/mo COGS</strong></td>
+</tr>
+</tbody>
+</table>
+<p>At ₹5,000/court/mo ASP → <strong>~89% gross margin.</strong> Healthy SaaS economics. Same as Clutch&rsquo;s underlying unit economics.</p>
+<hr>
+<h2 id="7-team-organisation">7. Team &amp; Organisation</h2>
+<h3 id="71-founding-team-target-structure">7.1 Founding team (target structure)</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Person</th>
+<th>Equity</th>
+<th>Cash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CEO / Product / Capital</strong></td>
+<td>Manoj</td>
+<td>40–50%</td>
+<td>Founder salary deferred</td>
+</tr>
+<tr>
+<td><strong>CTO / ML / CV</strong></td>
+<td>João Silva (target) <strong>OR</strong> equivalent</td>
+<td>20–30%</td>
+<td>Modest founder salary</td>
+</tr>
+<tr>
+<td><strong>Chief Coach / Domain (CCO)</strong></td>
+<td>TBD (named coach)</td>
+<td>8–15%</td>
+<td>₹50–80k/mo or equity-heavy</td>
+</tr>
+<tr>
+<td><strong>Founding Engineer</strong></td>
+<td>Hire month 6</td>
+<td>1–2%</td>
+<td>₹12–18 LPA</td>
+</tr>
+<tr>
+<td><strong>Founding BD</strong></td>
+<td>Hire month 9</td>
+<td>0.5–1%</td>
+<td>₹10–15 LPA + commission</td>
+</tr>
+</tbody>
+</table>
+<p>ESOP pool: <strong>15% reserved.</strong> Total founder + employee dilution at pre-seed: ~85% founders + 15% ESOP.</p>
+<h3 id="72-manpower-plan-by-stage">7.2 Manpower plan by stage</h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Headcount</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pre-seed (months 0–6)</strong></td>
+<td>3 (founders)</td>
+<td>CEO + CTO + CCO. Contractors for labelling (₹15k/mo × 2)</td>
+</tr>
+<tr>
+<td><strong>Seed (months 6–18)</strong></td>
+<td>8</td>
+<td>+ 2 ML engineers, 1 hardware ops/install lead, 1 BD, 1 customer success</td>
+</tr>
+<tr>
+<td><strong>Series A (months 18–36)</strong></td>
+<td>25</td>
+<td>+ Asia BD lead, regional install teams (3), more ML, design, content/coaching team (2)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-advisory-board-target">7.3 Advisory board (target)</h3>
+<ul>
+<li>1× racket-sports business veteran (Bhupathi / Hudle adjacent — feasible)</li>
+<li>1× CV/ML academic (UPC-ViRVIG team, or IIT prof)</li>
+<li>1× former Premier Padel player (sport credibility)</li>
+<li>1× venue/franchise operator (real-estate / club economics)</li>
+</ul>
+<p>Advisor equity pool: 1–2% total, 0.25–0.5% each, 2-yr vest.</p>
+<hr>
+<h2 id="8-infrastructure-requirements">8. Infrastructure Requirements</h2>
+<h3 id="81-compute">8.1 Compute</h3>
+<ul>
+<li><strong>Year 1:</strong> RunPod / Lambda on-demand. ~₹50k/mo at 25 clubs × 120 matches each</li>
+<li><strong>Year 2:</strong> Reserved GPU instances on AWS/GCP. ~₹5L/mo at 200 clubs</li>
+<li><strong>Year 3:</strong> Dedicated GPU cluster (~10× A100s) hybrid cloud. ~₹25L/mo at 1,000 clubs</li>
+</ul>
+<h3 id="82-storage">8.2 Storage</h3>
+<ul>
+<li>Cloudflare R2 throughout (no egress fees vs AWS S3 saves ~60%)</li>
+<li>Cold-tier matches &gt;90 days to keep costs down</li>
+<li>Year 3 estimate: ~200 TB hot + 1 PB cold</li>
+</ul>
+<h3 id="83-software-infra">8.3 Software infra</h3>
+<ul>
+<li>Supabase (Postgres + Auth + Storage + Realtime) — same stack as AX, leverage existing operator muscle</li>
+<li>Cloudflare Pages + Workers for PWA + edge logic</li>
+<li>Sentry, PostHog for observability</li>
+<li>GitHub Actions for CI/CD</li>
+<li>Linear for product tracking, Notion for docs</li>
+</ul>
+<h3 id="84-hardware-logistics">8.4 Hardware logistics</h3>
+<ul>
+<li><strong>Year 1:</strong> Manual install per court. ~₹5k labour per install</li>
+<li><strong>Year 2:</strong> Trained install partner network (3 cities)</li>
+<li><strong>Year 3:</strong> Self-install kit + remote-assisted (target ₹1k labour cost)</li>
+</ul>
+<hr>
+<h2 id="9-capital-plan">9. Capital Plan</h2>
+<h3 id="91-funding-stages">9.1 Funding stages</h3>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>When</th>
+<th>Amount</th>
+<th>Use</th>
+<th>Investors to target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bootstrap / Founder cash</strong></td>
+<td>Now (months 0–3)</td>
+<td><strong>₹15–25L (founder + close angels)</strong></td>
+<td>1 pilot club, V1 build, rubric IP, MVP video</td>
+<td>Self + 2–3 angels</td>
+</tr>
+<tr>
+<td><strong>Pre-seed</strong></td>
+<td>Month 4–6</td>
+<td><strong>₹2–3 Cr ($250–350k)</strong></td>
+<td>5 clubs live, founding team salaries 12 mo, hardware for 25 clubs</td>
+<td>Sky Impact (Hudle&rsquo;s lead), Stellaris, Blume Founders Fund, Better Capital, sports-angel syndicates</td>
+</tr>
+<tr>
+<td><strong>Seed</strong></td>
+<td>Month 12–15</td>
+<td><strong>₹15–20 Cr ($1.8–2.5M)</strong></td>
+<td>India 200-club scale, UAE entry, ML team build, Series A prep</td>
+<td>Accel, Lightspeed India, Matrix, Elevation, regional SWFs (UAE)</td>
+</tr>
+<tr>
+<td><strong>Series A</strong></td>
+<td>Month 30–36</td>
+<td><strong>₹80–120 Cr ($10–15M)</strong></td>
+<td>Pan-Asia scale, global pilots</td>
+<td>Sequoia/Peak XV, Tiger, regional sovereign funds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-cash-burn-forecast-lakhsmonth">9.2 Cash burn forecast (₹ Lakhs/month)</h3>
+<table>
+<thead>
+<tr>
+<th>Month</th>
+<th>Headcount</th>
+<th>Burn</th>
+<th>Revenue</th>
+<th>Net</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–6</td>
+<td>3 + contractors</td>
+<td>4</td>
+<td>0</td>
+<td>-4</td>
+</tr>
+<tr>
+<td>7–12</td>
+<td>5</td>
+<td>12</td>
+<td>2</td>
+<td>-10</td>
+</tr>
+<tr>
+<td>13–18</td>
+<td>10</td>
+<td>25</td>
+<td>15</td>
+<td>-10</td>
+</tr>
+<tr>
+<td>19–24</td>
+<td>14</td>
+<td>40</td>
+<td>50</td>
+<td>+10</td>
+</tr>
+<tr>
+<td>25–36</td>
+<td>25</td>
+<td>90</td>
+<td>180</td>
+<td>+90</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Break-even target: Month 22–24.</strong> Series A raised before breakeven for Asia expansion fuel, not survival.</p>
+<h3 id="93-capital-efficiency-moats-we-should-preserve">9.3 Capital efficiency moats we should preserve</h3>
+<ol>
+<li><strong>AX shared infra reuse</strong> (Supabase patterns, WhatsApp router, dashboards) saves ~6 months of platform work</li>
+<li><strong>India ML/labelling cost</strong> is 1/5th of EU equivalents</li>
+<li><strong>Cloud R2 vs S3</strong> saves 50–60% on video storage</li>
+<li><strong>PWA over native</strong> saves 8 weeks + ongoing native team</li>
+</ol>
+<hr>
+<h2 id="10-go-to-market-plan">10. Go-to-Market Plan</h2>
+<h3 id="101-year-1-3-cities-25-clubs-5000-players">10.1 Year 1 — 3 cities, 25 clubs, 5,000 players</h3>
+<p><strong>Beachhead: Mumbai → Pune → Bangalore.</strong> Why: highest court density, highest disposable income, strongest WhatsApp + tech-adoption signals.</p>
+<p><strong>Acquisition wedge — &ldquo;Free pilot for top 3 clubs per city&rdquo;:</strong>
+- We install hardware + run analytics free for 60 days
+- Club brings 30+ regular players who try the system
+- After 60 days: club pays subscription OR we remove hardware (low-stakes for them)
+- Players who tasted the feedback don&rsquo;t want to lose it → club gets pressured by demand
+- This is the same playbook Hudle used to seed its booking dominance</p>
+<p><strong>Distribution levers:</strong>
+1. <strong>Hudle partnership</strong> — explicit ask: in-app push to players in clubs we&rsquo;ve covered, in exchange for revenue share or data
+2. <strong>WhatsApp-native funnel</strong> — player gets feedback link via WhatsApp post-match; one tap to view, share, save → classic AX-style funnel
+3. <strong>Coach affiliate program</strong> — coaches earn 10% recurring on every player they refer; this creates a sales force we don&rsquo;t pay salary for
+4. <strong>Tournament sponsorships</strong> — sponsor 1–2 local circuits, get sole AI camera + livestream rights, build brand</p>
+<h3 id="102-year-2-uae-entry">10.2 Year 2 — UAE entry</h3>
+<p><strong>Why UAE first (not KSA):</strong>
+- English-default operating language
+- High-density (950+ courts in a small geography)
+- Expat-heavy player base = high willingness to pay
+- Easier business setup than KSA
+- Bridge to KSA via DIFC/ADGM-based operations</p>
+<p><strong>Entry approach:</strong> Acquire or partner with 1 existing UAE court operator chain (think 20-court operator) as launch customer. We become their tech stack, they become our distribution.</p>
+<h3 id="103-year-3-ksa-se-asia">10.3 Year 3 — KSA + SE Asia</h3>
+<ul>
+<li>KSA via Vision-2030 sport-infra RFPs; bid through UAE-registered subsidiary</li>
+<li>SE Asia (Indonesia, Thailand) via partnership with local franchise operators</li>
+<li>EU/LATAM pilots only if explicitly requested by investors (no own-cash spend)</li>
+</ul>
+<hr>
+<h2 id="11-phased-roadmap">11. Phased Roadmap</h2>
+<h3 id="year-1-validate-india-anchor">Year 1 — Validate + India anchor</h3>
+<p><strong>Q3 2026:</strong> V1 ship, pilot club live, 200 matches analysed, rubric IP locked, pre-seed raised
+<strong>Q4 2026:</strong> 5 clubs live, 1,000 matches/mo, first paying clubs, founding team complete
+<strong>Q1 2027:</strong> 15 clubs live, ₹15L MRR, seed conversations begin
+<strong>Q2 2027:</strong> 25 clubs live, ₹50L MRR, seed closed</p>
+<h3 id="year-2-scale-india-uae-entry">Year 2 — Scale India + UAE entry</h3>
+<p><strong>Q3 2027:</strong> 75 clubs, hardware ops team in place, UAE feasibility study
+<strong>Q4 2027:</strong> 125 clubs, UAE pilot launched (5 clubs)
+<strong>Q1 2028:</strong> 175 clubs in India, 15 in UAE, ₹2 Cr MRR
+<strong>Q2 2028:</strong> 200 + 30, ₹3 Cr MRR, Series A closed</p>
+<h3 id="year-3-asia-dominance-global-pilots">Year 3 — Asia dominance + global pilots</h3>
+<p><strong>Q3 2028:</strong> KSA entry (10 clubs), SE Asia partnerships signed
+<strong>Q4 2028:</strong> 400 India, 60 UAE, 25 KSA, 30 SE Asia → 515 clubs
+<strong>Q1 2029:</strong> EU pilot (5 clubs), LATAM pilot (5 clubs)
+<strong>Q2 2029:</strong> 750+ clubs, ₹10 Cr MRR, Series B raised or strategic acquisition conversations</p>
+<hr>
+<h2 id="12-bottlenecks-risks-failure-modes-honest">12. Bottlenecks, Risks &amp; Failure Modes (honest)</h2>
+<h3 id="121-technical-bottlenecks">12.1 Technical bottlenecks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Severity</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shot classifier plateaus below 70% accuracy</strong></td>
+<td>Medium</td>
+<td>High (kills product)</td>
+<td>Multi-coach labels, larger dataset, ensemble models, hire ML specialist if stuck at month 8</td>
+</tr>
+<tr>
+<td>Ball tracking unreliable in low light</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Better camera (Hikvision ColorVu), club-side lighting recommendations, manual rally-end fallback</td>
+</tr>
+<tr>
+<td>Cloud inference costs spike</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Edge inference V2 (Jetson) by Y2</td>
+</tr>
+<tr>
+<td><code>padel_analytics</code> upstream abandoned</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Fork early, don&rsquo;t depend on upstream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122-market-bottlenecks">12.2 Market bottlenecks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Severity</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hudle decides to build this in-house</strong></td>
+<td>Medium</td>
+<td>Very High</td>
+<td>Partner formally before Hudle thinks about it. Lock revenue-share and data-share contract</td>
+</tr>
+<tr>
+<td>Clutch enters India aggressively</td>
+<td>Medium</td>
+<td>High</td>
+<td>First-mover speed advantage. 25 clubs by Q4 = defensible local network</td>
+</tr>
+<tr>
+<td>Padel growth in India stalls (only 70% YoY for 1 year vs 5)</td>
+<td>Low</td>
+<td>High</td>
+<td>Bet is on the growth continuing through 2028 Asian Games tailwind</td>
+</tr>
+<tr>
+<td>Asian Games 2026 padel underwhelms public interest</td>
+<td>Low</td>
+<td>Medium</td>
+<td>India has other catalysts (Bhupathi push, IPL-style league rumours)</td>
+</tr>
+<tr>
+<td>Players unwilling to pay ₹399/mo Pro tier</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Lower to ₹199, lean on club-paid subscription as primary revenue</td>
+</tr>
+</tbody>
+</table>
+<h3 id="123-team-bottlenecks">12.3 Team bottlenecks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Severity</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No ML co-founder lands</strong></td>
+<td>High</td>
+<td>Very High</td>
+<td>Two tracks: João email + active search via IIT/IISc network. 2-month cutoff before falling back to senior contractor</td>
+</tr>
+<tr>
+<td>Coach overcommits, under-delivers</td>
+<td>Medium</td>
+<td>High</td>
+<td>Clear deliverables doc + payment milestones, not pure equity</td>
+</tr>
+<tr>
+<td>Manoj overstretched (AX is day job)</td>
+<td>High</td>
+<td>High</td>
+<td>Honest weekly hour budget; raise pre-seed early enough to afford a founding engineer who removes the bottleneck</td>
+</tr>
+<tr>
+<td>Hardware install team can&rsquo;t scale</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Train partner network from Year 1 (don&rsquo;t centralize)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="124-capital-bottlenecks">12.4 Capital bottlenecks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Severity</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-seed doesn&rsquo;t close by month 6</td>
+<td>Medium</td>
+<td>High</td>
+<td>Have an SAFE-bridge of ₹50L from 3–5 angels lined up; pitch on Hudle thesis traction</td>
+</tr>
+<tr>
+<td>India sports-tech FOMO cycle ends</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Padel is currently the hottest category — even with macro winter, this lane is funded</td>
+</tr>
+<tr>
+<td>₹/USD FX deterioration affects hardware costs</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Negotiate INR contracts with Reolink India distributor; lock 12-mo BOM pricing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="125-failure-modes-that-could-kill-the-venture-existential">12.5 Failure modes that could kill the venture (existential)</h3>
+<ol>
+<li><strong>Coach quality of judgment doesn&rsquo;t translate to algorithm.</strong> The classifier hits 85% accuracy but real players say &ldquo;this is wrong, I&rsquo;m not playing badly&rdquo; — losing trust kills WoM. <em>Mitigation: invest heavily in human-in-the-loop feedback before scaling.</em></li>
+<li><strong>Hudle builds it or partners with Clutch directly.</strong> Distribution moat collapses. <em>Mitigation: get to Hudle BEFORE Clutch does. They are in Mumbai.</em></li>
+<li><strong>Founder burnout — Manoj cannot sustain AX + this.</strong> <em>Mitigation: be honest about bandwidth; raise pre-seed quickly so a founding engineer can take ops load.</em></li>
+<li><strong>Hardware reliability nightmare.</strong> Cameras failing in monsoon, dust, summer heat → support ticket avalanche. <em>Mitigation: spend Y1 obsessing over hardware QA; standardize one camera model + thermal-tested install kits.</em></li>
+<li><strong>Players don&rsquo;t actually share/talk about the feedback.</strong> No viral loop → CAC stays high → unit economics break. <em>Mitigation: design feedback to be screenshot-worthy and WhatsApp-shareable from day one. Vanity-friendly visuals.</em></li>
+</ol>
+<hr>
+<h2 id="13-decision-gates-when-to-kill-when-to-push">13. Decision Gates (when to kill, when to push)</h2>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>When</th>
+<th>Pass criteria</th>
+<th>If fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gate 0 — Partnership</strong></td>
+<td>Week 1</td>
+<td>Coach committed in writing + first club access confirmed</td>
+<td>Pause venture, revisit in 60 days</td>
+</tr>
+<tr>
+<td><strong>Gate 1 — Rubric ships</strong></td>
+<td>Week 4</td>
+<td>15-page coaching rubric doc complete and validated by 2nd coach</td>
+<td>Replace coach</td>
+</tr>
+<tr>
+<td><strong>Gate 2 — V1 inference works</strong></td>
+<td>Week 8</td>
+<td>End-to-end pipeline runs on 5 test matches; outputs make sense to coach</td>
+<td>Pivot to contractor on classifier</td>
+</tr>
+<tr>
+<td><strong>Gate 3 — Player feedback validates</strong></td>
+<td>Week 12</td>
+<td>≥6 of 10 testers say &ldquo;I&rsquo;d pay ₹300/mo for this&rdquo;</td>
+<td>Pivot product (coach tool? video reels?)</td>
+</tr>
+<tr>
+<td><strong>Gate 4 — Pre-seed term sheet</strong></td>
+<td>Month 6</td>
+<td>₹2 Cr+ term sheet from a credible lead</td>
+<td>Bootstrap 6 more months on bridge cash</td>
+</tr>
+<tr>
+<td><strong>Gate 5 — Hudle/distribution deal</strong></td>
+<td>Month 9</td>
+<td>Formal partnership or proven independent CAC</td>
+<td>Re-strategize GTM</td>
+</tr>
+<tr>
+<td><strong>Gate 6 — 25 clubs ARR</strong></td>
+<td>Month 15</td>
+<td>₹50L MRR run rate</td>
+<td>Pause UAE, double down India</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="14-the-30-day-punch-list-what-we-actually-do-this-month">14. The 30-Day Punch List (what we actually do this month)</h2>
+<ol>
+<li>
+<p><strong>Week 1 — Partner lock-down</strong>
+   - [ ] Send João Silva collaboration email
+   - [ ] Onboarding conversation with coach (define scope + comp)
+   - [ ] Visit / call 3 clubs in Mumbai or Pune; pick pilot court
+   - [ ] Register placeholder domain + form LLP / private limited paperwork</p>
+</li>
+<li>
+<p><strong>Week 2 — Rubric + plan locked</strong>
+   - [ ] Coach delivers shot taxonomy v1 + scoring criteria v1
+   - [ ] Pilot club agreement signed (informal MOU OK)
+   - [ ] Order hardware for pilot court (~₹35k spend)
+   - [ ] Pre-seed deck v0 — Hudle thesis, Asian Games catalyst, team</p>
+</li>
+<li>
+<p><strong>Week 3 — Install + first recordings</strong>
+   - [ ] Mount camera, fix the 12 court keypoints
+   - [ ] First match recorded, uploaded, processed through <code>padel_analytics</code>
+   - [ ] Coach reviews raw player+ball tracking, gives feedback
+   - [ ] Begin recruiting ML co-founder (LinkedIn, IIT network)</p>
+</li>
+<li>
+<p><strong>Week 4 — Rubric live + labelling begins</strong>
+   - [ ] Coach labels 100 gold-standard clips
+   - [ ] 2 college labellers onboarded at ₹15k/mo each
+   - [ ] Streamlit labeller tool built
+   - [ ] First 3 angel conversations opened</p>
+</li>
+</ol>
+<hr>
+<h2 id="strategic-geographic-decision-pending-added-2026-07-01">Strategic Geographic Decision — pending (added 2026-07-01)</h2>
+<p>Given China findings, pick one before raising pre-seed:</p>
+<ul>
+<li><strong>(a) Pan-Asia ambition:</strong> India → UAE → KSA → SE Asia → eventual China-via-partner. Bigger TAM, bigger raise, more competitive surface, China-collision risk in Year 3.</li>
+<li><strong>(b) &ldquo;Anti-China by geography&rdquo;:</strong> India + Middle East only — explicitly defended by procurement-policy and language moats. Smaller TAM, defensible margin, simpler narrative. China handled via license/partnership/exit.</li>
+</ul>
+<p>Manoj&rsquo;s lean: TBD. Decision impacts Section 9 (Capital Plan) raise size and Section 10 GTM.</p>
+<hr>
+<h2 id="open-questions-tbds-must-resolve-before-raising">Open Questions / TBDs (must resolve before raising)</h2>
+<ul>
+<li>[ ] <strong>Working name + domain</strong> (current placeholders are weak; need brand)</li>
+<li>[ ] <strong>Coach identity + commitment terms</strong> (named, signed, on board)</li>
+<li>[ ] <strong>ML co-founder identity</strong> (João Silva or alternative)</li>
+<li>[ ] <strong>Pilot club identity</strong> (named, MoU)</li>
+<li>[ ] <strong>Entity setup</strong> — LLP, Pvt Ltd, or DIFC for future Asia? Tax &amp; cap-table implications</li>
+<li>[ ] <strong>Hudle relationship status</strong> — warm intro, formal pitch, or compete?</li>
+<li>[ ] <strong>Manoj weekly hour commitment</strong> — honest 15 hrs/wk floor</li>
+</ul>
+<hr>
+<h2 id="change-log">Change Log</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Author</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-07-01</td>
+<td>Manoj + Claude</td>
+<td>v0.1 — initial draft</td>
+</tr>
+<tr>
+<td>2026-07-01</td>
+<td>Claude</td>
+<td>v0.2 — Added Section 4.2.1 Clutch India full profile (Sharath Kumar / Curved Consistency / Epic Padel rollup), Section 4.4 China competitive landscape (Xiaoqiuquan, Lumistar, SenseTime), Section 4.5 moat reality check (tech moat downgraded; geopolitical + federation moats upgraded), Section 4.6 monthly China watch list, Strategic Geographic Decision pending</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>This is a living document. Update here before anywhere else. Memory pointer: <code>MEMORY.md</code> → <code>project_padel_clone_venture</code>.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

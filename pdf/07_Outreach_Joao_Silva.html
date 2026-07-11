@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Outreach — João Silva — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Founder Outreach Brief</div>
+    <h1 class="cover-title">Outreach to João Silva</h1>
+    <p class="cover-subtitle">Author of padel_analytics — opening a collaboration dialogue for the India + Middle East venture, with copy-paste-ready email and a follow-up cadence playbook.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Target</div><div class="cover-meta-value">João Silva — padel_analytics</div></div>
+<div><div class="cover-meta-label">Email</div><div class="cover-meta-value">jsilvawasd@hotmail.com</div></div>
+<div><div class="cover-meta-label">Repo</div><div class="cover-meta-value">github.com/Joao-M-Silva/padel_analytics</div></div>
+<div><div class="cover-meta-label">Prepared</div><div class="cover-meta-value">2026-07-01</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Outreach — João Silva" data-brand="PadelMind">
+<p><strong>Purpose:</strong> Open a collaboration dialogue with João Silva, author of <a href="https://github.com/Joao-M-Silva/padel_analytics"><code>Joao-M-Silva/padel_analytics</code></a>, with a view to building an India + Middle East equivalent to Clutch. His README explicitly invites collaboration. The technical and product gaps are complementary: he has the CV pipeline; we have the market, distribution, capital, and an expert coach co-founder for the missing classifier rubric.</p>
+<p><strong>Send from:</strong> Manoj&rsquo;s personal email (Gmail or a venture-branded inbox)
+<strong>Send to:</strong> <code>jsilvawasd@hotmail.com</code> (per repo README, last verified 2026-07-01)
+<strong>Subject options (pick one):</strong></p>
+<ol>
+<li><em>Collaboration interest — building on <code>padel_analytics</code> for India + the 2026 Asian Games</em></li>
+<li><em>Indian founder + your <code>padel_analytics</code> repo = a real venture?</em></li>
+<li><em>Read your README — I&rsquo;d like to talk</em></li>
+</ol>
+<p><strong>Recommended subject:</strong> Option 1 (specific, respectful, hooks the Asian Games urgency).</p>
+<p><strong>Tone:</strong> Peer-to-peer founder voice. Not vendor. Not student. Direct, warm, brief enough to read on a phone. Shows I read his code, not just his README.</p>
+<hr>
+<h2 id="email-body-copy-paste-ready">EMAIL BODY (copy-paste-ready)</h2>
+<blockquote>
+<p><strong>Subject:</strong> Collaboration interest — building on <code>padel_analytics</code> for India + the 2026 Asian Games</p>
+<p>Hi João,</p>
+<p>I run AutomationXpert, a WhatsApp-native SaaS platform serving Indian small businesses. Outside of that, I play padel three times a week — and like a few hundred thousand other Indians, I&rsquo;m watching what&rsquo;s happening with the sport here: 500 courts now (up from ~90 in 2023), 70% year-on-year growth, the 2026 Asian Games on the horizon, and zero India-headquartered AI coaching platform addressing the market.</p>
+<p>I spent the last week studying the open-source landscape, and your <code>padel_analytics</code> repo is the most complete CV foundation I found — the four-tracker architecture with player tracking, 13-DOF pose, TrackNet ball, and the 12-keypoint homography is exactly the right shape. I noticed your README invitation for collaborations, so I wanted to reach out before doing anything else.</p>
+<p>Here is what I see, in three sentences:</p>
+<p><strong>The gap in <code>padel_analytics</code> (and the gap in every other OSS padel repo) is the shot-quality classifier — there&rsquo;s pose extraction but no labelled rubric on top.</strong> That gap is also the moat of the entire commercial category — Clutch, Wingfield, Padelytics all sell exactly this, but none of them have a strong Asia or India presence. I have a senior padel coach lined up as the rubric designer + dataset labeller, distribution muscle through my AX WhatsApp platform, capital access in India, and clear demand: one of my home clubs has 200 active players and no current assessment system.</p>
+<p>What I do not have is a CTO-grade ML/CV co-founder who already understands the padel-specific work intimately. I think that&rsquo;s you.</p>
+<p>The collaboration shapes I would love to explore on a 30-minute call:</p>
+<ul>
+<li><strong>Co-founder partnership:</strong> you as CTO of the venture (equity, eventual salary post-pre-seed), India-headquartered Pvt Ltd, you can be remote from anywhere in Europe. We&rsquo;d build on a fork of <code>padel_analytics</code> with proper credit and continue contributing back upstream.</li>
+<li><strong>Technical advisor + licensing arrangement:</strong> lighter time commitment, equity-only, your repo continues independently while we focus on the India/ME commercial build.</li>
+<li><strong>Something else you&rsquo;d propose</strong> — you&rsquo;ve thought about this longer than I have.</li>
+</ul>
+<p>If any of this is interesting, I&rsquo;d be grateful for a 30-minute call this week or next. I am in IST (UTC+5:30) and can flex around your time zone.</p>
+<p>If it&rsquo;s not the right time or the right fit, I&rsquo;d still love to hear what you&rsquo;d build differently — your perspective on the problem space is worth its own conversation regardless.</p>
+<p>Thank you for putting <code>padel_analytics</code> out in the open.</p>
+<p>Warm regards,
+Manoj Maheshwari
+AutomationXpert — automationxpert.in
+WhatsApp: +91 98200 27850
+LinkedIn: linkedin.com/in/manojmaheshwari/
+[add: brief one-liner about Indian Pvt Ltd entity if registered]</p>
+<p><em>P.S. If you have ever wanted a partner who treats every client interaction as a WhatsApp message rather than a B2B SaaS portal — Indian sport happens on WhatsApp. That&rsquo;s a strange-sounding distribution moat but it&rsquo;s real and it&rsquo;s what I&rsquo;ve built for the last few years.</em></p>
+</blockquote>
+<hr>
+<h2 id="why-this-email-works">Why this email works</h2>
+<ol>
+<li><strong>Opens with peer credibility</strong> — AutomationXpert credentials in the first line establish I&rsquo;m not a student / fanboy / vendor pitching to him.</li>
+<li><strong>Shows I read his code</strong> — specific mention of the four-tracker architecture, 13-DOF pose, TrackNet, 12-keypoint homography. This is the difference between a generic outreach and a &ldquo;this person took my work seriously&rdquo; email.</li>
+<li><strong>Names the gap honestly</strong> — calling out the missing classifier is something he already knows; saying it out loud builds trust that I understand the technical reality.</li>
+<li><strong>Names the moat honestly</strong> — the classifier is the commercial moat of the entire category. Acknowledging that openly says &ldquo;I value what you&rsquo;d contribute, this isn&rsquo;t a free-OSS-extraction play.&rdquo;</li>
+<li><strong>Three concrete collaboration shapes</strong> — gives him agency. The third option (&ldquo;something else you&rsquo;d propose&rdquo;) is the most important; it signals I&rsquo;m not arriving with a rigid term sheet.</li>
+<li><strong>The base club + 200 players signal</strong> — concrete demand evidence, not market hand-waving.</li>
+<li><strong>Time-zone flexibility</strong> — removes any &ldquo;is this person going to ask me to wake up at 5am?&rdquo; friction.</li>
+<li><strong>Graceful exit clause</strong> — &ldquo;if it&rsquo;s not the right fit&rdquo; — reduces the social cost of replying no. Higher reply rate.</li>
+<li><strong>The WhatsApp P.S.</strong> — distinctive, memorable. Most cold founder emails read identically; this one has a personality fingerprint.</li>
+</ol>
+<h2 id="what-to-do-before-pressing-send">What to do before pressing send</h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replace the &ldquo;[add: brief one-liner&hellip;]&rdquo; line with either a sentence about the entity or remove it</td>
+<td>Drafting placeholder — must be either filled or deleted</td>
+</tr>
+<tr>
+<td>Confirm <code>jsilvawasd@hotmail.com</code> is still active via repo README</td>
+<td>Done 2026-07-01; recheck in case he updated</td>
+</tr>
+<tr>
+<td>Send from a custom-domain email if possible (e.g. <code>manoj@padelmind.in</code> once domain registered)</td>
+<td>Higher reply rate than Gmail; signals seriousness</td>
+</tr>
+<tr>
+<td>Send between Tuesday and Thursday, 10am–noon his local time (Lisbon / Madrid most likely)</td>
+<td>Outreach best practice</td>
+</tr>
+<tr>
+<td>Set Calendly link in your signature, or include 3 specific time slots inline</td>
+<td>Removes one round-trip</td>
+</tr>
+<tr>
+<td>Do NOT BCC anyone; this is a 1:1 conversation</td>
+<td>Trust signal</td>
+</tr>
+</tbody>
+</table>
+<h2 id="after-sending-the-follow-up-cadence">After sending — the follow-up cadence</h2>
+<ul>
+<li><strong>Day 4</strong> if no reply: short, single-line nudge (&ldquo;Hi João — just floating this back to the top of your inbox in case it got buried. Happy to talk whenever works.&rdquo;)</li>
+<li><strong>Day 10</strong> if no reply: final nudge, with a small concrete update (&ldquo;Spoke with [coach name] last week, the rubric work is starting Monday — would still love your view before we get too far in.&rdquo;)</li>
+<li><strong>Day 14</strong> if no reply: pause for 6 weeks, then re-engage with a milestone update once we have a live pilot court (&ldquo;Hi João — quick update: we installed a pilot rig at [club]. The 12-keypoint homography flow you wrote works beautifully. Wanted to share screenshots; let me know if you&rsquo;d like a look.&rdquo;)</li>
+</ul>
+<h2 id="if-he-says-yes">If he says yes</h2>
+<p>Convert this conversation into a structured exploration:
+1. <strong>30-min discovery call</strong> — your story, his story, mutual fit
+2. <strong>60-min technical call within a week</strong> — walk through <code>padel_analytics</code> together, what you&rsquo;d refactor, his honest view on the streaming retrofit and classifier head
+3. <strong>Term sheet draft within 2 weeks</strong> — equity, vesting, salary triggers, IP assignment, decision rights
+4. <strong>In-person meet (Lisbon or Bangalore) within 30 days</strong> if mutual interest holds</p>
+<h2 id="if-he-says-no-but-is-friendly">If he says no but is friendly</h2>
+<p>Ask him to recommend two other CV/ML engineers from his network who might be interested in this exact problem. People he respects technically. That referral is often as valuable as his own time would have been.</p>
+<hr>
+<p><em>Draft prepared 2026-07-01 for review. Adjust placeholders, send when ready.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

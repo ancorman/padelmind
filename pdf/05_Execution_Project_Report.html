@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Project Report — Execution — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">Execution Document</div>
+    <h1 class="cover-title">Project Report</h1>
+    <p class="cover-subtitle">30-day punch list, six-month deliverables, resource plan, budget, risk register, governance, and the backer pitch playbook.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Document version</div><div class="cover-meta-value">0.1</div></div>
+<div><div class="cover-meta-label">Purpose</div><div class="cover-meta-value">What we do, when, with whom, for how much</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari + AI drafting · 2026-07-01</div></div>
+<div><div class="cover-meta-label">Refresh cadence</div><div class="cover-meta-value">Weekly during build</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Project Report — Execution" data-brand="PadelMind">
+<p><strong>Companion to:</strong> <code>PADEL_AI_VENTURE_PLAN.md</code> (strategy)
+<strong>This document:</strong> what we DO, WHEN, with WHOM, for HOW MUCH
+<strong>Status:</strong> v0.1 draft — pre-Gate 0
+<strong>Authored:</strong> 2026-07-01
+<strong>Reading time:</strong> 15 min (executive summary 2 min)</p>
+<hr>
+<h2 id="a-executive-summary-the-1-page-for-backers">A. Executive Summary (the 1-page for backers)</h2>
+<p><strong>The opportunity:</strong> Padel is the world&rsquo;s fastest-growing sport (+1,026% search interest since 2004). India has 500 courts today (up from ~90 in 2023), projected to hit 5,000+ by 2036. Padel entered the 2026 Asian Games — a once-per-sport-lifecycle catalyst. No India-headquartered AI coaching platform exists. Window: 12–18 months.</p>
+<p><strong>The product:</strong> An AI coach (not a camera) that records padel matches via a single IP camera per court, runs computer vision on every shot, scores technique against an expert-coach-designed rubric, and delivers actionable improvement feedback to the player on WhatsApp within 10 minutes of match end.</p>
+<p><strong>The team:</strong>
+- <strong>Manoj Maheshwari</strong> (CEO) — SMB SaaS operator (AutomationXpert), WhatsApp distribution expert
+- <strong>Padel Coach (CCO)</strong> — domain authority + rubric IP (named TBD)
+- <strong>CTO / ML Co-founder</strong> — primary target João Silva (<code>padel_analytics</code> author, EU); fallback Bangalore CV hire
+- <strong>Technical advisor</strong>: Apple AI engineer (Manoj&rsquo;s son — pending discussion)</p>
+<p><strong>The ask (pre-seed):</strong> ₹2.5 Cr / $300k for 18 months runway → 25 paying clubs in 3 Indian cities, full V1 product, founding team complete, Series A-ready.</p>
+<p><strong>Beachhead:</strong> Mumbai → Pune → Bangalore. <strong>Then:</strong> UAE (Year 1.5), KSA + SE Asia (Year 3). <strong>Anti-China by geography</strong> — India + Middle East procurement-policy moat.</p>
+<p><strong>Unit economics:</strong> ₹540 COGS/court/month, ₹5,000 ASP → 89% gross margin. Same shape as Clutch.</p>
+<p><strong>The moat:</strong> Coach-designed proprietary rubric + WhatsApp-native distribution + federation-level lock-in. Not tech. Tech is commodity.</p>
+<p><strong>Why now, why us:</strong>
+- Asian Games 2026 timing window
+- Manoj&rsquo;s AX platform = built-in distribution muscle no global competitor has in India
+- India has the ML talent at 1/5th Western cost
+- Bank-rollable by existing angel network; no VC dependency at pre-seed</p>
+<hr>
+<h2 id="b-project-charter">B. Project Charter</h2>
+<h3 id="b1-mission">B.1 Mission</h3>
+<p>Make world-class padel coaching accessible to every Indian player via AI feedback in their pocket.</p>
+<h3 id="b2-scope-in-scope-for-v1-12-weeks">B.2 Scope (in-scope for V1, 12 weeks)</h3>
+<ol>
+<li>Single-court hardware install + RTSP ingestion pipeline</li>
+<li>Cloud video processing (player tracking, ball tracking, pose extraction, shot classification)</li>
+<li>Coach-designed rubric document (IP asset)</li>
+<li>Player-facing PWA (mobile-first) with skill score + shot feedback + highlight clips</li>
+<li>Club dashboard (basic — court usage + recording index)</li>
+<li>WhatsApp delivery of post-match insights</li>
+</ol>
+<h3 id="b3-out-of-scope-explicitly-not-in-v1">B.3 Out of scope (explicitly NOT in V1)</h3>
+<ul>
+<li>Native Android/iOS apps (PWA enough)</li>
+<li>Multi-camera 3D ball tracking</li>
+<li>Line-calling / officiating</li>
+<li>Live-streaming integration</li>
+<li>Gesture-trigger (&ldquo;save the last point&rdquo; hand wave)</li>
+<li>Sponsorship overlay tools</li>
+<li>Tournament management</li>
+<li>Booking integration (Hudle partnership instead)</li>
+</ul>
+<h3 id="b4-success-criteria-v1-ship">B.4 Success criteria (V1 ship)</h3>
+<ul>
+<li>5 pilot clubs live with hardware</li>
+<li>500 matches analysed and delivered to players</li>
+<li>Shot classifier ≥70% top-1 accuracy</li>
+<li>≥6 of 10 tester players say &ldquo;I&rsquo;d pay ₹300/month for this&rdquo;</li>
+<li>Coach approves output quality on random 20-match sample</li>
+</ul>
+<hr>
+<h2 id="c-30-day-punch-list-days-130-start-now">C. 30-Day Punch List (Days 1–30 — start now)</h2>
+<h3 id="week-1-days-17">Week 1 (Days 1–7)</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Task</th>
+<th>Owner</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Send LinkedIn DM to Sharath Kumar (Clutch India)</td>
+<td>Manoj</td>
+<td>Reply OR confirmed ignore</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Send João Silva collaboration email</td>
+<td>Manoj (Claude drafts)</td>
+<td>Reply OR confirmed ignore</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Coach onboarding call — scope + comp terms</td>
+<td>Manoj</td>
+<td>Verbal yes/no</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Shortlist 5 clubs in Mumbai/Pune/Bangalore for pilot pitch</td>
+<td>Manoj</td>
+<td>Names + contacts</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Open conversation with son (Apple AI engineer) on advisory role</td>
+<td>Manoj</td>
+<td>Yes/no/maybe + comfort level</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Register <code>padelmind.in</code> / <code>courtiq.ai</code> / <code>padelguru.in</code> (pick one)</td>
+<td>Manoj</td>
+<td>Domain secured</td>
+</tr>
+<tr>
+<td>6</td>
+<td>LLP vs Pvt Ltd decision + CA engaged for incorporation</td>
+<td>Manoj</td>
+<td>Entity decided</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Week 1 review — Gate 0 status</td>
+<td>Manoj + Claude</td>
+<td>Pass/fail decision</td>
+</tr>
+</tbody>
+</table>
+<p><strong>GATE 0 (end of Week 1):</strong> Coach committed in writing + 1 pilot club access confirmed. <strong>Fail → pause venture, revisit in 60 days.</strong></p>
+<h3 id="week-2-days-814">Week 2 (Days 8–14)</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Task</th>
+<th>Owner</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>Coach delivers shot taxonomy v1</td>
+<td>Coach</td>
+<td>List of 8–12 shots</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Hardware bill of materials confirmed — Reolink quoted</td>
+<td>Manoj</td>
+<td>INR quote in hand</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Pilot club informal MOU signed</td>
+<td>Manoj + Club</td>
+<td>1-page MOU</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Pre-seed deck v0.1</td>
+<td>Manoj + Claude</td>
+<td>15-slide PDF</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Coach delivers scoring rubric v1 (1–5 stars per shot)</td>
+<td>Coach</td>
+<td>Rubric doc</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Order pilot hardware (camera + Pi + switch + cabling)</td>
+<td>Manoj</td>
+<td>Tracking number</td>
+</tr>
+<tr>
+<td>14</td>
+<td>First 3 angel conversations opened</td>
+<td>Manoj</td>
+<td>Meetings scheduled</td>
+</tr>
+</tbody>
+</table>
+<h3 id="week-3-days-1521">Week 3 (Days 15–21)</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Task</th>
+<th>Owner</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>Hardware arrives; camera install begins</td>
+<td>Manoj + electrician</td>
+<td>Camera mounted</td>
+</tr>
+<tr>
+<td>16</td>
+<td>12 court keypoints clicked + cached</td>
+<td>Manoj + Claude</td>
+<td>JSON saved</td>
+</tr>
+<tr>
+<td>17</td>
+<td>First RTSP test recording — 1 hr stream to R2</td>
+<td>Manoj</td>
+<td>MP4 in cloud</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>padel_analytics</code> fork — local clone + smoke test</td>
+<td>Manoj + Claude</td>
+<td>Pipeline runs on test video</td>
+</tr>
+<tr>
+<td>19</td>
+<td>First real match recorded</td>
+<td>Manoj</td>
+<td>1-hr 4K MP4</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Process first match through full pipeline</td>
+<td>Claude + Manoj</td>
+<td>data.csv + visualizations</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Coach reviews raw output, flags errors</td>
+<td>Coach</td>
+<td>Feedback list</td>
+</tr>
+</tbody>
+</table>
+<h3 id="week-4-days-2230">Week 4 (Days 22–30)</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Task</th>
+<th>Owner</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22</td>
+<td>Coach labels 100 gold-standard clips</td>
+<td>Coach</td>
+<td>100 labels in CSV</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Hire 2 labellers (₹15k/mo each) — Indeed/Naukri post</td>
+<td>Manoj</td>
+<td>2 hires onboarded</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Streamlit labelling tool built</td>
+<td>Manoj + Claude</td>
+<td>Tool URL</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Bulk labelling begins (target 500 clips by Day 50)</td>
+<td>Labellers</td>
+<td>50 clips/day pace</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Pre-seed pitches to 3 angels (1st round of NO/YES)</td>
+<td>Manoj</td>
+<td>Term sheet conversations</td>
+</tr>
+<tr>
+<td>27</td>
+<td>ML co-founder decision — João Silva accepted OR fallback hire begins</td>
+<td>Manoj</td>
+<td>Decision logged</td>
+</tr>
+<tr>
+<td>28</td>
+<td>First skill-score V0 (rule-based, no ML yet)</td>
+<td>Claude + Manoj</td>
+<td>Demo for player</td>
+</tr>
+<tr>
+<td>29</td>
+<td>First player gets WhatsApp delivery of match report</td>
+<td>Manoj</td>
+<td>Screenshot</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Month 1 review — go/no-go for Month 2</td>
+<td>Manoj + Claude</td>
+<td>Decision logged</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Month 1 spend target:</strong> ≤ ₹60,000 (hardware + first labeller payroll + domain + CA fees)</p>
+<hr>
+<h2 id="d-90-day-milestones-end-of-month-3">D. 90-Day Milestones (end of Month 3)</h2>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Target</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pilot court live &amp; stable</td>
+<td>200+ matches processed</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>Shot classifier V1 trained</td>
+<td>≥60% top-1 accuracy</td>
+<td>ML lead</td>
+</tr>
+<tr>
+<td>500 clips labelled</td>
+<td>100% complete</td>
+<td>Coach + labellers</td>
+</tr>
+<tr>
+<td>2nd &amp; 3rd club onboarded (free pilot)</td>
+<td>2 additional courts live</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>25 players actively using WhatsApp PWA</td>
+<td>weekly active = 25</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>Pre-seed term sheet from 1 angel/syndicate</td>
+<td>₹2 Cr+ committed</td>
+<td>Manoj</td>
+</tr>
+<tr>
+<td>Coach equity formalised</td>
+<td>Signed shareholder agreement</td>
+<td>Manoj + CA</td>
+</tr>
+<tr>
+<td>ML co-founder onboarded OR senior CV hire</td>
+<td>Equity/contract done</td>
+<td>Manoj</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="e-6-month-deliverables-year-1-q2">E. 6-Month Deliverables (Year 1 Q2)</h2>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paying clubs in India</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Active analysed players</td>
+<td>1,500</td>
+</tr>
+<tr>
+<td>Shot classifier accuracy</td>
+<td>≥70%</td>
+</tr>
+<tr>
+<td>MRR</td>
+<td>₹3 lakh</td>
+</tr>
+<tr>
+<td>Founding team headcount</td>
+<td>5 (CEO, CCO coach, CTO/ML, 1 engineer, 1 BD)</td>
+</tr>
+<tr>
+<td>Pre-seed closed</td>
+<td>₹2.5 Cr</td>
+</tr>
+<tr>
+<td>Hudle partnership conversation</td>
+<td>In motion or signed</td>
+</tr>
+<tr>
+<td>First UAE feasibility visit</td>
+<td>Completed</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="f-budget-plan-in-lakhs">F. Budget Plan (₹ in lakhs)</h2>
+<h3 id="f1-month-13-founder-funded-bootstrap">F.1 Month 1–3 (founder-funded bootstrap)</h3>
+<table>
+<thead>
+<tr>
+<th>Line item</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pilot hardware (camera + Pi + cabling)</td>
+<td>0.35</td>
+</tr>
+<tr>
+<td>Domain + entity incorporation + CA</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>2 labellers × 2 months</td>
+<td>0.60</td>
+</tr>
+<tr>
+<td>Coach engagement (Phase 1 rubric work)</td>
+<td>0.80</td>
+</tr>
+<tr>
+<td>Cloud (RunPod, R2, Supabase)</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>Travel (3 cities pilot pitches)</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td>Miscellaneous (legal, design, tools)</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td><strong>Total Month 1–3</strong></td>
+<td><strong>3.35</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="f2-month-46-pre-seed-deployed">F.2 Month 4–6 (pre-seed deployed)</h3>
+<table>
+<thead>
+<tr>
+<th>Line item</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Founding salaries (Manoj + CTO + coach part-time + 1 engineer)</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Hardware for 10 clubs</td>
+<td>3.5</td>
+</tr>
+<tr>
+<td>Cloud + infra</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Sales/BD travel + events</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Labelling ops (2 → 4 labellers)</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>Legal, accounting, admin</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Buffer</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td><strong>Total Month 4–6</strong></td>
+<td><strong>29.8</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="f3-month-718-full-pre-seed-runway">F.3 Month 7–18 (full pre-seed runway)</h3>
+<table>
+<thead>
+<tr>
+<th>Line item</th>
+<th>INR/mo</th>
+<th>12-month total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salaries (8-headcount avg)</td>
+<td>8</td>
+<td>96</td>
+</tr>
+<tr>
+<td>Hardware for 25 clubs</td>
+<td>—</td>
+<td>10.5</td>
+</tr>
+<tr>
+<td>Cloud + infra at scale</td>
+<td>1.5</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Sales / BD / events</td>
+<td>2</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Marketing (WhatsApp funnel, content)</td>
+<td>1.5</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Legal, finance, admin</td>
+<td>1</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Office (Bangalore base — small)</td>
+<td>1.5</td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Total Month 7–18</strong></td>
+<td></td>
+<td><strong>~196</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total 18-month spend: ~₹230 lakhs = ₹2.3 Cr.</strong> Add 10% contingency = <strong>₹2.5 Cr pre-seed ask.</strong></p>
+<hr>
+<h2 id="g-resource-plan">G. Resource Plan</h2>
+<h3 id="g1-founding-team-who-when">G.1 Founding team — who &amp; when</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>When</th>
+<th>Source</th>
+<th>Comp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CEO / Product / Capital — Manoj</strong></td>
+<td>Day 0</td>
+<td>—</td>
+<td>Founder equity 40–50%, salary deferred to month 6</td>
+</tr>
+<tr>
+<td><strong>CCO / Coach</strong></td>
+<td>Day 1–7</td>
+<td>Network</td>
+<td>8–15% equity + ₹50–80k/mo from month 4</td>
+</tr>
+<tr>
+<td><strong>CTO / ML co-founder</strong></td>
+<td>Day 1–60</td>
+<td>João Silva first; Bangalore fallback</td>
+<td>20–30% equity + ₹1.2–1.8 lakh/mo from month 4</td>
+</tr>
+<tr>
+<td><strong>Founding Engineer (full-stack)</strong></td>
+<td>Month 4</td>
+<td>Bangalore hiring</td>
+<td>1–2% ESOP + ₹12–18 LPA</td>
+</tr>
+<tr>
+<td><strong>Founding BD/Sales</strong></td>
+<td>Month 7</td>
+<td>Sports-tech background</td>
+<td>0.5–1% ESOP + ₹10–15 LPA + commission</td>
+</tr>
+</tbody>
+</table>
+<h3 id="g2-operating-team-month-7">G.2 Operating team — month 7+</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Headcount</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ML engineers</td>
+<td>2</td>
+<td>Classifier improvements + new features</td>
+</tr>
+<tr>
+<td>Hardware install lead</td>
+<td>1</td>
+<td>Manages partner network</td>
+</tr>
+<tr>
+<td>Customer success</td>
+<td>1</td>
+<td>Coach training + club support</td>
+</tr>
+<tr>
+<td>Content / community</td>
+<td>1</td>
+<td>WhatsApp funnel + social</td>
+</tr>
+<tr>
+<td>Labellers</td>
+<td>3–4</td>
+<td>₹15k each, college students</td>
+</tr>
+</tbody>
+</table>
+<h3 id="g3-advisors-target-list-offer-02505-each-2-yr-vest">G.3 Advisors target list (offer 0.25–0.5% each, 2-yr vest)</h3>
+<ul>
+<li>1× Mahesh Bhupathi (Hudle investor, racket-sports India authority)</li>
+<li>1× WPT player or top-Indian padel pro</li>
+<li>1× CV/ML academic (UPC-ViRVIG, IIT prof)</li>
+<li>1× club operator / franchise economics expert</li>
+<li>1× Indian sports-tech founder (Hudle, Playo, KheloMore CEO — if approachable)</li>
+</ul>
+<hr>
+<h2 id="h-technical-talent-india-bench-answer-to-your-question">H. Technical Talent — India bench (answer to your question)</h2>
+<p>The bench in India is <strong>deep, accessible, and ~5x cheaper than EU/US</strong>. Hard numbers:</p>
+<h3 id="h1-india-ml-cv-talent-supply">H.1 India ML / CV talent supply</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>What you get</th>
+<th>INR salary</th>
+<th>Where to source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Senior CV/ML engineer</strong> (4–7 yrs, pose/tracking)</td>
+<td>Can refactor <code>padel_analytics</code>, train classifier, ship to prod</td>
+<td>₹35–60 LPA full-time, ₹2.5–4 LPA/mo contract</td>
+<td>LinkedIn, Cutshort, Wellfound (formerly AngelList Talent), CV Slack communities</td>
+</tr>
+<tr>
+<td><strong>Mid-level ML engineer</strong> (2–4 yrs)</td>
+<td>Train + tune classifier, integrate inference</td>
+<td>₹15–28 LPA</td>
+<td>Same + IIT/IIIT/IISc placement networks</td>
+</tr>
+<tr>
+<td><strong>CV specialist (5+ yrs)</strong> w/ sports background</td>
+<td>If we want pure thoroughbred</td>
+<td>₹50–90 LPA</td>
+<td>Niche — try Sports Mechanics, Hawk-Eye India alumni</td>
+</tr>
+<tr>
+<td><strong>Junior ML / fresh grad</strong></td>
+<td>Bulk model-training labour, data pipelines</td>
+<td>₹6–12 LPA</td>
+<td>IIT/NIT placements direct</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bangalore = the deepest CV pool in India.</strong> Hyderabad and Pune are #2. NCR (Delhi) is fintech-heavy, less CV.</p>
+<h3 id="h2-hiring-channels-ranked">H.2 Hiring channels — ranked</h3>
+<ol>
+<li><strong>LinkedIn paid + Wellfound</strong> — fastest yield for senior roles</li>
+<li><strong>IIT/IISc placement cells</strong> — best for fresh grads, free</li>
+<li><strong>Cutshort / Hirect</strong> — Indian-specific platforms with CV filters</li>
+<li><strong>Twitter/X CV community</strong> (<code>#cv</code> <code>#opencv</code> hashtags) — for senior thoroughbreds</li>
+<li><strong>GitHub padel/tennis CV repo contributors</strong> — direct outreach to ArtLabss, padel_analytics, TennisCourtDetector forkers (proven interest in the problem)</li>
+</ol>
+<h3 id="h3-cost-comparison-vs-other-markets">H.3 Cost comparison vs other markets</h3>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>Senior CV engineer/mo (INR equivalent)</th>
+<th>Multiplier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bangalore</td>
+<td>₹3.5 lakh</td>
+<td>1.0x</td>
+</tr>
+<tr>
+<td>EU (Berlin, Madrid)</td>
+<td>₹15–22 lakh</td>
+<td>4–6x</td>
+</tr>
+<tr>
+<td>US (SF, NY)</td>
+<td>₹35–60 lakh</td>
+<td>10–17x</td>
+</tr>
+<tr>
+<td>Shenzhen / Beijing</td>
+<td>₹6–10 lakh</td>
+<td>2–3x</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Capital efficiency moat:</strong> Same ML quality at 1/4 of EU price, 1/10 of US. This is real and matters for Series A multiples.</p>
+<h3 id="h4-verdict-on-are-we-covered-on-technical">H.4 Verdict on &ldquo;are we covered on technical?&rdquo;</h3>
+<p><strong>Yes — provided we hire correctly.</strong> Three rules:
+1. <strong>Don&rsquo;t compromise on the lead CV/ML hire</strong> (founding role). Pay for excellence here — every junior follows.
+2. <strong>Lean on the open-source maintainer network first</strong> (João, ArtLabss, yastrebksv, UPC-ViRVIG) — they have the specific domain experience that takes a generic CV hire 6 months to build
+3. <strong>Build remote-first; don&rsquo;t insist on Bangalore-office.</strong> Best CV folks in India are remote-mode already.</p>
+<hr>
+<h2 id="i-procurement-vendor-list-have-these-phone-numbers-handy">I. Procurement &amp; Vendor List (have these phone numbers handy)</h2>
+<h3 id="i1-hardware">I.1 Hardware</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Vendor</th>
+<th>Lead time</th>
+<th>INR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reolink RLC-823A 16x</td>
+<td>Amazon India / Reolink India distributor</td>
+<td>5–7 days</td>
+<td>12,000</td>
+</tr>
+<tr>
+<td>Hikvision DS-2CD2T87G2-LU (alt premium)</td>
+<td>Authorised Hikvision dealer (Lamington Road Mumbai / SP Road Bangalore)</td>
+<td>7–10 days</td>
+<td>15,000–22,000</td>
+</tr>
+<tr>
+<td>Raspberry Pi 5 8GB</td>
+<td>Robu.in / SB Components India</td>
+<td>2–3 days</td>
+<td>8,500</td>
+</tr>
+<tr>
+<td>1TB NVMe SSD</td>
+<td>Crucial / Samsung via Amazon</td>
+<td>2 days</td>
+<td>5,500</td>
+</tr>
+<tr>
+<td>PoE switch TP-Link TL-SG1005P</td>
+<td>Amazon</td>
+<td>2 days</td>
+<td>3,000</td>
+</tr>
+<tr>
+<td>Cat6 cable + connectors</td>
+<td>Local</td>
+<td>Same day</td>
+<td>1,500</td>
+</tr>
+<tr>
+<td>Camera mount bracket + IP66 box</td>
+<td>Local CCTV shop</td>
+<td>2 days</td>
+<td>1,500</td>
+</tr>
+</tbody>
+</table>
+<h3 id="i2-cloud-saas">I.2 Cloud + SaaS</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Vendor</th>
+<th>Plan</th>
+<th>INR/mo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU inference</td>
+<td>RunPod (RTX 3090)</td>
+<td>Pay-per-second</td>
+<td>~50,000 at 5-club scale</td>
+</tr>
+<tr>
+<td>Object storage</td>
+<td>Cloudflare R2</td>
+<td>Pay-per-use</td>
+<td>5,000 at 5-club scale</td>
+</tr>
+<tr>
+<td>Database + Auth + Realtime</td>
+<td>Supabase</td>
+<td>Pro plan</td>
+<td>2,500</td>
+</tr>
+<tr>
+<td>PWA hosting</td>
+<td>Cloudflare Pages</td>
+<td>Free</td>
+<td>0</td>
+</tr>
+<tr>
+<td>WhatsApp delivery</td>
+<td>AX router (own infra)</td>
+<td>Internal</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>GoDaddy India / Namecheap</td>
+<td>Annual</td>
+<td>1,200/yr</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Sentry + PostHog</td>
+<td>Free tier</td>
+<td>0 initially</td>
+</tr>
+</tbody>
+</table>
+<h3 id="i3-professional-services">I.3 Professional services</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Vendor type</th>
+<th>Estimated cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Company incorporation (Pvt Ltd)</td>
+<td>CA firm in Bangalore</td>
+<td>₹25,000 one-time</td>
+</tr>
+<tr>
+<td>Trademark filing (brand name)</td>
+<td>IP lawyer</td>
+<td>₹15,000 + ₹4,500 govt fees</td>
+</tr>
+<tr>
+<td>Founder equity / vesting agreements</td>
+<td>Startup lawyer</td>
+<td>₹50,000–80,000 one-time</td>
+</tr>
+<tr>
+<td>Coach engagement letter + IP assignment</td>
+<td>Same</td>
+<td>Included above</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="j-risk-register-with-owner-mitigation">J. Risk Register (with owner + mitigation)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Severity</th>
+<th>Owner</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Shot classifier accuracy plateaus</td>
+<td>Med</td>
+<td>High</td>
+<td>CTO</td>
+<td>Multi-coach labels + dataset expansion + ensemble; contractor escalation if stuck &gt;Week 8</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Hudle builds analytics OR signs Clutch</td>
+<td>Med</td>
+<td>V.High</td>
+<td>CEO</td>
+<td>Partnership conversation before Month 3; offer revenue share</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>Chinese competitor enters India</td>
+<td>Low (geopolitics)</td>
+<td>High</td>
+<td>CEO</td>
+<td>Monitor watch list; lean federation lock-in</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Coach overcommits, under-delivers</td>
+<td>Med</td>
+<td>High</td>
+<td>CEO</td>
+<td>Milestone-based payment, not pure equity</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Manoj overstretched (AX is day-job)</td>
+<td>High</td>
+<td>High</td>
+<td>CEO</td>
+<td>Founding engineer hired by Month 6 to take ops load; honest hour-budgeting</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Hardware reliability fails in monsoon/heat</td>
+<td>Med</td>
+<td>Med</td>
+<td>Hardware ops lead</td>
+<td>IP66 cameras only; thermal testing; spare-on-shelf for every club</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Pre-seed doesn&rsquo;t close by Month 6</td>
+<td>Med</td>
+<td>High</td>
+<td>CEO</td>
+<td>Bridge of ₹50L from 3–5 angels lined up early; SAFE structure</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>Players don&rsquo;t share/talk about feedback</td>
+<td>Med</td>
+<td>Med</td>
+<td>Product</td>
+<td>WhatsApp-shareable screenshots from V1; influencer seeding</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Hardware ops can&rsquo;t scale beyond 10 clubs</td>
+<td>Med</td>
+<td>Med</td>
+<td>Hardware lead</td>
+<td>Train partner network from Month 9</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Sharath Kumar / Epic Padel aggressive lock</td>
+<td>Med</td>
+<td>High</td>
+<td>CEO</td>
+<td>LinkedIn DM this week; gauge competition vs partnership intent</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="k-governance-review-cadence">K. Governance &amp; Review Cadence</h2>
+<h3 id="k1-weekly">K.1 Weekly</h3>
+<ul>
+<li><strong>Monday 9am:</strong> Founders sync (30 min). Review previous week&rsquo;s milestones. Lock current week priorities.</li>
+<li><strong>Friday 6pm:</strong> Metrics review — clubs live, matches analysed, classifier accuracy, MRR, runway months.</li>
+</ul>
+<h3 id="k2-monthly">K.2 Monthly</h3>
+<ul>
+<li><strong>First Monday:</strong> Board / advisor monthly update (1-page).</li>
+<li><strong>Mid-month:</strong> China watch list review (per Section 4.6 of venture plan).</li>
+<li><strong>End of month:</strong> Budget burn vs plan. Re-forecast if &gt;10% off.</li>
+</ul>
+<h3 id="k3-decision-gates">K.3 Decision gates</h3>
+<p>Use the 7-gate model from venture plan §13. <strong>Gate failures = automatic Friday emergency review, not next-Monday.</strong></p>
+<hr>
+<h2 id="l-backer-pitch-talking-points-use-these-in-conversations">L. Backer Pitch — Talking Points (use these in conversations)</h2>
+<h3 id="l1-the-hook-45-seconds">L.1 The hook (45 seconds)</h3>
+<p>&ldquo;Padel is the world&rsquo;s fastest-growing sport — search interest up 1,000% since 2020. India just hit 500 courts, projected 5,000+ by 2036, growing 70% a year. Padel enters the Asian Games in 2026. No India-headquartered AI coaching platform exists. We&rsquo;re building it — coach-led, WhatsApp-native, defensible by geography against Chinese tech. Pre-seed of ₹2.5 Cr for 18 months runway, target 25 paying clubs and Series A-ready by month 18.&rdquo;</p>
+<h3 id="l2-the-differentiation-when-they-ask-why-wont-clutch-china-kill-you">L.2 The differentiation (when they ask &ldquo;why won&rsquo;t Clutch / China kill you?&rdquo;)</h3>
+<p>&ldquo;Three moats Chinese tech can&rsquo;t easily replicate in India: (1) procurement-policy wall — Indian clubs face geopolitical risk choosing Chinese SaaS, same reason TikTok is banned. (2) A WPT-trained padel coach as co-founder, designing the technique-scoring rubric — that&rsquo;s the data moat, not the code. (3) WhatsApp-native distribution at SMB-club scale — I run AutomationXpert which has shipped this exact muscle into 250+ Indian businesses. Clutch sells direct in Europe; their India arm is one team in Bangalore. We can move faster on home turf.&rdquo;</p>
+<h3 id="l3-the-capital-efficiency-when-they-ask-burn-rate">L.3 The capital efficiency (when they ask burn rate)</h3>
+<p>&ldquo;₹230 lakh over 18 months. We&rsquo;re founder-funded for the first 3 months to hit 5 clubs and a working classifier. Then ₹2.5 Cr pre-seed gets us to 25 clubs, ₹50L MRR, founding team complete. India ML talent is 1/4 of European cost — our gross margin profile (89%) is identical to Clutch&rsquo;s, but our CAC is half theirs because of WhatsApp distribution. Series A target ₹15–20 Cr at Month 18 for India scale + UAE entry.&rdquo;</p>
+<h3 id="l4-the-exit-story-when-they-ask-outcome">L.4 The exit story (when they ask outcome)</h3>
+<p>&ldquo;Three credible paths: (a) Acquisition by Epic Padel or a global rollup — they already raised $10M to consolidate. We&rsquo;re the India play they&rsquo;d buy. (b) Strategic acquirer in Indian sports — Hudle, Playo, KheloMore, or a corporate (Bajaj Sports, Decathlon India) — buying for the AI capability. (c) Continued growth path through Series A/B if Asia thesis plays out — $50–100M Series B in 4 years is achievable at the right multiples on padel growth.&rdquo;</p>
+<hr>
+<h2 id="m-open-decisions-must-close-before-raising">M. Open Decisions (must close before raising)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>Brand name + domain</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>LLP vs Pvt Ltd entity</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>Coach identity + signed terms</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>CTO/ML co-founder — João or Bangalore hire</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>Pilot club identity (Mumbai/Pune/Bangalore)</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>Manoj&rsquo;s son advisory/role decision</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>Pan-Asia vs Anti-China geographic strategy (per plan §4.5)</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>Hudle partnership approach — competitive or collaborative?</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>First angel commit (₹50L bridge)</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>Working hour commitment (Manoj&rsquo;s weekly floor)</td>
+<td>Open</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="n-change-log">N. Change Log</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Author</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-07-01</td>
+<td>Manoj + Claude</td>
+<td>v0.1 — initial execution-ready Project Report</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Companion to PADEL_AI_VENTURE_PLAN.md (strategy). This document is execution-focused — what we do, when, with whom, for how much. Update here for any operational state change. Memory pointer in <code>MEMORY.md</code>.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>

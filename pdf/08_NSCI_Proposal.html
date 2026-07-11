@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Proposal to the NSCI Committee — PadelMind</title>
+  <style>
+/* ============================================================
+   PadelMind — Document Theme
+   Premium investor + advisor-facing PDF style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap');
+
+/* ---------- Page setup ---------- */
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm 20mm;
+
+  @bottom-left {
+    content: string(doctitle);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #94a3b8;
+  }
+
+  @top-right {
+    content: string(brand);
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #1B4D3E;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+  @top-right { content: none; }
+}
+
+/* ---------- Root ---------- */
+:root {
+  --primary: #1B4D3E;
+  --primary-dark: #0F2E25;
+  --primary-light: #2D6A57;
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #1E293B;
+  --muted: #475569;
+  --muted-soft: #64748B;
+  --hairline: #E2E8F0;
+  --card: #F8FAFC;
+  --card-warm: #FEF3C7;
+  --good: #047857;
+  --warn: #B45309;
+  --bad: #B91C1C;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: linear-gradient(135deg, #0F2E25 0%, #1B4D3E 50%, #2D6A57 100%);
+  color: white;
+  position: relative;
+  padding: 32mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50mm;
+  right: -50mm;
+  width: 150mm;
+  height: 150mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, transparent 70%);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80mm;
+  left: -60mm;
+  width: 200mm;
+  height: 200mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 106, 87, 0.4) 0%, transparent 60%);
+}
+
+.cover-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-brand-accent {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.cover-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6mm;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-main {
+  position: relative;
+  z-index: 2;
+}
+
+.cover-doctype {
+  font-size: 10pt;
+  color: var(--accent-light);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8mm;
+}
+
+.cover-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 38pt;
+  font-weight: 600;
+  line-height: 1.05;
+  color: white;
+  letter-spacing: -0.025em;
+  margin: 0 0 6mm 0;
+  max-width: 150mm;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 140mm;
+}
+
+.cover-meta {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8mm 12mm;
+  padding-top: 12mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.cover-meta-label {
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2mm;
+}
+
+.cover-meta-value {
+  font-size: 11pt;
+  color: white;
+  font-weight: 500;
+}
+
+/* ---------- Body content ---------- */
+.body {
+  string-set: doctitle attr(data-doctitle) brand attr(data-brand);
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14mm 0 6mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--primary);
+  page-break-after: avoid;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+  margin: 10mm 0 4mm 0;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin: 6mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 5mm 0 2mm 0;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 3mm 0;
+  color: var(--ink-soft);
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Lists ---------- */
+ul, ol {
+  margin: 0 0 4mm 0;
+  padding-left: 6mm;
+}
+
+li {
+  margin-bottom: 1.5mm;
+  color: var(--ink-soft);
+}
+
+li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+ul li::marker {
+  font-size: 1.1em;
+}
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0 6mm 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 2.5mm 3mm;
+  text-align: left;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--card);
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid var(--primary);
+}
+
+/* ---------- Code & inline elements ---------- */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 9pt;
+  background: var(--card);
+  color: var(--primary-dark);
+  padding: 0.4mm 1.5mm;
+  border-radius: 2px;
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  font-size: 8.5pt;
+  background: var(--ink);
+  color: #E2E8F0;
+  padding: 4mm;
+  border-radius: 3px;
+  overflow-x: auto;
+  line-height: 1.4;
+  margin: 4mm 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* ---------- Blockquote / callout ---------- */
+blockquote {
+  margin: 4mm 0;
+  padding: 4mm 5mm;
+  background: linear-gradient(to right, var(--card-warm), #FFF);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- HR ---------- */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--hairline), transparent);
+  margin: 8mm 0;
+}
+
+/* ---------- Section break utility ---------- */
+.page-break {
+  page-break-before: always;
+}
+
+/* ---------- Custom utility cards ---------- */
+.card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  padding: 4mm 5mm;
+  margin: 4mm 0;
+  border-radius: 0 2px 2px 0;
+  page-break-inside: avoid;
+}
+
+.card-accent {
+  border-left-color: var(--accent);
+  background: var(--card-warm);
+}
+
+/* ---------- TOC styling (optional) ---------- */
+.toc {
+  margin: 6mm 0 10mm 0;
+  padding: 5mm 6mm;
+  background: var(--card);
+  border-radius: 3px;
+}
+
+.toc h2 {
+  margin-top: 0;
+  font-size: 13pt;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 10pt;
+}
+
+.toc ul li {
+  padding: 1mm 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+
+/* ---------- Document footer ---------- */
+.doc-footer {
+  margin-top: 12mm;
+  padding-top: 4mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--muted-soft);
+  font-style: italic;
+}
+
+/* ---------- Strong emphasis on first paragraph of a section ---------- */
+h2 + p strong:first-child,
+h3 + p strong:first-child {
+  color: var(--primary);
+}
+
+/* ---------- Print-specific tweaks ---------- */
+@media print {
+  body { font-size: 10pt; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  h3 { font-size: 11.5pt; }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <div class="cover-brand">PadelMind<span class="cover-brand-accent"></span></div>
+    <div class="cover-tagline">AI Coaching for Racket Sports</div>
+  </div>
+  <div class="cover-main">
+    <div class="cover-doctype">For the NSCI Padel Committee</div>
+    <h1 class="cover-title">An AI Vision-Based Player Grading &amp; Improvement System for the NSCI Padel Courts</h1>
+    <p class="cover-subtitle">A proposal to install video capture equipment on both NSCI padel courts — a 90-day training phase at no cost to the club, followed by a 2-year commercial phase with a 30% share of gross member revenue remitted to NSCI. No audio. No third-party access.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Prepared for</div><div class="cover-meta-value">The Padel Committee, NSCI, Worli, Mumbai</div></div>
+<div><div class="cover-meta-label">Applicant</div><div class="cover-meta-value">Anchor Fastener Mfg Corporation</div></div>
+<div><div class="cover-meta-label">Product line</div><div class="cover-meta-value">PadelMind by AutomationXpert</div></div>
+<div><div class="cover-meta-label">Club economics</div><div class="cover-meta-value">Zero cost. 30% of gross member revenue in commercial phase.</div></div>
+<div><div class="cover-meta-label">Authored</div><div class="cover-meta-value">Manoj Maheshwari · 2026-07-02</div></div>
+  </div>
+</div>
+
+<div class="body" data-doctitle="Proposal to the NSCI Committee" data-brand="PadelMind">
+<h2 id="a-proposal-to-the-nsci-padel-committee-90-day-training-phase-at-no-cost-followed-by-a-2-year-commercial-phase-with-a-30-revenue-share-to-nsci">A Proposal to the NSCI Padel Committee — 90-Day Training Phase at No Cost, Followed by a 2-Year Commercial Phase with a 30% Revenue Share to NSCI</h2>
+<p><strong>To:</strong> The Padel Committee, National Sports Club of India, Worli, Mumbai
+<strong>From:</strong> Anchor Fastener Mfg Corporation
+&nbsp;&nbsp;&nbsp;&nbsp;318/319, Tardeo Aircon Market, Tardeo, Mumbai, Maharashtra – 400034, India
+&nbsp;&nbsp;&nbsp;&nbsp;GSTIN 27ACAPM7018E1ZV
+&nbsp;&nbsp;&nbsp;&nbsp;For its product line <strong>PadelMind by AutomationXpert</strong>
+&nbsp;&nbsp;&nbsp;&nbsp;Represented by Manoj Maheshwari, Director (and Member, NSCI)
+<strong>Date:</strong> 2026-07-02
+<strong>Reading time:</strong> 5 minutes</p>
+<hr>
+<h2 id="the-proposal-in-one-paragraph">The proposal in one paragraph</h2>
+<p>Anchor Fastener Mfg Corporation, through its product line <strong>PadelMind by AutomationXpert</strong>, would like the committee&rsquo;s permission to install — entirely at our own cost — video capture equipment on <strong>both NSCI padel courts</strong> for a <strong>90-day data-capture and model-training period</strong>, followed by a <strong>2-year commercial phase</strong> during which members can pay to use the system and the club earns a <strong>30% share of all revenue</strong> from NSCI members. During the 90-day training phase, <strong>no service is being offered to members</strong> — players simply play as usual; no member action is required and no member deliverable is provided.</p>
+<p><strong>No audio is captured. No footage is shared with any third party. No feed is made available to any player, staff member, or outside person during the trial.</strong> The data captured during the training phase is used solely internally, for the purpose of training the software.</p>
+<p>The only ask on the club is one covered, weather-protected electrical point near the courts to house the internet modem. Everything else — cameras, cabling, modem, cellular data, cloud processing, support, and all operating expenses of the commercial phase — is fully borne by us.</p>
+<p>Both the training phase and the commercial framework are being placed before the committee together in this single proposal, so the club has full clarity today on the entire arrangement — training terms, commercial terms, tenure, and revenue share.</p>
+<hr>
+<h2 id="why-we-are-bringing-this-to-nsci-first">Why we are bringing this to NSCI first</h2>
+<p>I am a member and an active padel player at the club. Professionally I run <strong>Anchor Fastener Mfg Corporation</strong> (Mumbai, GSTIN 27ACAPM7018E1ZV) and, under its umbrella, <strong>AutomationXpert</strong> — an established SaaS platform serving Indian small businesses. <strong>PadelMind by AutomationXpert</strong> is a new product line we are building under the same corporate roof, focused on AI-assisted racket-sports coaching.</p>
+<p>The honest ask is this: NSCI has two well-utilised padel courts, an engaged member base, and the atmosphere to run a real-world observation and training period without disruption. If the committee grants permission, we can develop, refine, and validate the software on Indian match play — and if it works, NSCI will have been the club where a genuinely Indian sports-technology capability was built.</p>
+<p>During the 90-day training phase there is no cost to the club and no obligation of any kind. From Day 91, the club begins earning a 30% share of gross revenue from NSCI members using the system, on the framework detailed later in this document.</p>
+<hr>
+<h2 id="trial-terms-90-days">Trial terms — 90 days</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Duration</strong></td>
+<td>90 days from the date of installation</td>
+</tr>
+<tr>
+<td><strong>Courts covered</strong></td>
+<td>Both padel courts</td>
+</tr>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Data capture and model training only. No service is offered to members during this phase.</td>
+</tr>
+<tr>
+<td><strong>Cost to NSCI</strong></td>
+<td>Zero. No installation charge, no fee, no consumable cost.</td>
+</tr>
+<tr>
+<td><strong>Impact on members</strong></td>
+<td>None. Members play as usual. Nothing to sign up for, nothing to opt into, no action required.</td>
+</tr>
+<tr>
+<td><strong>Audio</strong></td>
+<td>Not captured. Video only.</td>
+</tr>
+<tr>
+<td><strong>Data usage</strong></td>
+<td>Solely internal, for training the software. Not shared with any third party. Not made available to members or club staff during the trial.</td>
+</tr>
+<tr>
+<td><strong>Commitment during training phase</strong></td>
+<td>None. The committee may terminate the training phase at any point with 7 days&rsquo; written notice.</td>
+</tr>
+<tr>
+<td><strong>Removal on early termination</strong></td>
+<td>If the training phase is terminated during the 90 days, all equipment removed at our cost within 7 days of notice, with no residual obligation on the club.</td>
+</tr>
+<tr>
+<td><strong>After Day 90</strong></td>
+<td>Automatic transition to the 2-year commercial phase on the terms set out in the &ldquo;What happens after Day 90&rdquo; section below.</td>
+</tr>
+<tr>
+<td><strong>Transparency</strong></td>
+<td>A small informational notice will be posted at the courts explaining that AI research video capture is in progress for internal software-training purposes only.</td>
+</tr>
+<tr>
+<td><strong>Per-session opt-out</strong></td>
+<td>Any member who prefers not to be recorded can pause recording on that court instantly — either by pressing a clearly labelled courtside pause switch, or by asking club staff (see next section).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="what-nsci-needs-to-provide">What NSCI needs to provide</h2>
+<p><strong>One thing — one electrical point.</strong></p>
+<p>The club needs to provide:</p>
+<ul>
+<li><strong>One 230V / 15A power outlet</strong> at a location of the club&rsquo;s choosing, near or overlooking the padel courts</li>
+<li>The location must be <strong>covered from rain</strong> (under a canopy, inside a service niche, or in an existing covered structure)</li>
+<li>The location must be <strong>reasonably protected from casual tampering</strong> — ideally locked, or in a staff-access-only area, or inside a weatherproof service cabinet the club allows us to mount</li>
+<li><strong>No club internet is required.</strong> We will bring our own dedicated internet connection (4G/5G cellular modem with our own SIM and paid data plan) at our own cost. The modem lives at this power point.</li>
+</ul>
+<p>That is the total ask on the club. No court downtime for installation beyond a 2-hour window on a mutually agreed morning. No staff involvement thereafter. No maintenance obligation.</p>
+<hr>
+<h2 id="member-privacy-how-a-player-can-opt-out-of-being-recorded">Member privacy — how a player can opt out of being recorded</h2>
+<p>We recognise that even though no service is being offered to members and no footage leaves our system, some players may simply prefer not to be recorded on a given day. Two mechanisms will be in place from Day 1 to give every player direct, no-friction control.</p>
+<p><strong>1. A courtside pause switch — one per court.</strong>
+A small, clearly labelled push-button (a commodity IP-connected smart switch, ~10 cm across, weather-protected, LED-lit) will be installed at a visible location on each padel court, next to the score area. The convention is:</p>
+<ul>
+<li><strong>Green LED</strong> = recording is active</li>
+<li><strong>Red LED</strong> = recording is paused</li>
+</ul>
+<p>Pressing the button pauses recording on that court immediately for the next <strong>2 hours</strong> (adjustable). The LED turns red for the whole pause window. Recording auto-resumes after the 2 hours, unless the button is pressed again. Any member arriving on court can look at the LED before they start playing to know the current state, and press the button if they prefer.</p>
+<p><strong>2. A request to club staff (backup channel).</strong>
+A member who prefers can simply tell the club staff that they do not wish to be recorded. Staff send a one-line WhatsApp message to a dedicated number monitored by our team, and we pause the relevant court from our end within seconds.</p>
+<p><strong>3. Courtside signage.</strong>
+A small, discreet notice at each court will state — in one line — that AI research video capture is in progress, that no audio is captured, that footage is not shared, and how to pause recording (button or ask staff). This ensures every player, including first-time visitors, sees the mechanism before playing.</p>
+<p><strong>Hardware and software:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pause switch</td>
+<td>One commodity Zigbee / IP smart button per court (approx. ₹1,500 each), wall-mounted, LED-lit, weather-protected. Supplied and paid for by us.</td>
+</tr>
+<tr>
+<td>Management software</td>
+<td>Small state-machine service running on our edge computer. Reads button presses and WhatsApp pause requests; toggles the corresponding camera&rsquo;s recording state; auto-resumes on timer expiry. All state changes logged with timestamp for audit.</td>
+</tr>
+<tr>
+<td>Audit trail</td>
+<td>On request from the committee at any point during the trial, we can produce a log showing exactly when each court was paused, by which channel (button or staff), and for how long. This lets the committee independently verify that opt-outs are being honoured.</td>
+</tr>
+<tr>
+<td>Operational burden on the club</td>
+<td>None. We install, monitor, respond, and audit. Club staff only need to send a one-line WhatsApp when a member asks — no training, no app, no login.</td>
+</tr>
+</tbody>
+</table>
+<p>This mechanism is designed to be <strong>understandable by any member in five seconds</strong> (look at the LED, press if you want to pause), <strong>auditable by the committee at any time</strong>, and <strong>operationally silent for the club</strong>.</p>
+<hr>
+<h2 id="what-we-install-fully-at-our-cost">What we install — fully at our cost</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4K weather-resistant IP cameras (one or two per court, to be finalised at site walk)</td>
+<td>Recording rallies during match play</td>
+<td>Mounted on existing back-wall or overhead structure, at appropriate height, discreet</td>
+</tr>
+<tr>
+<td>1× courtside pause switch per court</td>
+<td>Player-facing opt-out mechanism (see previous section)</td>
+<td>Wall-mounted at the score area, LED-lit, weather-protected</td>
+</tr>
+<tr>
+<td>Cabling (Cat6, outdoor-grade)</td>
+<td>Camera → central network point</td>
+<td>Run along existing cable trays; concealed</td>
+</tr>
+<tr>
+<td>1× Edge-buffer computer</td>
+<td>Buffers matches locally, uploads to cloud securely, runs pause-switch state machine</td>
+<td>Inside a small weatherproof enclosure at the power point</td>
+</tr>
+<tr>
+<td>1× 4G/5G cellular modem + SIM</td>
+<td>Dedicated internet for the system — does not touch any club network</td>
+<td>Same enclosure as the edge computer</td>
+</tr>
+<tr>
+<td>1× UPS / battery backup</td>
+<td>Prevents data loss during brief power outages</td>
+<td>Same enclosure</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Installation:</strong> A single 2-hour window on a morning of the club&rsquo;s choosing. One licensed electrician plus our install lead. Zero disruption to normal club or member activity outside that window.</p>
+<p><strong>Ongoing maintenance:</strong> We retain sole responsibility for hardware upkeep, software updates, system uptime, and any breakage. <strong>Zero maintenance burden on the club.</strong></p>
+<p><strong>Ownership and liability:</strong> All equipment installed remains the property of Anchor Fastener Mfg Corporation. Any damage to club property caused during installation is our liability.</p>
+<hr>
+<h2 id="what-happens-after-day-90-commercial-framework">What happens after Day 90 — commercial framework</h2>
+<p>At the end of the 90-day training phase, PadelMind moves into commercial operation on the two NSCI padel courts, on the framework set out below. This framework is being agreed <strong>upfront, as part of this proposal</strong>, so the committee has full clarity today and no separate commercial negotiation is required later.</p>
+<p><strong>Pricing to members.</strong> Members will be offered two options: (a) a <strong>per-session usage fee</strong> for occasional users, or (b) a <strong>monthly subscription</strong> for members who want continuous access. The exact price points will be shared with the committee ahead of commercial launch and positioned to be attractive to members.</p>
+<p><strong>Revenue share with the club — 70:30, in the club&rsquo;s favour on effort.</strong> All revenue collected from NSCI members using PadelMind will be shared with the club on a <strong>70:30 ratio — 30% to NSCI, 70% to us</strong>. The 30% share is calculated on <strong>gross revenue</strong> from NSCI members (i.e. top-line, not net of our expenses) and is remitted to the club <strong>monthly</strong>, together with a clear statement of member usage and amounts collected.</p>
+<p><strong>All expenses borne by us.</strong> Every operating cost of the commercial phase — hardware, cellular data, cloud, software, support, upgrades, replacements, member onboarding, billing infrastructure — continues to be borne entirely by us as the proposer. The club&rsquo;s 30% share is on top-line revenue, with <strong>no cost deductions of any kind</strong>.</p>
+<p><strong>Tenure — 2-year lock-in.</strong> The commercial arrangement runs for a fixed period of <strong>2 years from the date of first commercial launch</strong>. This protects both sides: the club receives a guaranteed 2-year revenue stream from an asset it invests nothing in, and we get the operating window we need to recover our investment in the training phase and grow member adoption. At the end of the 2-year lock-in, the arrangement will be reviewed and renewed on mutually agreed terms.</p>
+<p><strong>Launch readiness.</strong> At <strong>Day 75</strong> — with 15 days still remaining in the training phase — we will confirm to the committee that the software is ready for commercial launch on Day 91, and share the final member pricing sheet and communication plan for member roll-out. This is a <strong>readiness confirmation, not a fresh commercial negotiation</strong> — the terms above are being agreed today.</p>
+<hr>
+<h2 id="longer-horizon-extending-to-tennis-and-badminton">Longer horizon — extending to tennis and badminton</h2>
+<p>If the padel phase proves the system out, the same approach extends naturally to <strong>tennis and badminton</strong>. NSCI is one of very few clubs in India that has active courts in all three of these racket sports under one roof, which makes it a genuinely unique candidate for a multi-sport rollout.</p>
+<p>If the committee wished to extend the arrangement after the padel phase, NSCI would become <strong>the first club in India with AI-assisted match analysis across padel, tennis, and badminton</strong> — a distinction that would sit meaningfully alongside NSCI&rsquo;s existing standing as one of Mumbai&rsquo;s premier sports institutions.</p>
+<p>We are not seeking a decision on this today. It is stated only so the committee is aware of the natural product horizon: what begins at the two padel courts can, if it earns the right to, become a club-wide capability for racket sports.</p>
+<hr>
+<h2 id="a-further-value-add-we-would-like-to-offer-nsci-in-the-longer-term">A further value-add we would like to offer NSCI in the longer term</h2>
+<p>Independently of the match-analysis system, we would like to also offer NSCI — at <strong>no cost, hosted and maintained free of charge</strong> — an <strong>in-house online court-bookings system</strong> for the padel courts. This can be extended to other sports facilities at the club if the committee wishes. Members book courts on their phone; the club sees a live occupancy view; reminders and no-shows are handled automatically.</p>
+<p>This is offered as a good-faith complement to the primary proposal. It is not a condition, not tied to the commercial phase, and not billable to the club. It reflects our long-term intent to serve NSCI as a technology partner beyond a single product.</p>
+<p>We do not need a decision on this today; it is mentioned so the committee is aware of the broader intent. We can present it separately whenever the committee wishes.</p>
+<hr>
+<h2 id="why-this-is-zero-risk-for-the-club">Why this is zero-risk for the club</h2>
+<p><strong>Equipment failure or issue</strong> — All hardware is our property and our sole responsibility. Any breakage, outage, or replacement is on us, at no cost or inconvenience to the club.</p>
+<p><strong>Member privacy</strong> — No audio is captured. No facial recognition is used. No footage is shared with any third party or shown to any player during the training phase. Data is stored on Indian-jurisdiction cloud and used only for internal software training. <strong>Any player who prefers not to be recorded can pause recording on that court in one press of a courtside switch (or by asking staff), for the next 2 hours — see the &ldquo;Member privacy&rdquo; section above for the mechanism.</strong></p>
+<p><strong>Financial exposure</strong> — Zero. The club invests nothing, pays nothing, and takes no operating risk. From Day 91 the club begins receiving a 30% share of gross revenue from NSCI members using the system, remitted monthly.</p>
+<p><strong>Termination of the training phase</strong> — If, during the 90-day training phase, the committee decides not to proceed at all, the trial may be terminated with 7 days&rsquo; written notice; equipment is then removed at our cost within 7 days and the club owes nothing.</p>
+<p><strong>No exposure on player-facing services during training</strong> — Because no service is being offered to members during the 90-day training phase, there is no player grievance surface for the club to worry about in that period.</p>
+<hr>
+<h2 id="what-i-ask-the-committee-to-approve">What I ask the committee to approve</h2>
+<p>A single decision, expressible in one paragraph the committee can minute:</p>
+<blockquote>
+<p><em>The Padel Committee approves a 90-day data-capture and model-training period on both padel courts, followed by a 2-year commercial phase from the date of first commercial launch, proposed by Anchor Fastener Mfg Corporation (through its product line PadelMind by AutomationXpert), represented by Member Manoj Maheshwari, at no cost or obligation to the club. During the training phase, video will be captured for the sole purpose of internal software training; no audio will be captured; no service will be offered to members. A discreet informational notice will be posted at each court explaining the recording and the opt-out mechanism. Members may pause recording on any court at any time either by pressing a clearly labelled courtside switch (auto-resumes after two hours) or by asking club staff. An audit log of pause events will be made available to the committee on request. The club will provide one covered, protected electrical point; internet connectivity will be arranged and paid for by the applicant. All equipment, installation, maintenance, connectivity, and all operating expenses of the commercial phase are the responsibility of the applicant. From the date of first commercial launch, 30% of the gross revenue collected from NSCI members using the system will be remitted to the club monthly for a fixed period of 2 years. The training phase may be terminated by the committee at any point with 7 days&rsquo; written notice.</em></p>
+</blockquote>
+<hr>
+<h2 id="timeline">Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Timing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Committee review and approval-in-principle</td>
+<td>This meeting</td>
+</tr>
+<tr>
+<td>Site walk with club maintenance to identify electrical point</td>
+<td>Within 3 days of approval</td>
+</tr>
+<tr>
+<td>Courtside informational notice posted</td>
+<td>On installation day</td>
+</tr>
+<tr>
+<td>Installation (2-hour window, morning)</td>
+<td>Within 10 days of approval</td>
+</tr>
+<tr>
+<td>Data capture and model training runs</td>
+<td>Days 1–90</td>
+</tr>
+<tr>
+<td>Day 75 — launch-readiness confirmation to committee, final member pricing shared</td>
+<td>To committee</td>
+</tr>
+<tr>
+<td>Day 91 — commercial launch to NSCI members</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Monthly remittance to club of 30% of gross revenue</td>
+<td>From month 1 of commercial phase</td>
+</tr>
+<tr>
+<td>End of 2-year lock-in — review and renewal on mutually agreed terms</td>
+<td>Month 24 of commercial phase</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="about-the-applicant">About the applicant</h2>
+<p><strong>Anchor Fastener Mfg Corporation</strong> is a Mumbai-based Indian company (GSTIN 27ACAPM7018E1ZV) with a registered office at 318/319, Tardeo Aircon Market, Tardeo, Mumbai – 400034. In addition to its manufacturing business, the company operates <strong>AutomationXpert</strong>, a WhatsApp-native SaaS platform serving Indian small businesses with live paying customers today.</p>
+<p><strong>PadelMind by AutomationXpert</strong> is a new product line under the same corporate roof, focused on AI-assisted racket-sports coaching. It is being built with an explicit India-first intent — Indian-owned, Indian-operated, developed on Indian match play, priced for Indian players.</p>
+<p>I am Manoj Maheshwari, Director of Anchor Fastener Mfg Corporation and a member of NSCI. I play padel at the club regularly and would rather NSCI be the club where this product is developed and refined than any other.</p>
+<hr>
+<h2 id="how-to-reach-me">How to reach me</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Contact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WhatsApp (preferred)</td>
+<td>+91 98200 27850</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>manoj@quitlosing.in</td>
+</tr>
+<tr>
+<td>In person</td>
+<td>On the padel courts most weekends</td>
+</tr>
+</tbody>
+</table>
+<p>I am happy to attend a committee meeting to walk through this in person and answer any questions.</p>
+<hr>
+<h2 id="attachments-available-on-request">Attachments available on request</h2>
+<ul>
+<li>Draft memorandum of understanding covering the 90-day training phase and the 2-year commercial phase, including the 70:30 revenue-share mechanics and monthly remittance format</li>
+</ul>
+<hr>
+<p><strong>Thank you for the committee&rsquo;s time and consideration. We would be honoured to have NSCI as the club where PadelMind is developed and refined.</strong></p>
+<p><em>— Manoj Maheshwari</em>
+<em>Director, Anchor Fastener Mfg Corporation</em>
+<em>For PadelMind by AutomationXpert</em>
+<em>Member, NSCI</em></p>
+<p><strong>Anchor Fastener Mfg Corporation</strong>
+318/319, Tardeo Aircon Market, Tardeo, Mumbai, Maharashtra – 400034, India
+GSTIN 27ACAPM7018E1ZV</p>
+<hr>
+<p><em>Working draft dated 2026-07-02. Please confirm receipt and preferred meeting slot to discuss.</em></p>
+<div class="doc-footer">
+  Companion document set: Strategic Venture Plan · Project Report · Technical Feasibility · Commercial Report · Base Club Offer · Technical Review Request.<br/>
+  Single source of truth maintained in <code>~/Documents/padel-clone/</code>.
+</div>
+</div>
+</body>
+</html>
