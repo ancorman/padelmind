@@ -1,0 +1,18 @@
+[Unit]
+Description=PadelMind Court Recorder
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/padelmind-recorder
+EnvironmentFile=/home/pi/padelmind-recorder/config.env
+ExecStart=/home/pi/padelmind-recorder/venv/bin/python recorder.py
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/padelmind-recorder.log
+StandardError=append:/var/log/padelmind-recorder.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PadelMind — Phase 1 Scope vs Build Status</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #1a1a2e; font-size: 13px; }
+
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .no-print { display: none; }
+  }
+
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .header {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 16px; border-bottom: 2.5px solid #1a3a8f; margin-bottom: 20px;
+  }
+  .header img { width: 52px; height: 52px; }
+  .header h1 { font-size: 20px; font-weight: 800; color: #1a3a8f; }
+  .header p { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .header-meta { margin-left: auto; text-align: right; font-size: 11px; color: #94a3b8; line-height: 1.7; }
+  .header-meta strong { color: #1a3a8f; }
+
+  .legend {
+    display: flex; gap: 20px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-done { background: #22c55e; }
+  .dot-us { background: #3b82f6; }
+  .dot-pending { background: #f59e0b; }
+  .dot-none { background: #e2e8f0; border: 1px solid #cbd5e1; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: #1a3a8f; color: white; font-weight: 700;
+    padding: 10px 12px; text-align: left; font-size: 11px;
+    letter-spacing: 0.3px; white-space: nowrap;
+  }
+  th:first-child { border-radius: 6px 0 0 0; }
+  th:last-child { border-radius: 0 6px 0 0; }
+
+  td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  tr:hover td { background: #f8fafc; }
+
+  .comp-label {
+    font-weight: 700; color: #1a3a8f; font-size: 12px; margin-bottom: 3px;
+  }
+  .comp-sub { font-size: 10px; color: #94a3b8; font-style: italic; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-done { background: #dcfce7; color: #15803d; }
+  .badge-us { background: #dbeafe; color: #1d4ed8; }
+  .badge-partial { background: #fef3c7; color: #b45309; }
+  .badge-pending { background: #fafafa; color: #94a3b8; border: 1px solid #e2e8f0; }
+  .badge-scope { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+  .detail { font-size: 11px; color: #475569; line-height: 1.6; margin-top: 4px; }
+  .detail li { margin-left: 12px; margin-bottom: 1px; }
+
+  .section-divider td {
+    background: #f8fafc; font-weight: 700; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8;
+    padding: 6px 12px; border-top: 1px solid #e2e8f0;
+  }
+
+  .owner-sasank { color: #dc2626; font-weight: 700; }
+  .owner-us { color: #1d4ed8; font-weight: 700; }
+  .owner-both { color: #7c3aed; font-weight: 700; }
+
+  .acceptance { font-size: 10px; color: #64748b; line-height: 1.5; }
+
+  .footer {
+    border-top: 1px solid #e2e8f0; margin-top: 20px; padding-top: 12px;
+    display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8;
+  }
+
+  .print-bar {
+    background: #1a3a8f; padding: 12px 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .print-btn {
+    padding: 8px 20px; background: white; color: #1a3a8f;
+    border: none; border-radius: 6px; font-size: 12px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .print-hint { color: rgba(255,255,255,0.7); font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="no-print print-bar">
+  <button class="print-btn" onclick="window.print()">⬇ Save as PDF</button>
+  <span class="print-hint">Chrome → Print → Save as PDF → A4 Landscape, Default margins</span>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div style="width:52px;height:52px;background:#1a3a8f;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:800;letter-spacing:0.5px;flex-shrink:0;">PM</div>
+    <div>
+      <h1>PadelMind — Phase 1 Scope vs Build Status</h1>
+      <p>Sasank SOW (2026-07-09) mapped against actual build progress as of July 12, 2026</p>
+    </div>
+    <div class="header-meta">
+      <strong>Status: In Progress</strong><br/>
+      12-week target from engagement<br/>
+      Pilot court: Mumbai (undisclosed)
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-done"></div> Done — built &amp; working</div>
+    <div class="legend-item"><div class="dot dot-us"></div> Built by us (not Sasank)</div>
+    <div class="legend-item"><div class="dot dot-pending"></div> Pending — not yet started</div>
+    <div class="legend-item"><div class="dot dot-none"></div> Not applicable / deferred</div>
+    <div style="margin-left:auto; font-size:11px; color:#94a3b8;">
+      <span class="owner-sasank">Red = Sasank's scope</span> &nbsp;·&nbsp;
+      <span class="owner-us">Blue = Our scope</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%">#</th>
+        <th style="width:18%">Component</th>
+        <th style="width:8%">Owner<br/>(per SOW)</th>
+        <th style="width:10%">Status</th>
+        <th style="width:8%">Built By</th>
+        <th style="width:32%">What's Done / What Remains</th>
+        <th style="width:19%">Acceptance Criteria (SOW §7)</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- SASANK'S COMPONENTS -->
+      <tr class="section-divider"><td colspan="7">Sasank's Scope — 6 Components</td></tr>
+
+      <tr>
+        <td><strong>1</strong></td>
+        <td>
+          <div class="comp-label">Pi Edge Software</div>
+          <div class="comp-sub">MediaMTX, recording daemon, R2 upload</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done (padelmind-pi/recorder.py):</strong>
+            <ul>
+              <li>Supabase-polling daemon — starts/stops ffmpeg when PWA sets match status</li>
+              <li>HTTP endpoints: /match/start, /match/stop, /status, /ping</li>
+              <li>ffmpeg segment concat on match end</li>
+              <li>R2 upload via boto3 + retry/backoff</li>
+              <li>Webhook POST to our Worker on upload complete</li>
+              <li>systemd service + install.sh</li>
+            </ul>
+            <strong>Remaining:</strong> Pi hardware install + config to spec · motion-based fallback end-detection (starting now) · direct ffmpeg capture replaces MediaMTX (design change)
+          </div>
+        </td>
+        <td class="acceptance">MP4 in R2 within 3 min of /match/stop; playable; size within 10% of expected</td>
+      </tr>
+
+      <tr>
+        <td><strong>2</strong></td>
+        <td>
+          <div class="comp-label">GPU Inference Worker</div>
+          <div class="comp-sub">RunPod Docker, YOLOv8m + ByteTrack, positions JSON</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done (cv-pipeline/, own code — no padel_analytics fork):</strong>
+            <ul>
+              <li>Headless handler.py + all 8 modules (extract → detect → track → homography → outputs)</li>
+              <li>Docker image via GitHub Actions → ghcr.io/ancorman/padelmind-cv</li>
+              <li>RunPod serverless endpoint <strong>deployed</strong></li>
+              <li>R2 download/upload wired · YOLOv8n + ByteTrack · court-metre projection</li>
+            </ul>
+            <strong>Remaining:</strong> first real-footage test (after Sunday's recording + calibration) · perf validation vs &lt;6-min target
+          </div>
+        </td>
+        <td class="acceptance">90-min match in &lt;6 min; positions JSON with ≥3 players in &gt;70% of frames; coords within 10m×20m boundary</td>
+      </tr>
+
+      <tr>
+        <td><strong>3</strong></td>
+        <td>
+          <div class="comp-label">Heatmap Renderer</div>
+          <div class="comp-sub">matplotlib + scipy, 4 PNGs per match</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done:</strong> cv-pipeline/heatmap.py — court diagram + gaussian heatmap, 4-player PNG loop, inline in RunPod worker.<br/>
+            <strong>Remaining:</strong> visual spot-check + &lt;300KB size check against real footage (after Sunday).<br/>
+            <strong>Note:</strong> PWA display shell is ready (our side ✅)
+          </div>
+        </td>
+        <td class="acceptance">4 PNGs under 300KB each; court lines visible; heat zones visually match player positions in video</td>
+      </tr>
+
+      <tr>
+        <td><strong>4</strong></td>
+        <td>
+          <div class="comp-label">Rally Detector</div>
+          <div class="comp-sub">Algorithmic, positions JSON → top-8 rally windows</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done:</strong> cv-pipeline/rally.py — velocity state machine, min-duration filter, gap merger, false-positive suppression, rally windows output.<br/>
+            <strong>Remaining:</strong> threshold calibration against real footage (2–3 iteration passes, after Sunday).
+          </div>
+        </td>
+        <td class="acceptance">≥5 distinct rally windows in 90-min match; &lt;3 false positives (walking, warm-up) in top-8</td>
+      </tr>
+
+      <tr>
+        <td><strong>5</strong></td>
+        <td>
+          <div class="comp-label">ffmpeg Highlight Clipper</div>
+          <div class="comp-sub">Top 5 rally clips → single MP4, 9:16, &lt;15MB</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done:</strong> cv-pipeline/highlight.py — per-rally clip extraction, concat, ffmpeg encode, inline in RunPod worker.<br/>
+            <strong>Remaining:</strong> &lt;15MB + WhatsApp-watchability verification on real footage (after Sunday).<br/>
+            <strong>Note:</strong> PWA highlight reel player is ready (our side ✅)
+          </div>
+        </td>
+        <td class="acceptance">Single MP4 &lt;15MB; 5 clips visible; clips match rally windows; watchable on Android WhatsApp at 1080p</td>
+      </tr>
+
+      <tr>
+        <td><strong>6</strong></td>
+        <td>
+          <div class="comp-label">Court Calibration Tool</div>
+          <div class="comp-sub">Browser tool: upload frame → click 12 keypoints → save to DB</div>
+        </td>
+        <td><span class="owner-sasank">Sasank</span></td>
+        <td><span class="badge badge-us">✅ Built by Us</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td>
+          <div class="detail">
+            <strong>Done:</strong>
+            <ul>
+              <li>Canvas-based tool — upload still frame, click 12 keypoints in sequence</li>
+              <li>Draggable marker refinement</li>
+              <li>Reference diagram with k1–k12 labels</li>
+              <li>Save POSTs keypoints to our Cloudflare Worker → Supabase</li>
+              <li>Vanilla HTML/JS — no framework, single file</li>
+            </ul>
+            <strong>Ready for:</strong> Pilot court calibration, Sunday 13 July
+          </div>
+        </td>
+        <td class="acceptance">12 clicks on test frame → correct JSON in DB; keypoints produce valid homography in worker ✅ (tool done; GPU worker pending)</td>
+      </tr>
+
+      <!-- OUR SCOPE -->
+      <tr class="section-divider"><td colspan="7">PadelMind Team Scope — Our Side</td></tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">Supabase Schema</div>
+          <div class="comp-sub">padel_clubs, padel_courts, padel_matches, padel_players, padel_match_players, padel_match_outputs, padel_bookings</div>
+        </td>
+        <td><span class="owner-us">Us</span></td>
+        <td><span class="badge badge-done">✅ Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail">All tables live + RLS policies. padel_bookings is a bonus table (court booking system — not in original scope).</td>
+        <td class="acceptance">—</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">R2 Bucket + Cloudflare Worker</div>
+          <div class="comp-sub">Object store + job dispatch webhook</div>
+        </td>
+        <td><span class="owner-us">Us</span></td>
+        <td><span class="badge badge-done">✅ Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail">R2 buckets ✅ · Upstash Redis job queue ✅ · /api/jobs/next polling endpoint ✅ · inference-complete callback handler ✅ · direct RunPod trigger ✅. <strong>Open item:</strong> Pi's upload-complete webhook route needs final wiring to the enqueue path (verify during first Pi test).</td>
+        <td class="acceptance">—</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">Player PWA</div>
+          <div class="comp-sub">React, Cloudflare Pages, match history + booking</div>
+        </td>
+        <td><span class="owner-us">Us</span></td>
+        <td><span class="badge badge-done">✅ Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail">
+          Magic-link auth ✅ · Member registration (membership no. + name + WA) ✅ · Court booking with 90-min cap ✅ · Matches list UI ✅ · Match detail (heatmap + highlight player + stats) ✅ · Staff match Start/End page ✅
+          <br/><em>Live at <strong>padelmind.quitlosing.in</strong></em>
+        </td>
+        <td class="acceptance">—</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">WhatsApp Delivery</div>
+          <div class="comp-sub">Heatmap + highlight + summary to all 4 players post-match</div>
+        </td>
+        <td><span class="owner-us">Us</span></td>
+        <td><span class="badge badge-partial">⚠️ Code Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail"><strong>Done:</strong> WA opt-in reply (PADEL OPTIN gate) ✅ · post-match 3-message send (summary + heatmap + highlight) wired to real Meta Cloud API in Worker, triggered from inference-complete callback ✅ · Meta token in system ✅. <strong>Pending:</strong> deploy updated Worker + first live send test.</td>
+        <td class="acceptance">—</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">Match Start / End Control</div>
+          <div class="comp-sub">Originally WA command parser — built as PWA Staff page instead</div>
+        </td>
+        <td><span class="owner-us">Us</span></td>
+        <td><span class="badge badge-done">✅ Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail"><strong>Design change:</strong> replaced WA text commands with in-PWA UI. Staff page: Start Match (creates padel_matches row + registers P2–P4 phones), live recording indicator, End Match, WhatsApp opt-in deep link (<code>PADEL OPTIN {match_id}</code>) + teammate share. Pi picks up start/stop by polling Supabase — no webhook needed.</td>
+        <td class="acceptance">—</td>
+      </tr>
+
+      <!-- EXTRA BUILT -->
+      <tr class="section-divider"><td colspan="7">Built Beyond Original Scope (Bonus)</td></tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <div class="comp-label">Court Booking System</div>
+          <div class="comp-sub">Not in Sasank SOW or original PadelMind team scope</div>
+        </td>
+        <td><span class="owner-both">Bonus</span></td>
+        <td><span class="badge badge-done">✅ Done</span></td>
+        <td><span class="owner-us">PadelMind</span></td>
+        <td class="detail">Full court booking grid (6 AM–11:30 PM), Court 1 + Court 2, 90-min daily cap (hard lock), guest toggle, T&amp;C, live booked-slot display, date navigation, member approval flow.</td>
+        <td class="acceptance">—</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+    <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:12px 14px;">
+      <div style="font-size:10px; font-weight:700; color:#15803d; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Summary — What's Done</div>
+      <div style="font-size:11px; color:#166534; line-height:1.8;">
+        ✅ ALL 6 Sasank components — built by us (C1–C6)<br/>
+        ✅ Supabase schema — all 8 tables live<br/>
+        ✅ Player PWA + booking + match Start/End — live at padelmind.quitlosing.in<br/>
+        ✅ Worker: R2 + Upstash queue + jobs API + callback + RunPod trigger<br/>
+        ✅ RunPod serverless endpoint deployed (GHCR image)<br/>
+        ✅ WA delivery code wired to Meta Cloud API (token in system)
+      </div>
+    </div>
+
+    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:12px 14px;">
+      <div style="font-size:10px; font-weight:700; color:#b45309; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Still Pending — Blocking End-to-End</div>
+      <div style="font-size:11px; color:#92400e; line-height:1.8;">
+        ⏳ Pi hardware — install, connect &amp; configure to spec<br/>
+        ⏳ Court 2 calibration — 12 keypoints on empty court<br/>
+        ⏳ Upload + process yesterday's recorded match — first real CV test<br/>
+        ⏳ Rally thresholds + heatmap + highlight tuning on real footage<br/>
+        ⏳ Motion-based fallback end-detection (starting now)<br/>
+        ⏳ Deploy updated Worker + first live WA delivery test<br/>
+        ⏳ Pi upload-complete → job-enqueue wiring verification
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>Confidential · PadelMind Internal · Based on Sasank SOW dated 2026-07-09</p>
+    <p>Updated 2026-07-12 · <strong>padelmind.quitlosing.in</strong></p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -9,6 +9,8 @@ export interface Env {
   RUNPOD_SHARED_SECRET: string;
   RUNPOD_API_KEY: string;
   RUNPOD_ENDPOINT_ID: string;
+  META_ACCESS_TOKEN: string;
+  META_PHONE_NUMBER_ID: string;
 }
 
 // ─── Supabase helpers ────────────────────────────────────────────────────────
@@ -348,10 +350,9 @@ async function deliverWhatsApp(
 
     const summary = `Your PadelMind match report is ready 🎾\n\nMatch: ${durationMin} min | ${rallyCount} rallies\n\nFull history: ${pwaUrl}`;
 
-    // Send 3 WA messages via AX Meta Cloud API
-    await sendWAText(phone, summary);
-    await sendWAImage(phone, heatmapUrl, `Your court heatmap — ${name}`);
-    await sendWAVideo(phone, highlightUrl, 'Top rallies from today\'s match');
+    await sendWAText(env, phone, summary);
+    await sendWAImage(env, phone, heatmapUrl, `Your court heatmap — ${name}`);
+    await sendWAVideo(env, phone, highlightUrl, 'Top rallies from today\'s match');
 
     // Mark delivered
     await sbQuery(env, `/padel_match_players?match_id=eq.${matchId}&player_slot=eq.${slot}`, {
@@ -361,15 +362,49 @@ async function deliverWhatsApp(
   }
 }
 
-// Placeholder WA senders — will wire to AX Meta Cloud API in P0-D
-async function sendWAText(phone: string, text: string) {
-  console.log(`[WA TEXT] → ${phone}: ${text.slice(0, 60)}...`);
+async function metaPost(env: Env, body: unknown) {
+  const res = await fetch(
+    `https://graph.facebook.com/v19.0/${env.META_PHONE_NUMBER_ID}/messages`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.META_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`[WA] Meta API error ${res.status}: ${err}`);
+  }
 }
-async function sendWAImage(phone: string, url: string, caption: string) {
-  console.log(`[WA IMAGE] → ${phone}: ${url}`);
+
+async function sendWAText(env: Env, phone: string, text: string) {
+  await metaPost(env, {
+    messaging_product: 'whatsapp',
+    to: phone,
+    type: 'text',
+    text: { body: text },
+  });
 }
-async function sendWAVideo(phone: string, url: string, caption: string) {
-  console.log(`[WA VIDEO] → ${phone}: ${url}`);
+
+async function sendWAImage(env: Env, phone: string, url: string, caption: string) {
+  await metaPost(env, {
+    messaging_product: 'whatsapp',
+    to: phone,
+    type: 'image',
+    image: { link: url, caption },
+  });
+}
+
+async function sendWAVideo(env: Env, phone: string, url: string, caption: string) {
+  await metaPost(env, {
+    messaging_product: 'whatsapp',
+    to: phone,
+    type: 'video',
+    video: { link: url, caption },
+  });
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Outer decorative petals -->
+  <g fill="none" stroke="#1a3a8f" stroke-width="2">
+    <!-- 24 petals around the circle -->
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(0 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(15 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(30 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(45 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(60 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(75 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(90 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(105 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(120 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(135 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(150 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(165 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(180 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(195 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(210 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(225 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(240 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(255 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(270 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(285 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(300 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(315 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(330 100 100) translate(0 -74)"/>
+    <ellipse cx="100" cy="100" rx="8" ry="18" transform="rotate(345 100 100) translate(0 -74)"/>
+  </g>
+  <!-- Main filled circle -->
+  <circle cx="100" cy="100" r="60" fill="#1a3a8f"/>
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="white" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="54" fill="none" stroke="white" stroke-width="1"/>
+  <!-- NSCI text -->
+  <text x="100" y="112" text-anchor="middle"
+    font-family="Georgia, serif" font-size="32" font-weight="bold"
+    fill="white" letter-spacing="2">NSCI</text>
+</svg>
