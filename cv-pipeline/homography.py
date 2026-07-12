@@ -31,9 +31,13 @@ class CourtHomography:
         """
         self._H = None
         if keypoints_data and keypoints_data.get("points"):
-            pts = sorted(keypoints_data["points"], key=lambda p: p["n"])
-            cam_pts = np.float32([[p["x"], p["y"]] for p in pts])
-            self._H, _ = cv2.findHomography(cam_pts, WORLD_PTS, cv2.RANSAC, 5.0)
+            # Map each provided point to its world coord BY NUMBER, so a subset
+            # (e.g. near corners off-frame) still calibrates. Needs >= 4 points.
+            pts = [p for p in keypoints_data["points"] if 1 <= p.get("n", 0) <= 12]
+            if len(pts) >= 4:
+                cam_pts = np.float32([[p["x"], p["y"]] for p in pts])
+                world_pts = np.float32([WORLD_PTS[p["n"] - 1] for p in pts])
+                self._H, _ = cv2.findHomography(cam_pts, world_pts, cv2.RANSAC, 5.0)
 
     def project(self, px: float, py: float) -> tuple[float, float] | None:
         """Project a camera pixel coordinate to court metres. Returns None if uncalibrated."""
