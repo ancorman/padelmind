@@ -13,13 +13,19 @@ def _device() -> str:
 
 
 _model: YOLO | None = None
+_player_classes: list[int] = []
 
 def _get_model() -> YOLO:
-    global _model
+    global _model, _player_classes
     if _model is None:
-        # Use Roboflow padel model if env var set, else fall back to YOLOv8n
+        # Custom padel model via env var (e.g. /app/models/padel_yolov8s_wpt_v11.pt,
+        # classes: ball/net/player/racket/serve line), else stock YOLOv8n (COCO).
         model_path = os.environ.get("YOLO_MODEL", "yolov8n.pt")
         _model = YOLO(model_path)
+        # Class ids differ per model — resolve "the humans" by name, never hardcode.
+        _player_classes = [i for i, n in _model.names.items() if n in ("person", "player")]
+        if not _player_classes:
+            raise ValueError(f"No person/player class in {model_path}: {_model.names}")
     return _model
 
 
@@ -32,7 +38,7 @@ def detect_players(frame: np.ndarray, conf: float = 0.4) -> list[dict]:
     results = model.predict(
         frame,
         device=_device(),
-        classes=[0],        # person only
+        classes=_player_classes,
         conf=conf,
         verbose=False,
     )
