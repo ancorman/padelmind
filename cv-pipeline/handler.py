@@ -12,6 +12,7 @@ import track as tr
 import heatmap as hm
 import rally as rl
 import highlight as hl
+import stats as st
 from homography import CourtHomography
 
 WORKER_URL     = "https://padelmind-api.manoj-5ce.workers.dev"
@@ -86,6 +87,10 @@ def handler(job: dict) -> dict:
         rallies = rl.detect(position_log)
         print(f"[{match_id}] {len(rallies)} rallies detected")
 
+        # ── 4b. Phase 1.5 stats (distance, sprints, net %, fade) ─────────
+        match_stats = st.compute(position_log, rallies, duration_sec) if homo.calibrated else {}
+        print(f"[{match_id}] Stats computed for {len([k for k in match_stats if k.startswith('player')])} players")
+
         # ── 5. Highlight reel ─────────────────────────────────────────────
         highlight_key  = f"outputs/{match_id}/highlight.mp4"
         highlight_path = os.path.join(tmp, "highlight.mp4")
@@ -119,7 +124,7 @@ def handler(job: dict) -> dict:
             "rally_count":  len(rallies),
             "duration_sec": int(duration_sec),
             "rally_windows": [r.to_dict() for r in rallies],
-            "zones":        {},  # V2
+            "zones":        match_stats,  # Phase 1.5 stats — stored as zones_summary jsonb
             "outputs": {
                 "heatmap_p1": heatmap_keys.get("heatmap_p1", ""),
                 "heatmap_p2": heatmap_keys.get("heatmap_p2", ""),
