@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PadelMind — Court Capture Checklist</title>
+<style>
+  :root{
+    --bg:#0E1613; --card:#152420; --card2:#1A2C26; --line:#26382F;
+    --ink:#EAF1ED; --ink2:#A6B8AF; --ink3:#748A80;
+    --teal:#2DD4BF; --amber:#F0A93C; --red:#F26D6D; --green:#3FCF8E;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:light){
+    :root{--bg:#EEF3F1;--card:#FFFFFF;--card2:#F4F8F6;--line:#DCE6E1;
+      --ink:#122019;--ink2:#4A5C54;--ink3:#7B8C84;--teal:#0E9488;--amber:#B4720C;--red:#C6453F;--green:#178A55;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg)}
+  body{color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;padding:24px 16px 48px}
+  .kick{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+  .sub{color:var(--ink2);font-size:13.5px}
+  .two{font-size:12px;color:var(--ink3);margin-top:8px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px 8px;margin-top:18px;overflow:hidden}
+  .card.match{border-top:3px solid var(--teal)}
+  .card.pose{border-top:3px solid var(--amber)}
+  .card h2{font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .tag{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}
+  .tag.t{background:rgba(45,212,191,.16);color:var(--teal)}
+  .tag.a{background:rgba(240,169,60,.18);color:var(--amber)}
+  .why{font-size:12px;color:var(--ink3);margin:6px 0 12px}
+
+  ul{list-style:none;margin:0}
+  li{display:flex;gap:11px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+  li:first-child{border-top:none}
+  .box{flex:0 0 18px;width:18px;height:18px;border:2px solid var(--ink3);border-radius:5px;margin-top:1px}
+  li b{font-weight:700}
+  li .k{color:var(--ink2);font-size:12.5px;display:block;margin-top:1px}
+
+  .rules{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:18px}
+  .rules h2{font-size:14px;font-weight:800;color:var(--red);display:flex;align-items:center;gap:7px;margin-bottom:4px}
+  .rules .x{flex:0 0 18px;color:var(--red);font-weight:800;font-size:16px;line-height:1.2}
+
+  .tldr{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:18px}
+  .tldr h2{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:8px}
+  .tldr p{font-size:14px;color:var(--ink);line-height:1.6}
+  .tldr b{color:var(--amber)}
+  footer{margin-top:22px;text-align:center;color:var(--ink3);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">PadelMind &middot; Field Guide</div>
+  <h1>Court Capture Checklist</h1>
+  <p class="sub">Two recordings, two setups. Both use the iPhone <b>rear camera</b> (never the selfie/front one &mdash; it's lower quality).</p>
+  <p class="two">Keep this open on your phone court-side.</p>
+
+  <div class="card match">
+    <h2>&#128247; Match capture <span class="tag t">Wide &middot; locked</span></h2>
+    <div class="why">Feeds heatmaps, distance, rallies, highlights. Needs the whole court, camera never moving.</div>
+    <ul>
+      <li><span class="box"></span><div><b>Rear camera, 1080p30</b><span class="k">4K30 fine if storage allows &mdash; it downsamples anyway</span></div></li>
+      <li><span class="box"></span><div><b>Elevated, behind one baseline</b><span class="k">high on a tripod/clamp &mdash; not handheld</span></div></li>
+      <li><span class="box"></span><div><b>WHOLE court in frame &mdash; including the NEAR baseline</b><span class="k">the #1 miss last time. Back up / raise / go wider until both back walls + all 4 corners are visible</span></div></li>
+      <li><span class="box"></span><div><b>Lock focus + exposure</b><span class="k">tap-and-hold the screen until "AE/AF LOCK" shows</span></div></li>
+      <li><span class="box"></span><div><b>Camera dead-still &mdash; do NOT touch it</b><span class="k">from calibration to the last point. If it moves, calibration breaks</span></div></li>
+      <li><span class="box"></span><div><b>Record 30 sec of the EMPTY court first</b><span class="k">that still = your one-time calibration frame</span></div></li>
+      <li><span class="box"></span><div><b>One continuous take</b><span class="k">no stopping, no re-framing, no montage</span></div></li>
+      <li><span class="box"></span><div><b>Well-lit court</b><span class="k">dim = detection fails. Lights on, no dark half</span></div></li>
+    </ul>
+  </div>
+
+  <div class="card pose">
+    <h2>&#127934; Pose capture <span class="tag a">Close &middot; front-on</span></h2>
+    <div class="why">Feeds the coach's technique labeling. Needs ONE player, close and clear.</div>
+    <ul>
+      <li><span class="box"></span><div><b>Rear camera, 1080p30</b></div></li>
+      <li><span class="box"></span><div><b>Court-level, FACING the player from the front/side</b><span class="k">not behind them &mdash; you want to see the swing and the body</span></div></li>
+      <li><span class="box"></span><div><b>Close &mdash; player fills ~half the frame height</b><span class="k">the closer and clearer, the better the pose</span></div></li>
+      <li><span class="box"></span><div><b>Nothing between camera and player</b><span class="k">no net, no glass in the way if you can help it</span></div></li>
+      <li><span class="box"></span><div><b>Lock focus + exposure &middot; steady mount</b></div></li>
+      <li><span class="box"></span><div><b>2&ndash;3 minutes of hitting</b><span class="k">10&ndash;15 shots is plenty for a labeling batch</span></div></li>
+    </ul>
+  </div>
+
+  <div class="rules">
+    <h2>&#9940; The 5 things that ruin a capture</h2>
+    <ul>
+      <li><span class="x">&#10005;</span><div><b>Moving the camera mid-recording</b><span class="k">breaks the whole calibration + tracking</span></div></li>
+      <li><span class="x">&#10005;</span><div><b>Cutting off the near baseline</b><span class="k">then the near corners can't be calibrated</span></div></li>
+      <li><span class="x">&#10005;</span><div><b>Shooting through mesh / glass</b><span class="k">obscures players &mdash; detection drops</span></div></li>
+      <li><span class="x">&#10005;</span><div><b>A dim or half-lit court</b><span class="k">the detector needs to see the players</span></div></li>
+      <li><span class="x">&#10005;</span><div><b>Letting autofocus hunt</b><span class="k">always AE/AF lock before recording</span></div></li>
+    </ul>
+  </div>
+
+  <div class="tldr">
+    <h2>If you remember one line</h2>
+    <p><b>Rear camera. Whole court, near baseline included. Lock focus. Never move it. Lights on.</b> Thirty seconds of empty court at the start is your calibration &mdash; then let it run.</p>
+  </div>
+
+  <footer>PadelMind capture guide &middot; keep court-side</footer>
+</div>
+</body>
+</html>
