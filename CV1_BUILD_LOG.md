@@ -100,3 +100,11 @@ Roboflow sub-steps:
 - **Phase 1.5 stats layer built** (`stats.py` + 6 passing tests): distance/top-speed/sprints/net%/baseline%/zones/fade/longest-rally from positions JSON. Wired into `handler.py` callback `zones` field → lands in `padel_match_outputs.zones_summary` with zero Worker changes.
 - **detect.py**: player class resolved by name (custom model is alphabetical — classes=[0] would have detected balls).
 - **NEXT (needs tonight's footage):** calibrate Court 2 from empty-court still → Steps 4–6 on the real match → Step 7–8 E2E (Worker deploy + `YOLO_MODEL` env on RunPod = Manoj's go).
+
+## Log — 2026-07-12 (late, cont.)
+
+- **Phase 2 prototypes** (Tier P): `ball_track.py` (Kalman, works but ball detection only 15% on WPT clip — gated on a better ball model) + `pose.py` (YOLOv8-pose off-the-shelf, 100% coverage 28FPS, NO Roboflow data needed — the cheap Phase-2 win).
+- **Local E2E harness** (`run_local.py`): whole handler runs offline (R2 + callback stubbed) → real heatmap PNG + highlight.mp4 + positions.json + correctly-shaped callback with Phase-1.5 stats. Integration VALIDATED end-to-end. Degenerate values are broadcast-footage + fake-keypoint artifacts, not bugs.
+- **Fixed:** handler ran `runpod.serverless.start()` on import (now `__main__`-guarded). rally.py switched from positional-spread to velocity per SOW.
+- **Flags for the real run:** (1) slot assignment gave 1/4 players on broadcast footage (camera cuts fragment ByteTrack) — watch it on real single-camera footage; (2) all thresholds (rally speed 0.5 m/s, sprint 3 m/s) need 2-3 tuning passes on a watched real match.
+- **Footage-independent build queue now essentially exhausted.** Remaining: WA V1.5 message template wiring + PWA match report page (both "make stats visible" — best built against real stats), then the real-footage run (calibrate → run_local with real keypoints → RunPod).
