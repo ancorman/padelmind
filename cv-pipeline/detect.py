@@ -52,3 +52,22 @@ def detect_players(frame: np.ndarray, conf: float = 0.4) -> list[dict]:
             "foot": [(x1 + x2) / 2, y2],   # foot = bottom-centre of bbox
         })
     return detections
+
+
+def detect_all(frame: np.ndarray, conf: float = 0.25) -> list[dict]:
+    """
+    All classes the model knows (ball, net, player, racket, serve line for the
+    custom model). Returns {bbox, conf, class_id}. Used by ball_track / pose crops.
+    Lower default conf — the ball is faint and worth catching at lower confidence.
+    """
+    model = _get_model()
+    results = model.predict(frame, device=_device(), conf=conf, verbose=False)
+    out = []
+    for box in results[0].boxes:
+        x1, y1, x2, y2 = box.xyxy[0].tolist()
+        out.append({
+            "bbox": [x1, y1, x2, y2],
+            "conf": float(box.conf[0]),
+            "class_id": int(box.cls[0]),
+        })
+    return out
