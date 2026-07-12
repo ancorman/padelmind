@@ -46,7 +46,7 @@ export default function Register({ session, onRegistered }) {
         </p>
 
         {/* WA opt-in nudge */}
-        <div style={{ background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '16px', padding: '20px', marginBottom: '24px', width: '100%', maxWidth: '360px' }}>
+        <div style={{ background: 'rgba(var(--green-rgb),0.08)', border: '1px solid rgba(var(--green-rgb),0.3)', borderRadius: '16px', padding: '20px', marginBottom: '24px', width: '100%', maxWidth: '360px' }}>
           <div style={{ fontSize: '24px', marginBottom: '8px' }}>💬</div>
           <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text)', marginBottom: '6px' }}>
             Get match alerts on WhatsApp
@@ -59,7 +59,7 @@ export default function Register({ session, onRegistered }) {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              display: 'block', background: '#25D366', color: 'white',
+              display: 'block', background: 'var(--wa)', color: 'white',
               textDecoration: 'none', borderRadius: '10px',
               padding: '10px 20px', fontSize: '13px', fontWeight: '700',
             }}

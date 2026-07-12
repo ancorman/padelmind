@@ -234,10 +234,10 @@ export default function Book({ session, player: playerProp, onBack }) {
             position: 'sticky', top: '100px', zIndex: 19, flexWrap: 'wrap',
           }}>
             {[
-              { color: 'rgba(245,158,11,0.18)', label: 'Available', text: 'var(--amber)' },
-              { color: 'var(--amber)', label: 'Selected', text: '#0F172A' },
-              { color: 'rgba(51,65,85,0.5)', label: 'Booked', text: 'var(--muted)' },
-              { color: 'rgba(51,65,85,0.18)', label: 'Past', text: 'var(--border)' },
+              { color: 'rgba(var(--hot-rgb),0.18)', label: 'Available', text: 'var(--amber)' },
+              { color: 'var(--amber)', label: 'Selected', text: 'var(--bg)' },
+              { color: 'rgba(var(--border-rgb),0.5)', label: 'Booked', text: 'var(--muted)' },
+              { color: 'rgba(var(--border-rgb),0.18)', label: 'Past', text: 'var(--border)' },
             ].map(l => (
               <div key={l.label} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <div style={{ width: '14px', height: '14px', borderRadius: '4px', background: l.color, flexShrink: 0 }} />
@@ -262,7 +262,7 @@ export default function Book({ session, player: playerProp, onBack }) {
 
           {/* 90-min cap warning */}
           {error && (
-            <div style={{ background: 'rgba(248,113,113,0.12)', border: '1px solid var(--danger)', borderRadius: '10px', margin: '8px 8px 0', padding: '10px 14px', fontSize: '12px', color: 'var(--danger)', fontWeight: '600' }}>
+            <div style={{ background: 'rgba(var(--danger-rgb),0.12)', border: '1px solid var(--danger)', borderRadius: '10px', margin: '8px 8px 0', padding: '10px 14px', fontSize: '12px', color: 'var(--danger)', fontWeight: '600' }}>
               ⚠️ {error}
             </div>
           )}
@@ -273,7 +273,7 @@ export default function Book({ session, player: playerProp, onBack }) {
               <div key={s.key} style={{
                 display: 'grid', gridTemplateColumns: `56px repeat(${courts.length}, 1fr)`,
                 alignItems: 'center', minHeight: '48px',
-                borderBottom: '1px solid rgba(51,65,85,0.4)',
+                borderBottom: '1px solid rgba(var(--border-rgb),0.4)',
               }}>
                 {/* Time label */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
@@ -288,9 +288,9 @@ export default function Book({ session, player: playerProp, onBack }) {
                   const sel_    = isSel(c.id, s.key)
 
                   const bg = sel_    ? 'var(--amber)'
-                           : booked_ ? 'rgba(51,65,85,0.4)'
-                           : past_   ? 'rgba(51,65,85,0.2)'
-                           : 'rgba(245,158,11,0.12)'
+                           : booked_ ? 'rgba(var(--border-rgb),0.4)'
+                           : past_   ? 'rgba(var(--border-rgb),0.2)'
+                           : 'rgba(var(--hot-rgb),0.12)'
 
                   const color = sel_ ? 'white'
                               : booked_ || past_ ? 'var(--muted)'
@@ -359,7 +359,7 @@ export default function Book({ session, player: playerProp, onBack }) {
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
           {/* T&C card */}
-          <div style={{ background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '12px', padding: '14px' }}>
+          <div style={{ background: 'rgba(var(--green-rgb),0.08)', border: '1px solid rgba(var(--green-rgb),0.3)', borderRadius: '12px', padding: '14px' }}>
             <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--green)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Terms & Conditions
             </div>
@@ -395,7 +395,7 @@ export default function Book({ session, player: playerProp, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '800', color: isGuest ? 'var(--danger)' : 'var(--text)' }}>₹{price}</div>
                   </div>
                   {/* Guest toggle */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', background: 'rgba(51,65,85,0.3)', borderRadius: '10px', padding: '8px 12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', background: 'rgba(var(--border-rgb),0.3)', borderRadius: '10px', padding: '8px 12px' }}>
                     <div>
                       <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text)' }}>Bringing a guest?</div>
                       <div style={{ fontSize: '11px', color: 'var(--muted)' }}>NSCI guest charge: ₹{GUEST_PRICE}/session</div>

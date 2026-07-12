@@ -134,12 +134,12 @@ export default function Staff({ session, player, activeBooking }) {
       <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
 
         {msg && (
-          <div style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.35)', borderRadius: '10px', padding: '14px', fontSize: '13px', color: 'var(--green)', lineHeight: '1.6' }}>
+          <div style={{ background: 'rgba(var(--green-rgb),0.1)', border: '1px solid rgba(var(--green-rgb),0.35)', borderRadius: '10px', padding: '14px', fontSize: '13px', color: 'var(--green)', lineHeight: '1.6' }}>
             {msg}
           </div>
         )}
         {error && (
-          <div style={{ background: 'rgba(248,113,113,0.1)', border: '1px solid var(--danger)', borderRadius: '10px', padding: '12px 14px', fontSize: '13px', color: 'var(--danger)' }}>
+          <div style={{ background: 'rgba(var(--danger-rgb),0.1)', border: '1px solid var(--danger)', borderRadius: '10px', padding: '12px 14px', fontSize: '13px', color: 'var(--danger)' }}>
             {error}
           </div>
         )}
@@ -148,7 +148,7 @@ export default function Staff({ session, player, activeBooking }) {
           <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--muted)', fontSize: '13px' }}>Checking court status…</div>
         ) : activeMatch ? (
           /* ── Active match ── */
-          <div className="card" style={{ borderColor: 'rgba(248,113,113,0.5)' }}>
+          <div className="card" style={{ borderColor: 'rgba(var(--danger-rgb),0.5)' }}>
 
             {/* Recording indicator */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
@@ -164,7 +164,7 @@ export default function Staff({ session, player, activeBooking }) {
             </div>
 
             {/* ── Opt-in section ── */}
-            <div style={{ background: 'rgba(61,111,214,0.07)', border: '1px solid rgba(61,111,214,0.25)', borderRadius: '10px', padding: '14px', marginBottom: '14px' }}>
+            <div style={{ background: 'rgba(var(--amber-rgb),0.07)', border: '1px solid rgba(var(--amber-rgb),0.25)', borderRadius: '10px', padding: '14px', marginBottom: '14px' }}>
               <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--amber)', marginBottom: '4px' }}>📲 Get your highlight reel on WhatsApp</div>
               <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '12px', lineHeight: '1.6' }}>
                 Tap below to confirm your WhatsApp number. Your heatmap + reel will be sent there within 15 minutes of match end.
@@ -177,7 +177,7 @@ export default function Staff({ session, player, activeBooking }) {
                 rel="noopener noreferrer"
                 style={{
                   display: 'block', textAlign: 'center', padding: '13px 16px',
-                  background: '#25D366', borderRadius: '10px', color: '#fff',
+                  background: 'var(--wa)', borderRadius: '10px', color: '#fff',
                   fontWeight: '700', fontSize: '14px', textDecoration: 'none',
                   marginBottom: enteredPhones.length ? '10px' : 0,
                 }}
@@ -195,8 +195,8 @@ export default function Staff({ session, player, activeBooking }) {
                     onClick={shareWithTeam}
                     style={{
                       width: '100%', padding: '12px 16px',
-                      background: 'rgba(37,211,102,0.12)', border: '1.5px solid rgba(37,211,102,0.4)',
-                      borderRadius: '10px', color: '#25D366',
+                      background: 'rgba(var(--wa-rgb),0.12)', border: '1.5px solid rgba(var(--wa-rgb),0.4)',
+                      borderRadius: '10px', color: 'var(--wa)',
                       fontWeight: '700', fontSize: '13px', cursor: 'pointer',
                     }}
                   >
@@ -259,7 +259,7 @@ export default function Staff({ session, player, activeBooking }) {
           </div>
         )}
 
-        <div style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: '10px', padding: '12px 14px' }}>
+        <div style={{ background: 'rgba(var(--hot-rgb),0.06)', border: '1px solid rgba(var(--hot-rgb),0.2)', borderRadius: '10px', padding: '12px 14px' }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--amber)', marginBottom: '6px' }}>How it works</div>
           <div style={{ fontSize: '11px', color: 'var(--muted)', lineHeight: '1.7' }}>
             Tap <strong style={{ color: 'var(--text)' }}>Start Match</strong> when you step on court — the camera begins recording.<br/>

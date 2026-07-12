@@ -6,12 +6,22 @@
   --bg: #0F172A;
   --bg-elev: #1E293B;
   --border: #334155;
-  --amber: #3D6FD6;
+  --amber: #3D6FD6;         /* primary accent — nav / CTA (blue) */
   --amber-dark: #2952B8;
-  --green: #34D399;
+  --hot: #FB923C;           /* intensity accent — movement / highlight (orange) */
+  --green: #34D399;         /* success */
+  --wa: #25D366;            /* WhatsApp brand green */
   --text: #F1F5F9;
   --muted: #94A3B8;
   --danger: #F87171;
+
+  /* RGB components — single source of truth for every rgba() tint in the app */
+  --amber-rgb: 61,111,214;
+  --hot-rgb: 251,146,60;
+  --green-rgb: 52,211,153;
+  --wa-rgb: 37,211,102;
+  --danger-rgb: 248,113,113;
+  --border-rgb: 51,65,85;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase, PUB_R2 } from '../supabase'
 
 // Intensity accent (echoes the heatmap fire colours) — per UI_MATCH_REPORT_SCOPE.
-const HOT = '#FB923C'
+const HOT = 'var(--hot)'
 
 function r2url(key) {
   return key ? `${PUB_R2}/${key}` : null
@@ -128,7 +128,7 @@ export default function Match({ ctx, onBack }) {
 
         {/* Intensity fade note */}
         {me?.fade_min != null && (
-          <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '10px', borderColor: 'rgba(251,146,60,0.35)' }}>
+          <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '10px', borderColor: 'rgba(var(--hot-rgb),0.35)' }}>
             <span style={{ fontSize: '20px' }}>📉</span>
             <span style={{ fontSize: '13px', color: 'var(--text)', lineHeight: 1.5 }}>
               Your intensity dipped after <strong style={{ color: HOT }}>minute {me.fade_min}</strong> — worth pacing for next time.
