@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PadelMind — Competitive Read</title>
+<style>
+  :root{
+    --bg:#0E1613;--card:#152420;--card2:#1A2C26;--line:#2A3D34;
+    --ink:#EAF1ED;--ink2:#A6B8AF;--ink3:#748A80;
+    --teal:#2DD4BF;--amber:#F0A93C;
+    --win:#34D399;--par:#8AA6B4;--gap:#F0A93C;--miss:#5E6F68;--uniq:#2DD4BF;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:light){
+    :root{--bg:#EFF3F1;--card:#FFFFFF;--card2:#F5F9F7;--line:#DBE5E0;
+      --ink:#122019;--ink2:#4A5C54;--ink3:#7C8C84;--teal:#0D9488;--amber:#B4720C;
+      --win:#15954F;--par:#5B7383;--gap:#C9791A;--miss:#9AA8A2;--uniq:#0D9488;}
+  }
+  :root[data-theme="light"]{--bg:#EFF3F1;--card:#FFFFFF;--card2:#F5F9F7;--line:#DBE5E0;--ink:#122019;--ink2:#4A5C54;--ink3:#7C8C84;--teal:#0D9488;--amber:#B4720C;--win:#15954F;--par:#5B7383;--gap:#C9791A;--miss:#9AA8A2;--uniq:#0D9488;}
+  :root[data-theme="dark"]{--bg:#0E1613;--card:#152420;--card2:#1A2C26;--line:#2A3D34;--ink:#EAF1ED;--ink2:#A6B8AF;--ink3:#748A80;--teal:#2DD4BF;--amber:#F0A93C;--win:#34D399;--par:#8AA6B4;--gap:#F0A93C;--miss:#5E6F68;--uniq:#2DD4BF;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:36px 20px 56px}
+  .kick{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+  h1{font-size:clamp(24px,4.5vw,34px);font-weight:800;letter-spacing:-.02em;margin:8px 0 6px;text-wrap:balance}
+  .lede{color:var(--ink2);font-size:14.5px;max-width:70ch}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0;font-size:12px;color:var(--ink2)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .d{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-top:8px}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+  thead th{background:var(--card2);text-align:left;padding:12px 12px;font-size:12px;font-weight:800;border-bottom:1px solid var(--line);position:sticky;left:0}
+  thead th.us{color:var(--teal)}
+  tbody td,tbody th{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody th{font-weight:700;color:var(--ink);text-align:left;background:var(--card);white-space:nowrap;font-size:12.5px}
+  td .cell{font-weight:700;font-size:12px}
+  td small{display:block;color:var(--ink3);font-weight:400;font-size:11px;margin-top:2px;line-height:1.35}
+  td.uscol{background:color-mix(in srgb,var(--teal) 7%,transparent)}
+  .win{color:var(--win)} .par{color:var(--par)} .gap{color:var(--gap)} .miss{color:var(--miss)} .uniq{color:var(--uniq)}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  @media(max-width:720px){.grid3{grid-template-columns:1fr}}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;border-top:3px solid var(--c)}
+  .box h3{font-size:13px;font-weight:800;color:var(--c);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+  .box ul{list-style:none;margin:0}
+  .box li{font-size:13px;color:var(--ink2);padding:5px 0 5px 16px;position:relative;line-height:1.45}
+  .box li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--c)}
+  .box li b{color:var(--ink)}
+
+  .verdict{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-top:24px}
+  .verdict h2{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .verdict h2::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--amber)}
+  .verdict p{color:var(--ink2);font-size:14px;margin-top:10px;max-width:78ch;line-height:1.65}
+  .verdict b{color:var(--ink)} .verdict .hot{color:var(--amber);font-weight:700}
+  footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  a{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">PadelMind &middot; Strategy</div>
+  <h1>PadelMind vs the field — an honest read</h1>
+  <p class="lede">Phone-based padel analysis is now a <b>crowded, real category</b>, and a proven incumbent (SwingVision) is entering it. This maps where PadelMind is at parity, behind, and genuinely different — so effort goes where the edge actually is.</p>
+
+  <div class="legend">
+    <span><i class="d" style="background:var(--uniq)"></i> Unique edge</span>
+    <span><i class="d" style="background:var(--win)"></i> Have it</span>
+    <span><i class="d" style="background:var(--par)"></i> At parity</span>
+    <span><i class="d" style="background:var(--gap)"></i> Behind / partial</span>
+    <span><i class="d" style="background:var(--miss)"></i> Not yet</span>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Clutch</th>
+          <th>SwingVision</th>
+          <th>Padel AI</th>
+          <th class="us">PadelMind</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Capture model</th>
+          <td><span class="cell gap">Installed camera</span><small>per-court hardware</small></td>
+          <td><span class="cell win">Your phone</span><small>any court</small></td>
+          <td><span class="cell win">Your phone</span><small>any court</small></td>
+          <td class="uscol"><span class="cell win">Your phone</span><small>portable, any court</small></td>
+        </tr>
+        <tr>
+          <th>Platform</th>
+          <td><span class="cell par">App + hardware</span></td>
+          <td><span class="cell win">Native iOS</span><small>on-device Core ML</small></td>
+          <td><span class="cell win">Native iOS + Android</span></td>
+          <td class="uscol"><span class="cell gap">PWA (web)</span><small>native app = later</small></td>
+        </tr>
+        <tr>
+          <th>Works on any court, no setup</th>
+          <td><span class="cell miss">No — installed</span></td>
+          <td><span class="cell win">Yes</span></td>
+          <td><span class="cell win">Yes</span></td>
+          <td class="uscol"><span class="cell win">Yes</span><small>auto-calibration validated</small></td>
+        </tr>
+        <tr>
+          <th>Heatmaps / positioning</th>
+          <td><span class="cell win">Yes</span></td>
+          <td><span class="cell par">Positioning stats</span></td>
+          <td><span class="cell win">Yes</span></td>
+          <td class="uscol"><span class="cell win">Yes</span><small>built + proven</small></td>
+        </tr>
+        <tr>
+          <th>Match stats (speed / rally / distance)</th>
+          <td><span class="cell win">Yes</span></td>
+          <td><span class="cell win">Yes</span><small>shot speed, depth</small></td>
+          <td><span class="cell win">Yes</span></td>
+          <td class="uscol"><span class="cell win">Yes</span><small>Phase 1.5 layer</small></td>
+        </tr>
+        <tr>
+          <th>Auto highlight reels</th>
+          <td><span class="cell win">Yes (mature)</span><small>gesture-trigger</small></td>
+          <td><span class="cell win">Yes</span><small>auto-trim</small></td>
+          <td><span class="cell par">Partial</span></td>
+          <td class="uscol"><span class="cell win">Yes</span><small>9:16, intensity-ranked</small></td>
+        </tr>
+        <tr>
+          <th>Shot / technique scoring</th>
+          <td><span class="cell par">Limited</span></td>
+          <td><span class="cell win">Yes</span><small>shot-type ID + coaching</small></td>
+          <td><span class="cell win">Yes</span><small>6 shots, Playtomic 1–7, drills</small></td>
+          <td class="uscol"><span class="cell gap">Building</span><small>coach tool + pose done; engine not yet</small></td>
+        </tr>
+        <tr>
+          <th>Human coach designs the rubric</th>
+          <td><span class="cell miss">AI only</span></td>
+          <td><span class="cell miss">AI only</span></td>
+          <td><span class="cell miss">AI only</span></td>
+          <td class="uscol"><span class="cell uniq">Coach co-founder</span><small>the intended moat</small></td>
+        </tr>
+        <tr>
+          <th>Rating-scale integration</th>
+          <td><span class="cell par">Own rating</span></td>
+          <td><span class="cell par">Own stats</span></td>
+          <td><span class="cell win">Playtomic 1–7</span></td>
+          <td class="uscol"><span class="cell miss">Planned</span></td>
+        </tr>
+        <tr>
+          <th>Delivery to player</th>
+          <td><span class="cell par">App</span></td>
+          <td><span class="cell par">App</span></td>
+          <td><span class="cell par">App</span></td>
+          <td class="uscol"><span class="cell uniq">WhatsApp-native</span><small>no one else does this</small></td>
+        </tr>
+        <tr>
+          <th>Geography focus</th>
+          <td><span class="cell par">Europe</span></td>
+          <td><span class="cell par">US / global</span></td>
+          <td><span class="cell par">Global</span></td>
+          <td class="uscol"><span class="cell uniq">India-first</span></td>
+        </tr>
+        <tr>
+          <th>Pricing</th>
+          <td><span class="cell par">Club B2B</span></td>
+          <td><span class="cell par">Free &rarr; $60&ndash;120/yr</span></td>
+          <td><span class="cell par">Free + premium scan</span></td>
+          <td class="uscol"><span class="cell miss">TBD</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid3">
+    <div class="box" style="--c:var(--par)">
+      <h3>At parity — table stakes</h3>
+      <ul>
+        <li><b>Phone capture</b> — everyone's here now</li>
+        <li><b>Heatmaps + match stats</b> — commodity</li>
+        <li><b>Auto highlights</b> — commodity</li>
+        <li>These get you <b>in the game, not ahead</b></li>
+      </ul>
+    </div>
+    <div class="box" style="--c:var(--gap)">
+      <h3>Behind — close these</h3>
+      <ul>
+        <li><b>Native app</b> — rivals are native; you're a PWA. Fine for MVP, a gap long-term</li>
+        <li><b>Technique scoring</b> — <b>Padel AI already ships</b> per-shot Playtomic scoring + drills. Your "moat" area — they're live, you're building</li>
+        <li><b>Rating scale</b> — Playtomic is the standard; you need a stance on it</li>
+      </ul>
+    </div>
+    <div class="box" style="--c:var(--uniq)">
+      <h3>Genuinely different — lean hard</h3>
+      <ul>
+        <li><b>WhatsApp-native delivery</b> — literally no competitor does this</li>
+        <li><b>India-first</b> distribution (AutomationXpert muscle)</li>
+        <li><b>Human coach</b> designing the rubric vs pure AI — if it's demonstrably better/explainable</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h2>The verdict</h2>
+    <p><b>Portable + analytics is a race you won't win on features</b> — SwingVision is more mature, and Padel AI already ships the technique scoring you consider your moat. If the pitch is "phone-based padel analysis," you're one of six, behind two.</p>
+    <p>Your <span class="hot">only defensible edges are distribution and the human-coach rubric</span>: WhatsApp-native reach into Indian clubs (nobody else), and a real coach's eye that AI-only rivals can't fake — <i>if</i> it produces feedback players trust more than an auto-score. Treat heatmaps/stats/highlights as <b>table stakes to reach parity cheaply</b>, ship the PWA MVP to prove the WhatsApp loop, and pour the real energy into the <span class="hot">coach rubric + India go-to-market</span>. That's the wedge — not the camera.</p>
+  </div>
+
+  <footer>
+    <span>PadelMind competitive read &middot; 13 Jul 2026</span>
+    <span>Sources: clutchapp.io &middot; swing.vision &middot; padelaiapp.com &middot; padelize.ai</span>
+  </footer>
+</div>
+</body>
+</html>
