@@ -27,6 +27,7 @@ import sys
 
 import cv2
 import numpy as np
+from PIL import Image
 from ultralytics import YOLO
 
 import extract as ex
@@ -50,11 +51,15 @@ def model():
         _model = YOLO("yolov8s-pose.pt")
     return _model
 
+# MPS has a known YOLO-pose keypoint bug (produces the "impossibly long limb"
+# artifacts). Use GPU only for fast peak-FINDING (pass 1); use CPU for the
+# rendered skeletons the coach actually sees (pass 2) so keypoints are correct.
+import torch
+_GPU = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+DEVICE = _GPU
+
 def _device():
-    import torch
-    if torch.cuda.is_available(): return "cuda"
-    if torch.backends.mps.is_available(): return "mps"
-    return "cpu"
+    return DEVICE
 
 def _pt(k, j):
     x, y, c = k[j]
@@ -112,20 +117,72 @@ def nearest_player(frame, ref_box):
     return best
 
 def draw(img, k, ox, oy, scale):
-    H = img.shape[0]
+    H, W = img.shape[:2]
     lw = max(2, int(H*0.010)); r = max(3, int(H*0.012))
     def P(j):
         x, y, c = k[j]
-        return (int((x-ox)*scale), int((y-oy)*scale)) if c > KV else None
+        if c <= KV:
+            return None
+        px, py = int((x-ox)*scale), int((y-oy)*scale)
+        # Reject keypoints that fall well outside the crop (bad detections)
+        if px < -W*0.15 or px > W*1.15 or py < -H*0.15 or py > H*1.15:
+            return None
+        return (px, py)
+
+    # Torso length as the anatomical yardstick — a real limb segment never exceeds
+    # ~1.3x the torso, so anything longer is a mis-detected joint: skip it.
+    ls, rs, lh, rh = P(5), P(6), P(11), P(12)
+    def mid(a, b): return ((a[0]+b[0])/2, (a[1]+b[1])/2) if a and b else None
+    shm, hpm = mid(ls, rs), mid(lh, rh)
+    torso = math.hypot(shm[0]-hpm[0], shm[1]-hpm[1]) if (shm and hpm) else H*0.35
+    max_seg = max(H*0.12, torso*1.35)
+
+    drawn = set()
     for (a, b), col in LIMBS:
         pa, pb = P(a), P(b)
-        if pa and pb:
+        if pa and pb and math.hypot(pa[0]-pb[0], pa[1]-pb[1]) <= max_seg:
             cv2.line(img, pa, pb, (20,20,20), lw+2); cv2.line(img, pa, pb, col, lw)
-    for j in range(17):
+            drawn.add(a); drawn.add(b)
+    for j in drawn:                      # only joints that belong to a valid limb
         p = P(j)
         if p:
             cv2.circle(img, p, r+1, (20,20,20), -1)
             cv2.circle(img, p, r, (80,160,255) if j in (9,10) else (255,255,255), -1)
+
+def gif_for_shot(cap, peak_t, pbox, out_path, target_h=260, nframes=16):
+    """Render the shot as a looping slow-mo GIF with the skeleton overlaid, using
+    a FIXED crop window (generous around the peak box) so the player doesn't jump."""
+    x1, y1, x2, y2 = pbox
+    padx, pady = (x2-x1)*0.75, (y2-y1)*0.45
+    cap.set(cv2.CAP_PROP_POS_MSEC, peak_t*1000)
+    ok, f0 = cap.read()
+    if not ok:
+        return None
+    h, w = f0.shape[:2]
+    cx1, cy1 = max(0, int(x1-padx)), max(0, int(y1-pady))
+    cx2, cy2 = min(w, int(x2+padx)), min(h, int(y2+pady))
+    frames = []
+    for tt in np.linspace(peak_t-0.7, peak_t+0.5, nframes):
+        cap.set(cv2.CAP_PROP_POS_MSEC, max(0.0, tt)*1000)
+        ok, frame = cap.read()
+        if not ok:
+            continue
+        crop = frame[cy1:cy2, cx1:cx2]
+        if crop.size == 0:
+            continue
+        scale = max(1.0, target_h/crop.shape[0])
+        crop = cv2.resize(crop, (int(crop.shape[1]*scale), int(crop.shape[0]*scale)), interpolation=cv2.INTER_CUBIC)
+        crop = cv2.bilateralFilter(crop, 5, 50, 50)
+        found = nearest_player(frame, pbox)
+        if found:
+            draw(crop, found[0], cx1, cy1, scale)
+        frames.append(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)))
+    if len(frames) < 4:
+        return None
+    frames[0].save(out_path, save_all=True, append_images=frames[1:],
+                   duration=90, loop=0, optimize=True)
+    return os.path.basename(out_path)
+
 
 def crop_phase(frame, k, box, out_path):
     x1, y1, x2, y2 = box
@@ -143,6 +200,8 @@ def crop_phase(frame, k, box, out_path):
     return [[round(v[0],1), round(v[1],1), round(v[2],3)] for v in k]
 
 def process(video, out_dir, cidx, max_shots, manifest):
+    global DEVICE
+    DEVICE = _GPU                        # fast peak-finding
     # Pass 1 — strike-score series (no frame storage)
     series = []
     for t, frame in ex.frames(video, target_fps=10.0):
@@ -162,6 +221,8 @@ def process(video, out_dir, cidx, max_shots, manifest):
             chosen.append(p); used.append(p[0])
     chosen.sort(key=lambda p: p[0])
 
+    # Pass 2 renders the skeletons the coach sees — switch to CPU for correct keypoints
+    DEVICE = "cpu"
     cap = cv2.VideoCapture(video)
     for si, (pt, psc, pbox, pface) in enumerate(chosen):
         shot_id = f"c{cidx}s{si}"
@@ -178,9 +239,10 @@ def process(video, out_dir, cidx, max_shots, manifest):
             kp = crop_phase(frame, k, b, os.path.join(out_dir, fn))
             if kp: phases.append({"phase": pname, "id": fn, "t": round(tt,2), "keypoints": kp})
         if len(phases) >= 3:
+            gif = gif_for_shot(cap, pt, pbox, os.path.join(out_dir, f"{shot_id}.gif"))
             manifest.append({"shot_id": shot_id, "shot_index": len(manifest)+1,
                              "peak_sec": round(pt,2), "strike_score": round(psc,2),
-                             "front_facing": pface >= 2, "phases": phases})
+                             "front_facing": pface >= 2, "gif": gif, "phases": phases})
     cap.release()
 
 

@@ -5,6 +5,7 @@
     "peak_sec": 23.84,
     "strike_score": 17.36,
     "front_facing": true,
+    "gif": "c0s1.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -382,6 +383,7 @@
     "peak_sec": 30.32,
     "strike_score": 1.56,
     "front_facing": true,
+    "gif": "c0s2.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -759,6 +761,7 @@
     "peak_sec": 36.16,
     "strike_score": 16.68,
     "front_facing": true,
+    "gif": "c1s0.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -1136,6 +1139,7 @@
     "peak_sec": 40.24,
     "strike_score": 12.55,
     "front_facing": true,
+    "gif": "c1s1.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -1513,6 +1517,7 @@
     "peak_sec": 80.4,
     "strike_score": 11.32,
     "front_facing": true,
+    "gif": "c1s2.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -1890,6 +1895,7 @@
     "peak_sec": 26.72,
     "strike_score": 17.89,
     "front_facing": true,
+    "gif": "c2s0.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -2267,6 +2273,7 @@
     "peak_sec": 57.28,
     "strike_score": 2.38,
     "front_facing": true,
+    "gif": "c2s1.gif",
     "phases": [
       {
         "phase": "Preparation",
@@ -2644,6 +2651,7 @@
     "peak_sec": 62.72,
     "strike_score": 2.53,
     "front_facing": true,
+    "gif": "c2s2.gif",
     "phases": [
       {
         "phase": "Preparation",

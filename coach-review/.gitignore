@@ -1,2 +1,5 @@
 # Generated snapshots — regenerate with pose_label_gen.py
 public/snaps/*.jpg
+
+# generated GIFs
+public/snaps/*.gif

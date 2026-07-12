@@ -16,12 +16,15 @@
   .shead{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
   .shead .n{font-size:14px;font-weight:800}
   .shead .badge{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--hot)}
-  .strip{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#0b1220;scroll-snap-type:x mandatory}
-  .frame{flex:0 0 auto;width:150px;scroll-snap-align:center}
-  .frame img{width:150px;height:200px;object-fit:cover;border-radius:8px;display:block;background:#000;border:1px solid var(--border)}
-  .frame .plabel{text-align:center;font-size:11px;font-weight:700;color:var(--muted);margin-top:6px}
+  .gifwrap{background:#0b1220;display:flex;justify-content:center;align-items:center;padding:12px 12px 6px;position:relative}
+  .gifwrap img{max-height:52vh;width:auto;max-width:100%;border-radius:10px;display:block}
+  .gifwrap .live{position:absolute;top:18px;left:20px;background:rgba(239,68,68,.9);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.5px}
+  .strip{display:flex;gap:6px;overflow-x:auto;padding:6px 12px 12px;background:#0b1220;scroll-snap-type:x mandatory}
+  .frame{flex:0 0 auto;width:92px;scroll-snap-align:center}
+  .frame img{width:92px;height:122px;object-fit:cover;border-radius:6px;display:block;background:#000;border:1px solid var(--border)}
+  .frame .plabel{text-align:center;font-size:9px;font-weight:700;color:var(--muted);margin-top:4px}
   .frame.contact .plabel{color:var(--hot)}
-  .hint{text-align:center;font-size:10px;color:var(--muted);padding:0 12px 8px;background:#0b1220}
+  .hint{text-align:center;font-size:10px;color:var(--muted);padding:0 12px 10px;background:#0b1220}
   .body{padding:16px 16px 8px}
   .q{margin-bottom:16px}
   .qlabel{font-size:11px;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--border)}
@@ -83,9 +86,18 @@ function buildCard(shot,i){
   const card=el('div','card');
   const head=el('div','shead');
   head.append(el('div','n','Shot '+(i+1)+' / '+SHOTS.length));
-  head.append(el('div','badge','⚡ '+shot.phases.length+'-phase sequence'));
+  head.append(el('div','badge','⚡ motion + '+shot.phases.length+' phases'));
   card.append(head);
 
+  // Hero — the shot in motion (skeleton GIF, autoplaying loop)
+  if(shot.gif){
+    const gw=el('div','gifwrap');
+    const g=document.createElement('img'); g.src='snaps/'+shot.gif; g.alt='shot motion'; g.loading='lazy';
+    gw.append(g); gw.append(el('div','live','● LOOP'));
+    card.append(gw);
+  }
+
+  // Secondary — the discrete phases as a compact filmstrip
   const strip=el('div','strip');
   for(const ph of shot.phases){
     const fr=el('div','frame'+(ph.phase==='Contact'?' contact':''));
@@ -94,7 +106,7 @@ function buildCard(shot,i){
     strip.append(fr);
   }
   card.append(strip);
-  card.append(el('div','hint','← swipe the sequence: preparation → contact → follow-through →'));
+  card.append(el('div','hint','motion loops above · discrete phases below: preparation → contact → follow-through'));
 
   const body=el('div','body');
   const a=answers[shot.shot_id]||(answers[shot.shot_id]={});
