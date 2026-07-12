@@ -12,3 +12,12 @@ yolov8*.pt
 pwa/dist/
 Booking App/
 ingest/ingest.env
+
+# cv-pipeline virtualenv (heavy, never commit)
+cv-pipeline/.venv/
+
+# embeds Roboflow API key — never commit
+cv-pipeline/colab_train_padel_yolov8.ipynb
+
+# Roboflow raw downloads (weights already copied to cv-pipeline/models/)
+Roboflow /
