@@ -50,11 +50,15 @@ def estimate(frame, conf=0.4):
     """
     m = _get_model()
     r = m.predict(frame, device=_device(), conf=conf, verbose=False)[0]
-    if r.keypoints is None or len(r.keypoints.xy) == 0:
+    if r.keypoints is None:
+        return []
+
+    xy = r.keypoints.xy.cpu().numpy()             # (n, 17, 2)
+    # Guard every degenerate shape: no people (n=0) OR no keypoints axis (17→0)
+    if xy.ndim != 3 or xy.shape[0] == 0 or xy.shape[1] < 17:
         return []
 
     out = []
-    xy = r.keypoints.xy.cpu().numpy()             # (n, 17, 2)
     cf = r.keypoints.conf.cpu().numpy() if r.keypoints.conf is not None else None
     boxes = r.boxes.xyxy.cpu().numpy() if r.boxes is not None else None
     bconf = r.boxes.conf.cpu().numpy() if r.boxes is not None else None
