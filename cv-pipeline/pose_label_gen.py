@@ -103,9 +103,19 @@ def poses(frame):
         out.append((k, boxes[i]))
     return out
 
+# When PREFER_FRONT is on, target the front-facing person (e.g. the coach across
+# the net whose face is visible) rather than the biggest/nearest player.
+PREFER_FRONT = False
+
 def top_striker(frame):
     cands = [(strike_score(k), k, b) for k, b in poses(frame) if full_body(k, b)]
-    return max(cands, key=lambda c: c[0]) if cands else None
+    if not cands:
+        return None
+    if PREFER_FRONT:
+        front = [c for c in cands if face_score(c[1]) >= 3]   # nose + eyes visible
+        if front:
+            cands = front
+    return max(cands, key=lambda c: c[0])
 
 def nearest_player(frame, ref_box):
     cx, cy = (ref_box[0]+ref_box[2])/2, (ref_box[1]+ref_box[3])/2
@@ -202,9 +212,10 @@ def crop_phase(frame, k, box, out_path):
 def process(video, out_dir, cidx, max_shots, manifest):
     global DEVICE
     DEVICE = _GPU                        # fast peak-finding
-    # Pass 1 — strike-score series (no frame storage)
+    # Pass 1 — strike-score series (no frame storage). 6 FPS is plenty to catch
+    # a ~1s strike; keeps a 76-min clip tractable.
     series = []
-    for t, frame in ex.frames(video, target_fps=10.0):
+    for t, frame in ex.frames(video, target_fps=6.0):
         top = top_striker(frame)
         series.append((t, top[0], top[2], face_score(top[1])) if top else (t, 0.0, None, 0))
 
@@ -247,7 +258,9 @@ def process(video, out_dir, cidx, max_shots, manifest):
 
 
 def main():
-    # Usage: pose_label_gen.py <out_dir> <max_shots_per_clip> <video1> [video2 ...]
+    # Usage: PREFER_FRONT=1 pose_label_gen.py <out_dir> <max_shots_per_clip> <video1> [video2 ...]
+    global PREFER_FRONT
+    PREFER_FRONT = os.environ.get("PREFER_FRONT") == "1"
     out_dir = sys.argv[1]
     max_shots = int(sys.argv[2])
     videos = sys.argv[3:]
