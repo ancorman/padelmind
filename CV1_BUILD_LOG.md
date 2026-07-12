@@ -46,8 +46,8 @@ Internal disk is tight (~20 GB free, 96% full). **Bulk / occasional-use data →
 | # | Step | Needs Sunday recording? | Status |
 |---|---|---|---|
 | 1 | Dedicated venv + install deps + YOLOv8 MPS smoke test | No | ✅ DONE |
-| 2 | M1+M2 — frame extraction + player detection on a test video | No | ⬜ |
-| 3 | M3+M4 — ByteTrack tracking + slot assignment (fix ByteTrack bug) | No | ⬜ |
+| 2 | M1+M2 — frame extraction + player detection on a test video | No | ✅ DONE (90s WPT clip, 451 frames, both models) |
+| 3 | M3+M4 — ByteTrack tracking + slot assignment (fix ByteTrack bug) | No | ✅ bug fixed (`sv.ByteTrack`) + smoke-tested; real-footage run pending |
 | 4 | M5 — court homography (pixel→metres) | Yes (NSCI calibration) | ⬜ |
 | 5 | M6 — per-player heatmap PNGs | Yes | ⬜ |
 | 6 | M7+M8 — rally detection + ffmpeg highlight cutter | Yes | ⬜ |
@@ -67,8 +67,8 @@ Roboflow sub-steps:
 | R1 | Create Roboflow account + get Private API Key | ✅ DONE |
 | R2 | Pick padel dataset(s) on Roboflow Universe (player-detection first) | ✅ DONE |
 | R3 | `pip install roboflow`; download dataset in YOLOv8 format | ✅ DONE |
-| R4 | Train custom YOLOv8 on GPU — **venue: Google Colab free T4** | ⏳ notebook ready, awaiting Manoj's Colab run |
-| R5 | Download weights → set `YOLO_MODEL` → benchmark vs yolov8n on our footage | ⬜ |
+| R4 | Train custom YOLOv8 on GPU — **venue: Google Colab free T4** | ✅ DONE — 50 epochs, player mAP50 0.985, weights committed cv-pipeline/models/ |
+| R5 | Download weights → set `YOLO_MODEL` → benchmark vs yolov8n on our footage | ✅ DONE — custom wins: ≥4 players 63.9% vs 49.0%, conf 0.889 vs 0.674, far-court +0.2, zero crowd FPs (`bench_r5.py`) |
 
 **R1:** Roboflow account created (Google SSO). Premium Trial active — 14 days, **15 credits** (could fund a Roboflow-hosted training run). Key stored in git-ignored `cv-pipeline/.env` as `ROBOFLOW_API_KEY`. SDK roboflow 1.3.13 installed (note: downgraded opencv-headless 4.11→4.10, typer — harmless).
 **R2:** Dataset = **`yolo-data-labeling/padel-wpt-10videos`** (multi-class: player 6152, racket 4076, serve line 3088, ball 2164, net 1545; 11 versions). Downloading v11 (yolov8 fmt) → `$PADEL_DATA_DIR/datasets/padel-wpt-10videos-v11`.
@@ -90,3 +90,13 @@ Roboflow sub-steps:
 - **Step-3 bug confirmed:** `sv.ByteTrack` exists, `sv.ByteTracker` does NOT. track.py must switch class name. Valid init params: `track_activation_threshold, lost_track_buffer, minimum_matching_threshold, frame_rate, minimum_consecutive_frames`.
 
 **Next: Step 2** — needs a padel test video (see open question below).
+
+---
+
+## Log — 2026-07-12 (evening session, main window)
+
+- **Step 2 ✅ / R5 ✅**: `bench_r5.py` on 90s WPT 720p clip (451 frames @5FPS, MPS). Custom `padel_yolov8s_wpt_v11.pt`: all-4-players in 63.9% frames, mean conf 0.889, ignores crowd/replay close-ups. Stock yolov8n: 49.0%, conf 0.674, fires on spectators. Far-court players +0.2 conf with custom. Annotated frames: `$PADEL_DATA_DIR/outputs/bench_r5/`.
+- **Step 3 code ✅**: `track.py` ByteTracker→ByteTrack fixed, 4-track smoke test green. Real-footage tracking run when NSCI recording lands.
+- **Phase 1.5 stats layer built** (`stats.py` + 6 passing tests): distance/top-speed/sprints/net%/baseline%/zones/fade/longest-rally from positions JSON. Wired into `handler.py` callback `zones` field → lands in `padel_match_outputs.zones_summary` with zero Worker changes.
+- **detect.py**: player class resolved by name (custom model is alphabetical — classes=[0] would have detected balls).
+- **NEXT (needs tonight's footage):** calibrate Court 2 from empty-court still → Steps 4–6 on the real match → Step 7–8 E2E (Worker deploy + `YOLO_MODEL` env on RunPod = Manoj's go).
