@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PadelMind — Coach Review</title>
+<style>
+  :root{--bg:#0F172A;--elev:#1E293B;--border:#334155;--amber:#3D6FD6;--hot:#FB923C;--green:#34D399;--text:#F1F5F9;--muted:#94A3B8;--danger:#F87171}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5}
+  .top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 16px}
+  .top h1{font-size:17px;font-weight:800}
+  .top .sub{font-size:11px;color:var(--muted);margin-top:2px}
+  .namewrap{margin-top:10px;display:flex;gap:8px;align-items:center}
+  input[type=text]{flex:1;background:var(--elev);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:14px;padding:9px 12px;outline:none}
+  input[type=text]:focus{border-color:var(--amber)}
+  .feed{max-width:640px;margin:0 auto;padding:16px 14px 96px}
+  .card{background:var(--elev);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px}
+  .card .imgwrap{background:#000;display:flex;justify-content:center;position:relative}
+  .card img{max-height:44vh;width:auto;max-width:100%;display:block}
+  .card .num{position:absolute;top:8px;left:12px;background:rgba(15,23,42,.85);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted)}
+  .body{padding:14px 14px 6px}
+  .q{margin-bottom:14px}
+  .qlabel{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+  .opts{display:flex;flex-wrap:wrap;gap:7px}
+  .opt{border:1.5px solid var(--border);border-radius:20px;padding:7px 12px;font-size:13px;cursor:pointer;user-select:none;transition:all .12s;background:var(--bg)}
+  .opt:hover{border-color:var(--muted)}
+  .opt.sel{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+  .opt.multi.sel{background:var(--hot);border-color:var(--hot);color:#111}
+  textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:13px;padding:9px;resize:vertical;min-height:44px;outline:none}
+  textarea:focus{border-color:var(--amber)}
+  .done{color:var(--green);font-size:12px;font-weight:700}
+  .bar{position:fixed;bottom:0;left:0;right:0;background:var(--elev);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:20}
+  .track{flex:1;height:8px;background:var(--bg);border-radius:6px;overflow:hidden}
+  .fill{height:100%;background:var(--hot);width:0;transition:width .2s}
+  .cnt{font-size:12px;color:var(--muted);white-space:nowrap}
+  button{font:inherit;font-weight:800;border:none;border-radius:10px;padding:11px 20px;cursor:pointer;background:var(--amber);color:#fff}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--green);color:#04231a;padding:12px 20px;border-radius:10px;font-weight:700;z-index:30;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+  .toast.err{background:var(--danger);color:#2a0a0a}
+  .loader{text-align:center;padding:60px 20px;color:var(--muted)}
+</style></head>
+<body>
+  <div class="top">
+    <h1>Coach Pose Review 🎾</h1>
+    <div class="sub">Scroll through each player and rate the pose. Your input trains PadelMind's coaching engine.</div>
+    <div class="namewrap"><input type="text" id="coach" placeholder="Your name (so we credit your labels)"/></div>
+  </div>
+  <div class="feed" id="feed"><div class="loader">Loading players…</div></div>
+  <div class="bar">
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <span class="cnt" id="cnt">0 / 0</span>
+    <button id="submit" disabled>Submit</button>
+  </div>
+<script>
+const BACKEND='https://padelmind-coach.manoj-5ce.workers.dev';
+const CLIP='wpt-sample';
+const QUESTIONS=[
+  {key:'shot_type',label:'Shot type',multi:false,opts:['Forehand drive','Backhand drive','Forehand volley','Backhand volley','Bandeja','Víbora','Smash / Remate','Serve','Lob','Defensive / Block','Not a shot / movement']},
+  {key:'contact_point',label:'Contact point',multi:false,opts:['Overhead','Shoulder height','Waist height','Below knee','N/A']},
+  {key:'position_quality',label:'Body position',multi:false,opts:['Textbook','Acceptable','Off-balance','Poor']},
+  {key:'technique_flags',label:'Technique (tap all that apply)',multi:true,opts:['Knees bent','Shoulder turn','Non-racket arm up','Weight forward','Early preparation']},
+  {key:'court_zone',label:'Court zone',multi:false,opts:['Net','Mid-court','Baseline','Back glass']},
+];
+const LS='padelmind_coach_'+CLIP;
+const answers=JSON.parse(localStorage.getItem(LS)||'{}');
+const coachLS='padelmind_coach_name';
+let SNAPS=[];
+const $=id=>document.getElementById(id);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+const isDone=id=>{const a=answers[id]||{};return !!(a.shot_type&&a.position_quality);};
+const save=()=>localStorage.setItem(LS,JSON.stringify(answers));
+
+function updateBar(){
+  const done=SNAPS.filter(s=>isDone(s.id)).length;
+  $('cnt').textContent=done+' / '+SNAPS.length;
+  $('fill').style.width=(SNAPS.length?100*done/SNAPS.length:0)+'%';
+  $('submit').disabled=!(done>0 && $('coach').value.trim());
+}
+
+function buildCard(s,i){
+  const card=el('div','card');
+  const iw=el('div','imgwrap');
+  const img=document.createElement('img'); img.src='snaps/'+s.id; img.alt='pose'; img.loading='lazy';
+  const num=el('div','num'); num.textContent='Player '+(i+1)+' / '+SNAPS.length;
+  iw.append(img,num); card.append(iw);
+  const body=el('div','body');
+  const a=answers[s.id]||(answers[s.id]={});
+  for(const q of QUESTIONS){
+    const qd=el('div','q'); qd.append(el('div','qlabel',q.label));
+    const opts=el('div','opts');
+    for(const o of q.opts){
+      const sel=q.multi?((a[q.key]||[]).includes(o)):(a[q.key]===o);
+      const op=el('div','opt'+(q.multi?' multi':'')+(sel?' sel':''),o);
+      op.onclick=()=>{
+        if(q.multi){const arr=a[q.key]||[];a[q.key]=arr.includes(o)?arr.filter(x=>x!==o):[...arr,o];}
+        else a[q.key]=a[q.key]===o?undefined:o;
+        save(); op.classList.toggle('sel');
+        if(!q.multi){[...opts.children].forEach(c=>{if(c!==op)c.classList.remove('sel');});}
+        updateBar();
+      };
+      opts.append(op);
+    }
+    qd.append(opts); body.append(qd);
+  }
+  const nq=el('div','q'); nq.append(el('div','qlabel','Coach note (optional)'));
+  const ta=document.createElement('textarea'); ta.placeholder='e.g. late on the bandeja, elbow dropping'; ta.value=a.note||'';
+  ta.oninput=e=>{a.note=e.target.value;save();};
+  nq.append(ta); body.append(nq);
+  card.append(body);
+  return card;
+}
+
+function toast(msg,err){const t=el('div','toast'+(err?' err':''),msg);document.body.append(t);setTimeout(()=>t.remove(),3500);}
+
+async function submit(){
+  const coach=$('coach').value.trim();
+  const labels=SNAPS.filter(s=>isDone(s.id)).map(s=>({...s,coach_input:answers[s.id]}));
+  $('submit').disabled=true; $('submit').textContent='Saving…';
+  try{
+    const r=await fetch(BACKEND+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({coach,clip:CLIP,labels})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'failed');
+    toast('Saved '+d.count+' labels — thank you!');
+    $('submit').textContent='Saved ✓';
+  }catch(e){toast('Save failed: '+e.message,true);$('submit').textContent='Submit';updateBar();}
+}
+
+async function boot(){
+  $('coach').value=localStorage.getItem(coachLS)||'';
+  $('coach').oninput=()=>{localStorage.setItem(coachLS,$('coach').value);updateBar();};
+  try{
+    const r=await fetch('snaps/manifest.json'); SNAPS=await r.json();
+  }catch(e){$('feed').textContent='';$('feed').append(el('div','loader','Could not load players.'));return;}
+  const feed=$('feed'); feed.textContent='';
+  SNAPS.forEach((s,i)=>feed.append(buildCard(s,i)));
+  $('submit').onclick=submit;
+  updateBar();
+}
+boot();
+</script></body></html>

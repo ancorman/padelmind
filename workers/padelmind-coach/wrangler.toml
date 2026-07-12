@@ -1,0 +1,10 @@
+name = "padelmind-coach"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+account_id = "5cea7760e2a9ac11cdeb84ea116ff839"
+workers_dev = true
+
+# Coach pose-labels saved here as JSON under coach-labels/
+[[r2_buckets]]
+binding = "LABELS"
+bucket_name = "padelmind-outputs"
