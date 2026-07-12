@@ -9,27 +9,29 @@
   .top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 16px}
   .top h1{font-size:17px;font-weight:800}
   .top .sub{font-size:11px;color:var(--muted);margin-top:2px}
-  .namewrap{margin-top:10px;display:flex;gap:8px;align-items:center}
-  input[type=text]{flex:1;background:var(--elev);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:14px;padding:9px 12px;outline:none}
+  input[type=text]{width:100%;margin-top:10px;background:var(--elev);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:14px;padding:9px 12px;outline:none}
   input[type=text]:focus{border-color:var(--amber)}
-  .feed{max-width:640px;margin:0 auto;padding:16px 14px 96px}
-  .card{background:var(--elev);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:22px}
-  .card .imgwrap{background:#0b1220;display:flex;justify-content:center;align-items:center;position:relative;min-height:300px;padding:8px}
-  .card img{max-height:56vh;width:auto;max-width:100%;display:block;border-radius:8px}
-  .card .num{position:absolute;top:10px;left:12px;background:rgba(15,23,42,.9);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--text)}
-  .card .strike{position:absolute;top:10px;right:12px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--hot)}
+  .feed{max-width:680px;margin:0 auto;padding:16px 14px 96px}
+  .card{background:var(--elev);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:24px}
+  .shead{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .shead .n{font-size:14px;font-weight:800}
+  .shead .badge{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--hot)}
+  .strip{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#0b1220;scroll-snap-type:x mandatory}
+  .frame{flex:0 0 auto;width:150px;scroll-snap-align:center}
+  .frame img{width:150px;height:200px;object-fit:cover;border-radius:8px;display:block;background:#000;border:1px solid var(--border)}
+  .frame .plabel{text-align:center;font-size:11px;font-weight:700;color:var(--muted);margin-top:6px}
+  .frame.contact .plabel{color:var(--hot)}
+  .hint{text-align:center;font-size:10px;color:var(--muted);padding:0 12px 8px;background:#0b1220}
   .body{padding:16px 16px 8px}
-  .q{margin-bottom:18px}
+  .q{margin-bottom:16px}
   .qlabel{font-size:11px;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--border)}
   .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-  .opts.three{grid-template-columns:repeat(3,1fr)}
   .opt{border:1.5px solid var(--border);border-radius:10px;padding:11px 8px;font-size:13px;cursor:pointer;user-select:none;transition:all .12s;background:var(--bg);text-align:center;font-weight:600}
   .opt:hover{border-color:var(--muted)}
   .opt.sel{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:800}
   .opt.multi.sel{background:var(--hot);border-color:var(--hot);color:#111}
-  textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:13px;padding:9px;resize:vertical;min-height:44px;outline:none}
+  textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:13px;padding:10px;resize:vertical;min-height:46px;outline:none}
   textarea:focus{border-color:var(--amber)}
-  .done{color:var(--green);font-size:12px;font-weight:700}
   .bar{position:fixed;bottom:0;left:0;right:0;background:var(--elev);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:20}
   .track{flex:1;height:8px;background:var(--bg);border-radius:6px;overflow:hidden}
   .fill{height:100%;background:var(--hot);width:0;transition:width .2s}
@@ -42,11 +44,11 @@
 </style></head>
 <body>
   <div class="top">
-    <h1>Coach Pose Review 🎾</h1>
-    <div class="sub">Scroll through each player and rate the pose. Your input trains PadelMind's coaching engine.</div>
-    <div class="namewrap"><input type="text" id="coach" placeholder="Your name (so we credit your labels)"/></div>
+    <h1>Coach Shot Review 🎾</h1>
+    <div class="sub">Each shot is shown as a sequence — preparation → contact → follow-through. Rate the approach. Your input trains PadelMind's coaching engine.</div>
+    <input type="text" id="coach" placeholder="Your name (so we credit your labels)"/>
   </div>
-  <div class="feed" id="feed"><div class="loader">Loading players…</div></div>
+  <div class="feed" id="feed"><div class="loader">Loading shots…</div></div>
   <div class="bar">
     <div class="track"><div class="fill" id="fill"></div></div>
     <span class="cnt" id="cnt">0 / 0</span>
@@ -54,41 +56,48 @@
   </div>
 <script>
 const BACKEND='https://padelmind-coach.manoj-5ce.workers.dev';
-const CLIP='wpt-sample';
+const CLIP='technique-set';
 const QUESTIONS=[
-  {key:'shot_type',label:'Shot type',multi:false,opts:['Forehand drive','Backhand drive','Forehand volley','Backhand volley','Bandeja','Víbora','Smash / Remate','Serve','Lob','Defensive / Block','Not a shot / movement']},
-  {key:'contact_point',label:'Contact point',multi:false,opts:['Overhead','Shoulder height','Waist height','Below knee','N/A']},
-  {key:'position_quality',label:'Body position',multi:false,opts:['Textbook','Acceptable','Off-balance','Poor']},
-  {key:'technique_flags',label:'Technique (tap all that apply)',multi:true,opts:['Knees bent','Shoulder turn','Non-racket arm up','Weight forward','Early preparation']},
-  {key:'court_zone',label:'Court zone',multi:false,opts:['Net','Mid-court','Baseline','Back glass']},
+  {key:'shot_type',label:'Shot type',multi:false,opts:['Forehand drive','Backhand drive','Forehand volley','Backhand volley','Bandeja','Víbora','Smash / Remate','Serve','Lob','Defensive / Block']},
+  {key:'preparation',label:'Preparation',multi:false,opts:['Good','Rushed','Late','Poor']},
+  {key:'execution',label:'Execution / contact',multi:false,opts:['Clean contact','Slightly off','Mistimed','Poor']},
+  {key:'follow_through',label:'Follow-through',multi:false,opts:['Complete','Short','Cut off','Poor']},
+  {key:'technique_flags',label:'Technique (tap all that apply)',multi:true,opts:['Knees bent','Shoulder turn','Non-racket arm up','Weight transfer','Early prep','Good balance']},
 ];
-const LS='padelmind_coach_'+CLIP;
+const LS='padelmind_coach_'+CLIP, coachLS='padelmind_coach_name';
 const answers=JSON.parse(localStorage.getItem(LS)||'{}');
-const coachLS='padelmind_coach_name';
-let SNAPS=[];
+let SHOTS=[];
 const $=id=>document.getElementById(id);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
-const isDone=id=>{const a=answers[id]||{};return !!(a.shot_type&&a.position_quality);};
+const isDone=id=>{const a=answers[id]||{};return !!(a.shot_type&&a.execution);};
 const save=()=>localStorage.setItem(LS,JSON.stringify(answers));
 
 function updateBar(){
-  const done=SNAPS.filter(s=>isDone(s.id)).length;
-  $('cnt').textContent=done+' / '+SNAPS.length;
-  $('fill').style.width=(SNAPS.length?100*done/SNAPS.length:0)+'%';
+  const done=SHOTS.filter(s=>isDone(s.shot_id)).length;
+  $('cnt').textContent=done+' / '+SHOTS.length;
+  $('fill').style.width=(SHOTS.length?100*done/SHOTS.length:0)+'%';
   $('submit').disabled=!(done>0 && $('coach').value.trim());
 }
 
-function buildCard(s,i){
+function buildCard(shot,i){
   const card=el('div','card');
-  const iw=el('div','imgwrap');
-  const img=document.createElement('img'); img.src='snaps/'+s.id; img.alt='pose'; img.loading='lazy';
-  const num=el('div','num'); num.textContent='Shot '+(i+1)+' / '+SNAPS.length;
-  iw.append(img,num);
-  const strike=el('div','strike','⚡ strike moment');
-  iw.append(strike);
-  card.append(iw);
+  const head=el('div','shead');
+  head.append(el('div','n','Shot '+(i+1)+' / '+SHOTS.length));
+  head.append(el('div','badge','⚡ '+shot.phases.length+'-phase sequence'));
+  card.append(head);
+
+  const strip=el('div','strip');
+  for(const ph of shot.phases){
+    const fr=el('div','frame'+(ph.phase==='Contact'?' contact':''));
+    const img=document.createElement('img'); img.src='snaps/'+ph.id; img.alt=ph.phase; img.loading='lazy';
+    fr.append(img); fr.append(el('div','plabel',ph.phase));
+    strip.append(fr);
+  }
+  card.append(strip);
+  card.append(el('div','hint','← swipe the sequence: preparation → contact → follow-through →'));
+
   const body=el('div','body');
-  const a=answers[s.id]||(answers[s.id]={});
+  const a=answers[shot.shot_id]||(answers[shot.shot_id]={});
   for(const q of QUESTIONS){
     const qd=el('div','q'); qd.append(el('div','qlabel',q.label));
     const opts=el('div','opts');
@@ -99,7 +108,7 @@ function buildCard(s,i){
         if(q.multi){const arr=a[q.key]||[];a[q.key]=arr.includes(o)?arr.filter(x=>x!==o):[...arr,o];}
         else a[q.key]=a[q.key]===o?undefined:o;
         save(); op.classList.toggle('sel');
-        if(!q.multi){[...opts.children].forEach(c=>{if(c!==op)c.classList.remove('sel');});}
+        if(!q.multi)[...opts.children].forEach(c=>{if(c!==op)c.classList.remove('sel');});
         updateBar();
       };
       opts.append(op);
@@ -107,39 +116,35 @@ function buildCard(s,i){
     qd.append(opts); body.append(qd);
   }
   const nq=el('div','q'); nq.append(el('div','qlabel','Coach note (optional)'));
-  const ta=document.createElement('textarea'); ta.placeholder='e.g. late on the bandeja, elbow dropping'; ta.value=a.note||'';
+  const ta=document.createElement('textarea'); ta.placeholder='e.g. good load in prep, but wrist late at contact'; ta.value=a.note||'';
   ta.oninput=e=>{a.note=e.target.value;save();};
   nq.append(ta); body.append(nq);
   card.append(body);
   return card;
 }
 
-function toast(msg,err){const t=el('div','toast'+(err?' err':''),msg);document.body.append(t);setTimeout(()=>t.remove(),3500);}
+function toast(m,e){const t=el('div','toast'+(e?' err':''),m);document.body.append(t);setTimeout(()=>t.remove(),3500);}
 
 async function submit(){
   const coach=$('coach').value.trim();
-  const labels=SNAPS.filter(s=>isDone(s.id)).map(s=>({...s,coach_input:answers[s.id]}));
+  const labels=SHOTS.filter(s=>isDone(s.shot_id)).map(s=>({...s,coach_input:answers[s.shot_id]}));
   $('submit').disabled=true; $('submit').textContent='Saving…';
   try{
     const r=await fetch(BACKEND+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({coach,clip:CLIP,labels})});
-    const d=await r.json();
-    if(!r.ok)throw new Error(d.error||'failed');
-    toast('Saved '+d.count+' labels — thank you!');
-    $('submit').textContent='Saved ✓';
+    const d=await r.json(); if(!r.ok)throw new Error(d.error||'failed');
+    toast('Saved '+d.count+' shots — thank you!'); $('submit').textContent='Saved ✓';
   }catch(e){toast('Save failed: '+e.message,true);$('submit').textContent='Submit';updateBar();}
 }
 
 async function boot(){
   $('coach').value=localStorage.getItem(coachLS)||'';
   $('coach').oninput=()=>{localStorage.setItem(coachLS,$('coach').value);updateBar();};
-  try{
-    const r=await fetch('snaps/manifest.json'); SNAPS=await r.json();
-  }catch(e){$('feed').textContent='';$('feed').append(el('div','loader','Could not load players.'));return;}
+  try{const r=await fetch('snaps/manifest.json'); SHOTS=await r.json();}
+  catch(e){$('feed').textContent='';$('feed').append(el('div','loader','Could not load shots.'));return;}
   const feed=$('feed'); feed.textContent='';
-  SNAPS.forEach((s,i)=>feed.append(buildCard(s,i)));
-  $('submit').onclick=submit;
-  updateBar();
+  SHOTS.forEach((s,i)=>feed.append(buildCard(s,i)));
+  $('submit').onclick=submit; updateBar();
 }
 boot();
 </script></body></html>
