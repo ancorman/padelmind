@@ -3,11 +3,13 @@ import supervision as sv
 from collections import defaultdict
 
 
-def build_tracker() -> sv.ByteTracker:
-    return sv.ByteTracker(minimum_matching_threshold=0.3)
+def build_tracker() -> sv.ByteTrack:
+    # minimum_matching_threshold lowered from 0.8: at 5 FPS sampling, players move
+    # far between frames, so inter-frame IoU is low
+    return sv.ByteTrack(minimum_matching_threshold=0.3)
 
 
-def update(tracker: sv.ByteTracker, detections: list[dict]) -> list[dict]:
+def update(tracker: sv.ByteTrack, detections: list[dict]) -> list[dict]:
     """Feed detections into ByteTracker, return list with track_id added."""
     if not detections:
         return []
