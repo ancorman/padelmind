@@ -6,6 +6,7 @@ import numpy as np
 class RallyWindow:
     start_sec: float
     end_sec: float
+    intensity: float = 0.0          # mean court-speed during the rally (m/s)
 
     @property
     def duration_sec(self) -> float:
@@ -16,6 +17,7 @@ class RallyWindow:
             "start_sec": round(self.start_sec, 2),
             "end_sec": round(self.end_sec, 2),
             "duration_sec": round(self.duration_sec, 2),
+            "intensity": round(self.intensity, 2),
         }
 
 
@@ -75,19 +77,31 @@ def detect(
     if not active_times:
         return []
 
+    def _intensity(a: float, b: float) -> float:
+        # mean of (both-sides activity) over the bins spanned by [a, b)
+        vals = []
+        for sec in range(int(a), int(b) + 1):
+            d = bins.get(sec)
+            if d:
+                vals.append((max(d.get("near", [0.0])) + max(d.get("far", [0.0]))) / 2)
+        return sum(vals) / len(vals) if vals else 0.0
+
     # Merge consecutive active seconds into windows
     windows: list[RallyWindow] = []
     start = active_times[0]
     prev  = active_times[0]
 
+    def _close(s: float, e: float) -> RallyWindow:
+        return RallyWindow(s, e + window_sec, intensity=_intensity(s, e))
+
     for t in active_times[1:]:
         if t - prev <= gap_merge_sec:
             prev = t
         else:
-            windows.append(RallyWindow(start, prev + window_sec))
+            windows.append(_close(start, prev))
             start = t
             prev  = t
-    windows.append(RallyWindow(start, prev + window_sec))
+    windows.append(_close(start, prev))
 
     # Filter by minimum duration
     return [w for w in windows if w.duration_sec >= min_duration]
