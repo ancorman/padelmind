@@ -6,6 +6,7 @@ import Matches from './pages/Matches'
 import Match from './pages/Match'
 import Book from './pages/Book'
 import Staff from './pages/Staff'
+import Upload from './pages/Upload'
 import { isDemo, DEMO_CTX, isDemoAccount, DEMO_PLAYER } from './demo'
 
 // ── Top-level states ──────────────────────────────────────────────────────────
@@ -178,6 +179,9 @@ export default function App() {
         {tab === 'book' && (
           <Book session={session} player={player} onBack={() => setTab('matches')} />
         )}
+        {tab === 'upload' && (
+          <Upload player={player} />
+        )}
         {tab === 'staff' && (
           <Staff session={session} player={player} activeBooking={activeBooking} />
         )}
@@ -200,6 +204,12 @@ export default function App() {
           icon="🎾"
           active={tab === 'book'}
           onClick={() => setTab('book')}
+        />
+        <NavTab
+          label="Upload"
+          icon="⬆️"
+          active={tab === 'upload'}
+          onClick={() => setTab('upload')}
         />
         {activeBooking && (
           <NavTab

@@ -1,3 +1,5 @@
+import { AwsClient } from 'aws4fetch';
+
 export interface Env {
   VIDEOS: R2Bucket;
   OUTPUTS: R2Bucket;
@@ -11,6 +13,10 @@ export interface Env {
   RUNPOD_ENDPOINT_ID: string;
   META_ACCESS_TOKEN: string;
   META_PHONE_NUMBER_ID: string;
+  // R2 S3 credentials — for phone-direct presigned uploads (set via wrangler secret)
+  R2_ACCOUNT_ID: string;
+  R2_ACCESS_KEY_ID: string;
+  R2_SECRET_ACCESS_KEY: string;
 }
 
 // ─── Supabase helpers ────────────────────────────────────────────────────────
@@ -124,19 +130,30 @@ export default {
 
 // ─── Handlers ────────────────────────────────────────────────────────────────
 
+// Phone-direct upload: return a real presigned R2 PUT URL so the phone uploads
+// the (multi-GB) match file straight to storage — no Mac, no creds on the client.
 async function handleUploadUrl(request: Request, env: Env, matchId: string): Promise<Response> {
-  const body = await request.json() as { secret: string };
-  if (body.secret !== env.PI_SHARED_SECRET) return json({ error: 'Unauthorized' }, 401);
+  // Gate: the match must exist (created by the logged-in player in the app).
+  const matches = await sbQuery(env, `/padel_matches?id=eq.${matchId}&select=id`);
+  if (!matches?.length) return json({ error: 'Match not found' }, 404);
+  if (!env.R2_ACCESS_KEY_ID) return json({ error: 'R2 credentials not configured on Worker' }, 500);
 
   const key = `videos/${matchId}/match.mp4`;
-  // Generate pre-signed URL (1 hour TTL)
-  const url = await env.VIDEOS.createMultipartUpload(key);
-  // Use R2's signed URL for simple PUT
-  const signedUrl = await env.VIDEOS.createMultipartUpload(key);
+  const endpoint = `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/padelmind-videos/${key}`;
 
-  // Simpler: return a direct signed URL via CF R2 presigning
-  // For now return the key and let Pi use service binding — update when custom domain set
-  return json({ upload_url: `https://padelmind-videos.r2.dev/${key}`, key, match_id: matchId });
+  const r2 = new AwsClient({
+    accessKeyId: env.R2_ACCESS_KEY_ID,
+    secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+    service: 's3',
+    region: 'auto',
+  });
+  // Presign a PUT valid for 2 hours (a long match upload over club WiFi)
+  const signed = await r2.sign(
+    new Request(`${endpoint}?X-Amz-Expires=7200`, { method: 'PUT' }),
+    { aws: { signQuery: true } }
+  );
+
+  return json({ upload_url: signed.url, key, match_id: matchId });
 }
 
 async function handleMatchStart(request: Request, env: Env, matchId: string): Promise<Response> {
@@ -182,12 +199,15 @@ async function handleMatchEnd(request: Request, env: Env, matchId: string): Prom
 // Called AFTER the video is confirmed in R2 — the only place a job should be enqueued.
 // Sources: ingest/ingest_match.py (iPad recording) or the Pi recorder's upload worker.
 async function handleUploaded(request: Request, env: Env, matchId: string): Promise<Response> {
-  const body = await request.json() as { secret: string; r2_key?: string };
-  if (body.secret !== env.PI_SHARED_SECRET) return json({ error: 'Unauthorized' }, 401);
+  const body = await request.json() as { secret?: string; r2_key?: string };
+  // Auth: the Mac/Pi path presents the PI secret. The app path presents no secret
+  // and is gated instead by the video actually being present in R2 (checked below)
+  // — you can only trigger processing for a match whose file already uploaded.
+  if (body.secret && body.secret !== env.PI_SHARED_SECRET) return json({ error: 'Unauthorized' }, 401);
 
   const videoKey = body.r2_key || `videos/${matchId}/match.mp4`;
 
-  // Verify the object actually exists in R2 before queueing
+  // Verify the object actually exists in R2 before queueing (this IS the app-path gate)
   const head = await env.VIDEOS.head(videoKey);
   if (!head) return json({ error: `Video not found in R2: ${videoKey}` }, 400);
 
