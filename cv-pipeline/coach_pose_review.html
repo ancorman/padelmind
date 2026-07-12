@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PadelMind — Coach Pose Review</title>
+<style>
+  :root{--bg:#0F172A;--elev:#1E293B;--border:#334155;--amber:#3D6FD6;--hot:#FB923C;--green:#34D399;--text:#F1F5F9;--muted:#94A3B8}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 88px}
+  header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:18px;gap:12px}
+  h1{font-size:18px;font-weight:800}
+  .sub{font-size:12px;color:var(--muted)}
+  .prog{font-size:12px;color:var(--muted);white-space:nowrap}
+  .prog b{color:var(--hot)}
+  .grid{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:20px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .imgcard{background:var(--elev);border:1px solid var(--border);border-radius:14px;padding:12px;position:sticky;top:12px;align-self:start}
+  .imgcard img{width:100%;border-radius:8px;background:#000}
+  .imgmeta{font-size:11px;color:var(--muted);margin-top:8px}
+  .q{margin-bottom:18px}
+  .qlabel{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{border:1.5px solid var(--border);border-radius:20px;padding:7px 13px;font-size:13px;cursor:pointer;user-select:none;transition:all .12s;background:var(--elev)}
+  .opt:hover{border-color:var(--muted)}
+  .opt.sel{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+  .opt.multi.sel{background:var(--hot);border-color:var(--hot);color:#111}
+  textarea{width:100%;background:var(--elev);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font:inherit;font-size:13px;padding:10px;resize:vertical;min-height:52px}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:var(--elev);border-top:1px solid var(--border);display:flex;gap:10px;padding:12px 16px;justify-content:center;align-items:center}
+  button{font:inherit;font-weight:700;border:none;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .btn{background:var(--border);color:var(--text)}
+  .btn.primary{background:var(--amber);color:#fff}
+  .btn.hot{background:var(--hot);color:#111}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .loader{text-align:center;padding:60px 20px;color:var(--muted)}
+  .file{margin-top:14px}
+  .done-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-left:6px}
+</style></head>
+<body><div class="wrap">
+  <header>
+    <div><h1>Coach Pose Review 🎾</h1><div class="sub">Label each player's shot &amp; technique — this trains PadelMind's coaching model.</div></div>
+    <div class="prog" id="prog">—</div>
+  </header>
+  <div id="app"></div>
+  <div class="nav" id="nav" style="display:none">
+    <button class="btn" id="prev">← Prev</button>
+    <span class="prog" id="counter" style="min-width:70px;text-align:center"></span>
+    <button class="btn primary" id="next">Next →</button>
+    <button class="btn hot" id="export">⤓ Export labels</button>
+  </div>
+</div>
+<script>
+const QUESTIONS = [
+  {key:'shot_type', label:'Shot type', multi:false, opts:['Forehand drive','Backhand drive','Forehand volley','Backhand volley','Bandeja','Víbora','Smash / Remate','Serve','Lob','Defensive / Block','Not a shot / movement']},
+  {key:'contact_point', label:'Contact point', multi:false, opts:['Overhead','Shoulder height','Waist height','Below knee','N/A']},
+  {key:'position_quality', label:'Body position', multi:false, opts:['Textbook','Acceptable','Off-balance','Poor']},
+  {key:'technique_flags', label:'Technique (tap all that apply)', multi:true, opts:['Knees bent','Shoulder turn','Non-racket arm up','Weight forward','Early preparation']},
+  {key:'court_zone', label:'Court zone', multi:false, opts:['Net','Mid-court','Baseline','Back glass']},
+];
+let SNAPS=[], idx=0;
+const LS='padelmind_coach_labels';
+const answers = JSON.parse(localStorage.getItem(LS)||'{}');
+const $=id=>document.getElementById(id);
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+
+function isDone(id){const a=answers[id]||{};return !!(a.shot_type&&a.position_quality);}
+function save(){localStorage.setItem(LS,JSON.stringify(answers));}
+
+async function boot(){
+  try{const r=await fetch('manifest.json');if(!r.ok)throw 0;SNAPS=await r.json();render();}
+  catch(e){
+    const app=$('app'); app.textContent='';
+    const l=el('div','loader'); l.append('Pick manifest.json from the snapshots folder:');
+    const f=el('div','file'); const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
+    inp.onchange=async ev=>{SNAPS=JSON.parse(await ev.target.files[0].text());render();};
+    f.append(inp); l.append(f); app.append(l);
+  }
+}
+function render(){
+  const app=$('app'); app.textContent='';
+  if(!SNAPS.length){app.append(el('div','loader','No snapshots in manifest.'));return;}
+  $('nav').style.display='flex';
+  const s=SNAPS[idx], a=answers[s.id]||(answers[s.id]={});
+  const done=SNAPS.filter(x=>isDone(x.id)).length;
+  $('prog').textContent=''; const b=el('b',null,done); $('prog').append(b, ` / ${SNAPS.length} labeled`);
+  $('counter').textContent=`${idx+1} / ${SNAPS.length}`;
+
+  const grid=el('div','grid');
+  // image column
+  const card=el('div','imgcard'); const img=document.createElement('img'); img.src=s.id; img.alt='pose'; card.append(img);
+  const meta=el('div','imgmeta'); meta.textContent=`${s.id} · t=${s.source_frame_sec}s`;
+  if(isDone(s.id)) meta.append(el('span','done-dot'));
+  card.append(meta);
+  // questions column
+  const col=document.createElement('div');
+  for(const q of QUESTIONS){
+    const qd=el('div','q'); qd.append(el('div','qlabel',q.label));
+    const opts=el('div','opts');
+    for(const o of q.opts){
+      const sel=q.multi?((a[q.key]||[]).includes(o)):(a[q.key]===o);
+      const op=el('div','opt'+(q.multi?' multi':'')+(sel?' sel':''),o);
+      op.onclick=()=>{
+        if(q.multi){const arr=a[q.key]||[];a[q.key]=arr.includes(o)?arr.filter(x=>x!==o):[...arr,o];}
+        else a[q.key]=a[q.key]===o?undefined:o;
+        save();render();
+      };
+      opts.append(op);
+    }
+    qd.append(opts); col.append(qd);
+  }
+  const nq=el('div','q'); nq.append(el('div','qlabel','Coach note (optional)'));
+  const ta=document.createElement('textarea'); ta.placeholder='e.g. late on the bandeja, dropping the elbow'; ta.value=a.note||'';
+  ta.oninput=e=>{a.note=e.target.value;save();};
+  nq.append(ta); col.append(nq);
+
+  grid.append(card,col); app.append(grid);
+  $('prev').disabled=idx===0; $('next').disabled=idx===SNAPS.length-1;
+}
+$('prev').onclick=()=>{if(idx>0){idx--;render();}};
+$('next').onclick=()=>{if(idx<SNAPS.length-1){idx++;render();}};
+$('export').onclick=()=>{
+  const out=SNAPS.map(s=>({...s, coach:answers[s.id]||{}}));
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),link=document.createElement('a');
+  link.href=url;link.download='coach_labels.json';link.click();URL.revokeObjectURL(url);
+};
+boot();
+</script></body></html>
