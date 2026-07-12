@@ -27,30 +27,34 @@ def detect(
     gap_merge_sec: float = 2.0,
 ) -> list[RallyWindow]:
     """
-    position_log: [{timestamp, slot, court_x, court_y}]
-    Returns list of RallyWindow sorted by start_sec.
+    position_log: [{timestamp, slot, court_x, court_y}]  (slots 1,2 = near half;
+    3,4 = far half). Returns RallyWindows sorted by start_sec.
 
-    Rally heuristic (per SOW — velocity based, NOT positional spread):
-    - Per player (by slot), compute court-metre speed between consecutive samples
-    - Bin into 1-second windows; a window is "active" if the mean player speed
-      in it exceeds speed_threshold (m/s)
-    - Rally = consecutive active seconds (gaps <= gap_merge_sec bridged),
-      kept only if >= min_duration
-    NOTE: speed_threshold needs tuning on real pilot footage — this is the first
-    honest default, calibrate against a watched match (2-3 passes).
+    Rally heuristic (per SOW — velocity based, and BOTH-SIDES active):
+    - Per player (by slot), court-metre speed between consecutive samples.
+    - A 1-second window is "active" only when BOTH sides of the net show a moving
+      player (max speed on each half > speed_threshold). This is the rally signal:
+      a live exchange has both teams reacting; one player walking to fetch a ball,
+      or one team repositioning between points, does NOT light up both halves.
+    - Rally = consecutive active seconds (gaps <= gap_merge_sec bridged), kept if
+      >= min_duration.
+    NOTE: speed_threshold still needs tuning on real footage — see tune_rally.py,
+    which fits it against a handful of hand-marked rallies.
     """
     if not position_log:
         return []
 
-    # Per-slot ordered samples → per-interval speed, tagged to its 1-second bin
+    HALF = {1: "near", 2: "near", 3: "far", 4: "far"}
     by_slot: dict[int, list[dict]] = {}
     for e in position_log:
         if e.get("slot", 0) in (1, 2, 3, 4):
             by_slot.setdefault(e["slot"], []).append(e)
 
-    bin_speeds: dict[int, list[float]] = {}
+    # per 1-second bin → {'near': [speeds], 'far': [speeds]}
+    bins: dict[int, dict[str, list[float]]] = {}
     for slot, entries in by_slot.items():
         entries.sort(key=lambda e: e["timestamp"])
+        half = HALF[slot]
         for a, b in zip(entries, entries[1:]):
             dt = b["timestamp"] - a["timestamp"]
             if dt <= 0 or dt > 2.0:          # skip tracking gaps
@@ -59,12 +63,13 @@ def detect(
             speed = dist / dt
             if speed > 12.0:                  # despike tracker jumps (>12 m/s isn't a human)
                 continue
-            bin_speeds.setdefault(int(b["timestamp"]), []).append(speed)
+            bins.setdefault(int(b["timestamp"]), {}).setdefault(half, []).append(speed)
 
     active_times: list[float] = []
-    for b in sorted(bin_speeds):
-        speeds = bin_speeds[b]
-        if speeds and (sum(speeds) / len(speeds)) > speed_threshold:
+    for b in sorted(bins):
+        near = max(bins[b].get("near", [0.0]))
+        far = max(bins[b].get("far", [0.0]))
+        if near > speed_threshold and far > speed_threshold:   # BOTH sides moving
             active_times.append(float(b))
 
     if not active_times:

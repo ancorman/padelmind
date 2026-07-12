@@ -84,7 +84,13 @@ def handler(job: dict) -> dict:
             entry["slot"] = slot_map.get(entry["track_id"], 0)
 
         # ── 4. Rally detection ────────────────────────────────────────────
-        rallies = rl.detect(position_log)
+        # Thresholds env-tunable — set RALLY_SPEED_THRESHOLD / RALLY_MIN_DURATION
+        # on the RunPod endpoint to the values tune_rally.py finds (no redeploy).
+        rallies = rl.detect(
+            position_log,
+            speed_threshold=float(os.environ.get("RALLY_SPEED_THRESHOLD", "0.5")),
+            min_duration=float(os.environ.get("RALLY_MIN_DURATION", "3.0")),
+        )
         print(f"[{match_id}] {len(rallies)} rallies detected")
 
         # ── 4b. Phase 1.5 stats (distance, sprints, net %, fade) ─────────
