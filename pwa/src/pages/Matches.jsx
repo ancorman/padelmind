@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase, PUB_R2 } from '../supabase'
+import { isDemoAccount, DEMO_CTX } from '../demo'
 
 const STATUS_BADGE = {
   recording:   { label: 'Recording',   cls: 'badge-queued' },
@@ -125,12 +126,39 @@ export default function Matches({ session, player: playerProp, onSelect, onSignO
           </div>
         )}
 
-        {!loading && player && rows.length === 0 && (
+        {!loading && player && rows.length === 0 && !isDemoAccount(session.user.email) && (
           <div style={{ textAlign: 'center', marginTop: '48px' }}>
             <div style={{ fontSize: '36px', marginBottom: '12px' }}>📹</div>
             <p style={{ color: 'var(--muted)', fontSize: '14px' }}>
               No matches recorded yet.<br />Play and we'll handle the rest.
             </p>
+          </div>
+        )}
+
+        {/* Persistent demo match — only for demo accounts */}
+        {!loading && isDemoAccount(session.user.email) && (
+          <div
+            className="card"
+            onClick={() => onSelect(DEMO_CTX)}
+            style={{ cursor: 'pointer', transition: 'border-color 0.15s' }}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--amber)')}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+              <div>
+                <div style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text)' }}>Court 2 · Demo Match</div>
+                <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '3px' }}>NSCI Padel Club</div>
+              </div>
+              <span className="badge badge-done" style={{ flexShrink: 0 }}>Done</span>
+            </div>
+            <div style={{ display: 'flex', gap: '16px', marginTop: '8px' }}>
+              <Stat label="Rallies" value={DEMO_CTX.rallyCount} />
+              <Stat label="Duration" value={fmt(DEMO_CTX.durationSec)} />
+              <Stat label="Distance" value={`${DEMO_CTX.demoExtra.zones.player_1.distance_km} km`} />
+            </div>
+            <div style={{ marginTop: '12px', fontSize: '12px', color: 'var(--hot)', fontWeight: '600' }}>
+              Tap to view sample report →
+            </div>
           </div>
         )}
 

@@ -6,7 +6,7 @@ import Matches from './pages/Matches'
 import Match from './pages/Match'
 import Book from './pages/Book'
 import Staff from './pages/Staff'
-import { isDemo, DEMO_CTX } from './demo'
+import { isDemo, DEMO_CTX, isDemoAccount, DEMO_PLAYER } from './demo'
 
 // ── Top-level states ──────────────────────────────────────────────────────────
 // loading → auth check
@@ -40,6 +40,13 @@ export default function App() {
   }, [])
 
   async function resolvePlayer(s) {
+    // Demo account — skip DB/register/pending, drop straight into the app
+    if (isDemoAccount(s.user.email)) {
+      setPlayer(DEMO_PLAYER)
+      setAppState('app')
+      return
+    }
+
     const { data: p } = await supabase
       .from('padel_players')
       .select('id, name, email, phone, status')
@@ -109,6 +116,7 @@ export default function App() {
   // Re-check active booking every 60 seconds so the tab auto-appears/disappears
   useEffect(() => {
     if (appState !== 'app' || !player) return
+    if (isDemoAccount(session?.user?.email)) return   // no DB polling for demo account
     const timer = setInterval(async () => {
       const ab = await checkActiveBooking(player.id)
       setActiveBooking(ab)

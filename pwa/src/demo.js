@@ -5,6 +5,22 @@
 export const isDemo = () =>
   typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('demo')
 
+// Accounts that see a persistent demo match after logging in — for showing the
+// UI to anyone (log in as one of these, the demo report is always there).
+const DEMO_ACCOUNTS = ['manoj@rohancars.com']
+
+export const isDemoAccount = (email) =>
+  !!email && DEMO_ACCOUNTS.includes(email.trim().toLowerCase())
+
+// Faux approved player so a demo account skips register/pending gates.
+export const DEMO_PLAYER = {
+  id: 'demo-player',
+  name: 'Demo Player',
+  email: 'manoj@rohancars.com',
+  phone: '+910000000000',
+  status: 'approved',
+}
+
 // Faux player stats shaped exactly like the real zones_summary payload the CV
 // pipeline writes to padel_match_outputs.zones_summary.
 const DEMO_ZONES = {
