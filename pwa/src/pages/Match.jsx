@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { supabase, PUB_R2 } from '../supabase'
+import { DEMO_HEATMAP_URL } from '../demo'
 
 // Intensity accent (echoes the heatmap fire colours) — per UI_MATCH_REPORT_SCOPE.
 const HOT = 'var(--hot)'
 
 function r2url(key) {
+  if (key === '__demo__') return DEMO_HEATMAP_URL   // demo mode sentinel
   return key ? `${PUB_R2}/${key}` : null
 }
 
@@ -29,6 +31,12 @@ export default function Match({ ctx, onBack }) {
 
   useEffect(() => {
     let alive = true
+    // Demo mode — use faux stats, skip the DB fetch entirely
+    if (ctx.demoExtra) {
+      setExtra(ctx.demoExtra)
+      setLoaded(true)
+      return
+    }
     async function load() {
       const { data } = await supabase
         .from('padel_matches')
@@ -63,7 +71,11 @@ export default function Match({ ctx, onBack }) {
         ? Math.max(...extra.rallyWindows.map(w => w.duration_sec || 0))
         : null)
 
-  const avgRally = rallyCount && durationSec ? Math.round(durationSec / rallyCount) : null
+  // Average rally LENGTH = mean of rally-window durations (NOT match time / count)
+  const rw = extra?.rallyWindows || []
+  const avgRally = rw.length
+    ? Math.round(rw.reduce((s, w) => s + (w.duration_sec || 0), 0) / rw.length)
+    : null
   const courtName = extra?.courtName || 'Match'
 
   return (

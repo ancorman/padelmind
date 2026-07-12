@@ -234,7 +234,7 @@ export default function Book({ session, player: playerProp, onBack }) {
             position: 'sticky', top: '100px', zIndex: 19, flexWrap: 'wrap',
           }}>
             {[
-              { color: 'rgba(var(--hot-rgb),0.18)', label: 'Available', text: 'var(--amber)' },
+              { color: 'rgba(var(--hot-rgb),0.18)', label: 'Available', text: 'var(--hot)' },
               { color: 'var(--amber)', label: 'Selected', text: 'var(--bg)' },
               { color: 'rgba(var(--border-rgb),0.5)', label: 'Booked', text: 'var(--muted)' },
               { color: 'rgba(var(--border-rgb),0.18)', label: 'Past', text: 'var(--border)' },
@@ -294,7 +294,7 @@ export default function Book({ session, player: playerProp, onBack }) {
 
                   const color = sel_ ? 'white'
                               : booked_ || past_ ? 'var(--muted)'
-                              : 'var(--amber)'
+                              : 'var(--hot)'
 
                   return (
                     <div key={c.id}

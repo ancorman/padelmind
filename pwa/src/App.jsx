@@ -6,6 +6,7 @@ import Matches from './pages/Matches'
 import Match from './pages/Match'
 import Book from './pages/Book'
 import Staff from './pages/Staff'
+import { isDemo, DEMO_CTX } from './demo'
 
 // ── Top-level states ──────────────────────────────────────────────────────────
 // loading → auth check
@@ -125,6 +126,9 @@ export default function App() {
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────
+
+  // Demo mode (?demo) — render the populated report with faux data, no auth/DB
+  if (isDemo()) return <Match ctx={DEMO_CTX} onBack={() => { window.location.search = '' }} />
 
   if (appState === 'loading') return <Centered>Loading…</Centered>
 
