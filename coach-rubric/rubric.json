@@ -1,0 +1,236 @@
+{
+  "source": "Synthesised from @padeldriver YouTube technique videos (transcripts). Cues/mistakes are paraphrased coaching criteria, not verbatim transcript. Powers the labeling tool's technique_flags and the Player Score technique pillar (scoring_model.json).",
+  "status": "7 of 9 shot-groups; drives + bajada/rulo/chiquita/slice pending agent completion",
+  "shots": [
+    {
+      "shot": "Bandeja",
+      "aka": ["banda", "tray shot", "defensive overhead"],
+      "purpose": "A defensive overhead played off a lob to neutralize it, keep the ball deep, and hold your net position rather than to win the point outright.",
+      "cues": [
+        "Treat it as a defensive positional shot: tap the ball back deep and reclaim the net rather than swinging for a winner.",
+        "The instant you read the lob, turn sideways and take the racket back while you set your feet.",
+        "Keep the non-hitting arm up and pointing at the ball to align the shoulders and coil the body.",
+        "Contact out in front and to the side at roughly eye height, not directly overhead or behind the head.",
+        "Get behind the ball early, load the back foot, then transfer forward through contact and finish moving to the net.",
+        "Let the ball drop to eye level instead of hitting it high and steep (which gives a high rebound off the glass).",
+        "Slice it: bring the racket slightly from above and across so it skids low off the back glass and dies.",
+        "Rotate the whole chain (hips, shoulders, arm) and stay relaxed rather than muscling with the wrist.",
+        "Aim deep behind the service line, ideally cross-court so it catches back then side glass and displaces the opponent.",
+        "Mix targets (cross, centre, occasional down-the-line) and keep the centre rebound extra low."
+      ],
+      "mistakes": [
+        "Playing it too aggressively/fast, risking errors and leaving no time to recover the net.",
+        "Hitting high-to-low too steeply or too weakly, so it lands short and bounces up as an easy counter.",
+        "Staying back and admiring it instead of finishing with weight forward toward the net.",
+        "Falling backward at contact instead of transferring weight forward.",
+        "Playing it while still moving rather than being set as the opponent strikes.",
+        "Facing the net chest-square instead of turning sideways with the left hand.",
+        "Over-using the wrist for power instead of arm and body rotation.",
+        "Producing a high rebound (especially to the centre) that hands an easy counter."
+      ],
+      "phases": {
+        "preparation": "From volley-ready with racket tip up in the non-dominant hand; on reading the lob turn sideways, prepare the racket and set the feet, moving back with side steps.",
+        "backswing": "Weight loads onto the back foot, racket up and slightly above the intended contact, non-hitting arm raised at the ball, body coiled sideways.",
+        "contact": "Strike out in front and to the side at eye height with a slight downward-and-across slice, relaxed, sending it deep with a low skidding rebound.",
+        "follow_through": "Push through the ball and extend forward (hand finishing over the net), transferring weight forward so you are already advancing to the net."
+      }
+    },
+    {
+      "shot": "Víbora",
+      "aka": ["Viper", "Vibora"],
+      "purpose": "An aggressive attacking overhead off a shortish lob to add side-spin, pressure the opponents, block their net rush, and go for the winner rather than just reset.",
+      "cues": [
+        "Use a continental grip, or drop slightly toward a backhand grip to load extra side-spin.",
+        "On reading the lob, turn sideways and set feet and racket together, shoulders up, racket raised; prepare a touch longer than a bandeja.",
+        "Contact at eye height and out to your side, letting the ball travel a bit behind you so full rotation fires.",
+        "Brush the OUTSIDE of the ball at the 3 o'clock point for side-spin; keep a loose, unlocked wrist for the snap.",
+        "Rotate hips-then-shoulders-then-wrist together and stack that rotation into the ball for spin and head speed.",
+        "Come from above and slightly down-and-across so it drops fast and stays low after the glass (not up-and-out).",
+        "Stay compact — you don't need full arm extension; let rotation supply the speed for margin.",
+        "Aim mainly cross-court (more margin), mix down-the-line into the right-side player's body; vary pace, angle and spin."
+      ],
+      "mistakes": [
+        "Taking it too high, sending it into the glass and kicking it up for an easy rebound.",
+        "Not rotating chest and feet enough, so the contact point sits wrong.",
+        "Hitting too early and too far in front instead of letting it drop to eye height beside/behind you.",
+        "Reaching far from the body with a fully extended arm, draining power and opening the face so it flies out.",
+        "Preparing the racket below/level with the ball so the swing pushes up-and-out instead of from above.",
+        "Rushing under nerves, raising contact height and killing the low spinny trajectory.",
+        "Playing every víbora flat-out with no variation, so opponents adapt.",
+        "Brushing over the top (6 o'clock, bandeja-style) instead of the outside 3 o'clock, losing the side-spin."
+      ],
+      "phases": {
+        "preparation": "Read the short lob early, turn sideways with shoulders up, set feet and racket together (feet almost to the target corner); prepare a bit longer/higher than a bandeja.",
+        "backswing": "Racket raised near/above head height, tip to the ceiling, so you can come down onto the outside of the ball; wait for it to drop.",
+        "contact": "Strike at eye height and slightly to the side/behind, brushing the OUTSIDE (3 o'clock) with a loose wrist snap while the body unwinds — from above, for side-spin that drives it down and low.",
+        "follow_through": "Continue across and down like a bandeja, finishing to the opposite side, so the ball stays low and kicks wide off the glass into the corner."
+      }
+    },
+    {
+      "shot": "Forehand volley",
+      "aka": ["FH volley", "punch volley", "net forehand"],
+      "purpose": "Played at the net to keep and press the attacking position — an aggressive point-ender or a firm controlled block depending on the incoming ball.",
+      "cues": [
+        "Continental grip, held loosely as if pointing at the ball with the face.",
+        "Ready between the posts: knees bent and active, racket up at chest height, tip up.",
+        "Non-dominant hand cradles the throat so the frame is supported until you turn.",
+        "Rotate the shoulders to prepare rather than pulling the arm straight back.",
+        "Keep the take-back short and compact for fast balls; only lengthen on a slow ball you choose to attack.",
+        "Contact out in front of the chest, not late beside the body.",
+        "Transfer weight and step toward the target at contact (down-the-line vs cross changes the step angle).",
+        "Punch/block through the ball; don't swing or slap with the wrist.",
+        "Slice by preparing slightly above the ball with a flatter, slightly open face rather than breaking the wrist.",
+        "Push forward through contact for length instead of chopping down; keep the ball low after the bounce."
+      ],
+      "mistakes": [
+        "Over-using/breaking the wrist to slice instead of face angle and shoulder turn.",
+        "Long exaggerated backswing that leaves you late on fast balls.",
+        "Letting the non-dominant hand drop instead of keeping it up on the racket.",
+        "Contacting too late or beside the body instead of in front.",
+        "Following through steeply to the ground, sending the ball too high.",
+        "Aiming too deep near the back glass, giving an easy predictable ball off the wall.",
+        "No weight transfer / no step-in, losing power and balance.",
+        "Failing to recover to ready after the shot."
+      ],
+      "phases": {
+        "preparation": "Ready between the posts, knees bent and active, racket up at chest height tip up, left hand on the throat; react as the ball comes.",
+        "backswing": "Short compact take-back driven by shoulder rotation, not the arm; lengthen only for a chosen attacking ball.",
+        "contact": "Meet the ball out in front of the chest with a firm punch/block, face slightly open for slice, stepping toward the target as you strike.",
+        "follow_through": "Compact push forward for length (not a downward chop); keep it low, then step back to ready."
+      }
+    },
+    {
+      "shot": "Backhand volley",
+      "aka": ["BH volley", "block volley", "net backhand"],
+      "purpose": "Net shot on the backhand side — critical for a right-hander on the right court because most balls funnel to the centre backhand; aggressive for a winner or a controlled block. Power must come from the body, not just the arm.",
+      "cues": [
+        "Continental grip; verify the grip before the rest of the motion.",
+        "Ready at chest height but a step back off the net so you have time to step in.",
+        "Prepare the racket up toward left-ear height (above the ball) so slice comes naturally, not from the wrist.",
+        "Keep prep short and compact on fast balls; lengthen only on slow high balls you choose to attack.",
+        "Rotate the shoulders and leave the ball to one side; never hit chest-square.",
+        "Actively use the non-dominant hand: grip the throat, then pull it back as you hit to fire both sides.",
+        "Step in with the front foot at contact to transfer weight and take time from the opponent.",
+        "Take the ball in front and while still high.",
+        "Finish compact and stopped; on cross/middle you don't need to over-rotate."
+      ],
+      "mistakes": [
+        "Dead non-dominant hand: hitting with only the dominant side, killing power and balance.",
+        "Standing too close to the net, crowding the ball and finishing into the net.",
+        "Racket too far back, arriving late and losing impact on firm balls.",
+        "Contacting too late instead of in front.",
+        "Loading the back leg but never stepping in with the front, so stored power is unused.",
+        "Chest at the opponent with no shoulder rotation, making a fast backhand impossible.",
+        "Aiming too deep near the glass, giving an easy ball off the wall or inviting a lob.",
+        "Over-rotating on a cross/middle ball that needs little rotation.",
+        "Not recovering to ready after the shot."
+      ],
+      "phases": {
+        "preparation": "Ready at chest height a step off the net, continental grip, left hand on the throat; read the ball, decide attack vs block.",
+        "backswing": "Short compact take-back with the racket lifted toward left-ear height (above the ball) via shoulder rotation; lengthen only for a slow high ball.",
+        "contact": "Rotate the shoulders and step in with the front foot at impact, meeting the ball in front and still high; pull back with the non-dominant hand to fire both sides.",
+        "follow_through": "Short explosive stopped finish (arm stops, not fully extended), non-dominant hand pulled back for balance; eyes on the ball, then step back to recover."
+      }
+    },
+    {
+      "shot": "Smash / Remate",
+      "aka": ["Overhead", "Remate", "Kick smash (variant)", "Por tres"],
+      "purpose": "An attacking overhead off a short lob to finish the point or force a weak reply — flat and down for pace, or brushed up-and-out over the side glass (kick smash) to bounce it out of the court.",
+      "cues": [
+        "Get the racket up and loaded early — take it back the instant you read the lob so the elbow points at the sky.",
+        "Turn side-on and point/track the ball with the non-racket arm; stay behind the ball so it stays in front, not behind the head.",
+        "Move the feet fast to get fully underneath the ball; adjust with small steps rather than planting flat.",
+        "Contact at the highest point you can reach, above and slightly in front of the head; pros choke down slightly for reach.",
+        "Drive from the ground up — load the legs, lean back, then extend into the ball; power comes from legs, not arm.",
+        "Keep the wrist relaxed through the load, then snap it at contact for the final acceleration.",
+        "Flat power smash: aim down-the-line (less court to cross), hit through the ball for a high back-glass bounce.",
+        "Kick smash (por tres): go extra sideways, brush up the back of the ball for topspin, strike the back-glass corner ~3m high so it kicks up and out — hit up-and-out, not down.",
+        "Choose by lob quality and conditions: more topspin/less power in wind or outdoors.",
+        "Play a high-percentage smash you can repeat ~70% of the time; if smashes keep failing, switch to bandeja."
+      ],
+      "mistakes": [
+        "Late preparation — arriving with the racket low and lifting only as the ball drops, so contact is rushed and weak.",
+        "Letting the ball get behind the head — not getting underneath, striking behind you.",
+        "Hitting too low (head height like a víbora) instead of full reach, killing the bounce.",
+        "'Arming' the ball / no leg drive — no bend-and-extend, so no real power.",
+        "Over-using the wrist on the kick smash while body-blocked instead of full footwork/rotation/legs.",
+        "Facing the net square with no shoulder rotation, losing body-weight transfer.",
+        "Trying to kill every ball / pace over control, breaking timing (worse in wind).",
+        "Wrong grip for the kick (eastern forehand) so the ball can't lift and go out.",
+        "Aiming the kick bounce too short/early so opponents step in before the glass."
+      ],
+      "phases": {
+        "preparation": "Read the lob early, turn side-on, take the racket straight up so the elbow points at the sky; move the feet fast to get fully underneath and point at the ball with the non-racket hand.",
+        "backswing": "Loaded 'trophy' position — racket back and high behind the head, chest and free arm up, legs bent and weight leaning back like a spring, wrist relaxed.",
+        "contact": "Extend the legs up into the ball and strike at the highest reachable point above and slightly in front of the head; flat = punch down for pace, kick = brush up the back toward the back-glass corner.",
+        "follow_through": "Rotate the core through for weight transfer and snap the wrist; flat = drive down-and-through for a high glass bounce, kick = stay compact and downward then recover."
+      }
+    },
+    {
+      "shot": "Serve",
+      "aka": ["Underarm serve", "Saque"],
+      "purpose": "An underarm below-the-waist drop-and-hit whose job is to start the point with an advantage and get to the net first, not to hit an outright winner.",
+      "cues": [
+        "Drop/gently push the ball from ~shoulder height so contact happens right at the waistline (flatter, faster path).",
+        "Prepare the racket ABOVE the ball and swing high-to-low to slice; slice makes it die and stay low off the side glass.",
+        "At impact open the face ~45 degrees, then push forward through the ball for slice AND length (don't chop straight down).",
+        "Prioritise heavy slice over flat pace; a fast flat serve returns quick and leaves no time to reach the net.",
+        "Choose direction with the contact point, not the wrist: ball more in front for the T, further back to angle into the side glass.",
+        "Aim into the side glass, at the T, or straight at the body (the body serve jams them).",
+        "Control length: deep near the line so they can't step in; the T a touch shorter so it dies.",
+        "Keep the ball-drop hand in tension after release for balance.",
+        "Transfer weight forward into the hit and let momentum carry you into the net.",
+        "Stay unpredictable: vary direction, length, slice and pace, and remember what beat each opponent."
+      ],
+      "mistakes": [
+        "Tossing the ball up like tennis instead of a controlled drop-and-hit.",
+        "Contacting too low, producing a slow loop with no speed.",
+        "Racket tip pointing at the ground at contact, forcing a low hit with no forward swing.",
+        "No slice (low-to-high), or chopping too steeply so the ball pops up.",
+        "Serving too hard: most go out, forcing a soft second serve.",
+        "Serving flat with no slice, so it jumps off the glass and is easy to attack.",
+        "Watching it fly then starting to run, so you never get set at the net.",
+        "Being predictable: same direction, length and pace every time."
+      ],
+      "phases": {
+        "preparation": "Stand ~1.5-2m from the centre line, racket up high above the ball, weight ready to move forward; front foot forward or step in as you hit.",
+        "backswing": "Drop/lightly push the ball from ~shoulder height, racket above with an open face, non-hitting hand in tension.",
+        "contact": "Strike at the waistline (legal max), face open ~45 degrees, brushing high-to-low to slice; place via contact point and push forward for length.",
+        "follow_through": "Drive weight forward and use momentum to move straight into the net with consistent steps, then split ready for the first volley."
+      }
+    },
+    {
+      "shot": "Return",
+      "aka": ["Return of serve"],
+      "purpose": "The return's job is not to win the point but to neutralise the server's attack with a deep, low ball so you survive the first volley and work your way to the net.",
+      "cues": [
+        "Set a pre-serve routine and split-step as the server strikes so you are balanced, not flat-footed.",
+        "First serve: return low with slice. Second/weak serve: lob deep and move up to take the net.",
+        "Prioritise how tight and low the ball stays over the net rather than how fast you hit it.",
+        "Default to returning at whoever served, since they must hit the first volley while still moving.",
+        "When the serve is too good, go down the line (technically easier, pushes onto their partner).",
+        "Prepare the racket early, before the ball reaches the glass, and stay low through contact.",
+        "On a ball into the glass, read the panel: if it reaches the first panel move off and let it come out; if only the second, take it early.",
+        "On a body serve, move quickly off the line to hit a clean forehand or backhand — don't play it off the glass.",
+        "Get low, push, and don't stand up until the shot is finished so the ball stays down.",
+        "The instant you hit, recover your position — don't stand and watch."
+      ],
+      "mistakes": [
+        "Trying to hit a winner off the return — it sails out and gives free points.",
+        "Attempting a lob on a strong serve, producing a short lob that gets smashed.",
+        "Hitting too hard when a tight low ball would neutralise better.",
+        "Returning high or lifting the ball, letting the opponent destroy the first volley.",
+        "Playing off the glass unnecessarily, especially on a heavy-slice serve that dies on the wall.",
+        "On a good serve, returning to the net player's forehand instead of chest/backhand.",
+        "Rushing and hitting too soon — the return needs timing and a relaxed read.",
+        "Failing to recover after the return, leaving a big open space."
+      ],
+      "phases": {
+        "preparation": "Ready position with a repeatable pre-serve routine, split-step as the server contacts, weight forward and alert.",
+        "backswing": "Short compact take-back prepared early — racket set before the ball reaches the glass, no last-second wind-up.",
+        "contact": "Early and in front, low with knees bent and body down, slice for control; stop before hitting if you had to run for it.",
+        "follow_through": "Controlled finish keeping the ball low and tight over the net, then move up toward the net and recover immediately."
+      }
+    }
+  ]
+}

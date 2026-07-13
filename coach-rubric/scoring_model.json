@@ -1,0 +1,83 @@
+{
+  "name": "PadelMind Player Score",
+  "version": "0.1-blueprint",
+  "note": "The base scoring model. Attributes derive from the transcript-synthesised coach rubric (rubric.json). Each attribute carries a build_status so the score is transparent about what is measured today vs. roadmap. Player-facing output is a commend-then-correct coaching summary, NOT a stats dump.",
+  "scale": 100,
+  "build_status_legend": {
+    "live": "Computed today from the CV we already have (stats.py: distance, sprints, net%).",
+    "training": "The signal is the coach-labelled pose data the coach tool is generating right now; measurable once the pose->quality model trains.",
+    "roadmap": "Needs reliable ball tracking + game-state (who hit what, ball speed, court position of both pairs). Ball tracking is weak today, so these are not yet scorable."
+  },
+  "pillars": [
+    {
+      "id": "technique",
+      "label": "Technique — how you strike",
+      "weight": 50,
+      "applies": "per shot, averaged across the player's shots; the four phases the pipeline already isolates",
+      "attributes": [
+        {"id": "preparation", "label": "Preparation", "weight": 12, "build_status": "training",
+         "signal": "pose model trained on coach 'preparation' labels", "rubric_field": "phases.preparation",
+         "measures": "early unit turn / side-on / racket set / feet set as the ball is read"},
+        {"id": "contact", "label": "Contact (connection)", "weight": 20, "build_status": "training",
+         "signal": "pose model trained on coach 'execution/contact' labels", "rubric_field": "phases.contact",
+         "measures": "contact point height & position (in front vs behind head), clean strike, wrist/spin action"},
+        {"id": "follow_through", "label": "Follow-through", "weight": 8, "build_status": "training",
+         "signal": "pose model trained on coach 'follow_through' labels", "rubric_field": "phases.follow_through",
+         "measures": "complete finish vs cut-off; direction of finish"},
+        {"id": "recovery", "label": "Recovery to position", "weight": 10, "build_status": "training",
+         "signal": "player track + auto-calibrated court homography", "rubric_field": "cues (recover to ready)",
+         "measures": "did the player return to the ready position / correct zone after the shot"}
+      ]
+    },
+    {
+      "id": "tactics",
+      "label": "Tactics — what you choose (padel IQ)",
+      "weight": 30,
+      "applies": "per point / per shot decision, given the game situation",
+      "attributes": [
+        {"id": "shot_selection", "label": "Shot selection (aggressive vs defensive read)", "weight": 12, "build_status": "roadmap",
+         "signal": "incoming ball speed/height + court position -> was bandeja/vibora/smash/defensive-lob the right call",
+         "measures": "reading the incoming ball and choosing attack vs reset appropriately"},
+        {"id": "serve_strategy", "label": "Serve strategy (placement + follow-in)", "weight": 6, "build_status": "roadmap",
+         "signal": "ball landing zone (T / side-glass / body) + did the server advance to the net",
+         "measures": "placement variety and whether the serve is followed into the net"},
+        {"id": "return_strategy", "label": "Return strategy (low-deep / lob-advance + target)", "weight": 6, "build_status": "roadmap",
+         "signal": "return trajectory + target + advance to net",
+         "measures": "low & deep on first serve, lob-and-advance on weak serve, target choice"},
+        {"id": "positioning", "label": "Court positioning (right zone for the phase)", "weight": 6, "build_status": "roadmap",
+         "signal": "both-players court position vs point phase (attacking net vs defending back)",
+         "measures": "being in the correct zone with the partner for attack vs defense"}
+      ]
+    },
+    {
+      "id": "movement",
+      "label": "Movement — how you move (work rate)",
+      "weight": 20,
+      "applies": "whole match",
+      "attributes": [
+        {"id": "coverage", "label": "Court coverage (distance)", "weight": 7, "build_status": "live",
+         "signal": "stats.py total distance", "measures": "ground covered / work rate"},
+        {"id": "explosiveness", "label": "Explosiveness (sprints)", "weight": 6, "build_status": "live",
+         "signal": "stats.py sprint/acceleration count", "measures": "burst movement to the ball"},
+        {"id": "net_presence", "label": "Net presence %", "weight": 7, "build_status": "live",
+         "signal": "stats.py net% (time at net vs back)", "measures": "holding the attacking net position"}
+      ]
+    }
+  ],
+  "coverage_ladder": {
+    "today_automatic": {"pillars": ["movement"], "points": 20,
+      "means": "We can honestly auto-score 20/100 right now (Movement via stats.py)."},
+    "after_pose_model": {"pillars": ["technique", "movement"], "points": 70,
+      "means": "Once the coach labels train the pose->quality model, Technique (50) unlocks -> 70/100 automatic. The coach tool is building this dataset now."},
+    "full_after_ball_tracking": {"pillars": ["technique", "tactics", "movement"], "points": 100,
+      "means": "Tactics (30) needs reliable ball tracking + game-state. Until then it is coach-assessed manually or excluded from the auto-score."}
+  },
+  "output": {
+    "style": "commend-then-correct",
+    "thesis": "The coach's currency is WINNING, not textbook form. We play to win, and we can't win without knowing what we're doing right, where we're going wrong, and what to do to get there. Frame every gap as points won/lost, not an abstract score -- 'this is the shot costing you the net', never 'your follow-through is 6/10'.",
+    "rule": "Not a stats dump. Rank the player's weakest weighted attributes; for each priority area emit ONE sentence that first commends what the player does right (a rubric cue they satisfy) and then, in the same sentence, names the fix (a rubric mistake they make -> its corresponding cue).",
+    "sentence_shape": "[what you're doing right] + [but/now] + [the specific fix from the rubric], anchored to its match impact.",
+    "priority": "surface the 2-3 lowest normalised sub-scores; always lead each with the genuine strength before the gap.",
+    "win_anchor": "Where the data exists, tie the gap to point outcomes (which shot precedes lost points); until ball-tracking + point-state exist, express impact qualitatively from the rubric (e.g. 'hands them the net', 'gives an easy counter')."
+  }
+}
