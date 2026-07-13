@@ -239,7 +239,9 @@ def process(video, out_dir, cidx, max_shots, manifest):
     # standing in a ready stance scores ~0; the whip through a real return peaks.
     # 8 FPS for enough temporal resolution to catch a ~0.25s swing.
     raw = []  # (t, kpts, box, face)
+    fh = 0
     for t, frame in ex.frames(video, target_fps=8.0):
+        fh = frame.shape[0]
         top = top_striker(frame)
         raw.append((t, top[1], top[2], face_score(top[1])) if top else (t, None, None, 0))
 
@@ -254,9 +256,14 @@ def process(video, out_dir, cidx, max_shots, manifest):
                 m = sp if sp <= 8.0 else 0.0        # >8 torso/s isn't human — keypoint jump
         series.append((t, m, b, f))
 
+    # A distant / soft-focus player fills too little of the frame to give coach-grade
+    # pose (matches the camera spec: player should fill ~a third+ of frame height).
+    # Gate on box height fraction — kills background bystanders and back-court blur.
+    MIN_FILL = float(os.environ.get("MIN_PLAYER_FILL", "0.33"))
     peaks, win = [], 0.35
     for t, sc, b, f in series:
         if sc < 3.0 or b is None: continue          # 3+ torso-lengths/s = a genuine swing whip
+        if fh and (b[3] - b[1]) < MIN_FILL * fh: continue   # too small in frame → distant player
         if sc >= max(s for (tt, s, _, _) in series if abs(tt - t) <= win):
             peaks.append((t, sc, b, f))
     peaks.sort(key=lambda p: p[1], reverse=True)
@@ -266,6 +273,8 @@ def process(video, out_dir, cidx, max_shots, manifest):
         if all(abs(p[0]-u) >= 1.3 for u in used):
             chosen.append(p); used.append(p[0])
     chosen.sort(key=lambda p: p[0])
+    for p in chosen:
+        print(f"  peak t={p[0]:.1f} speed={p[1]:.1f} fill={(p[2][3]-p[2][1])/fh:.2f}")
 
     # Pass 2 renders the skeletons the coach sees — switch to CPU for correct keypoints
     DEVICE = "cpu"
