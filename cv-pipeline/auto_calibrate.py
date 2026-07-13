@@ -16,6 +16,7 @@ Usage:  YOLO_MODEL=models/padel_yolov8s_wpt_v11.pt \
 
 import sys
 import cv2
+import os
 import numpy as np
 from ultralytics import YOLO
 
@@ -23,8 +24,11 @@ NET_CLS, SERVE_CLS = 1, 4
 
 
 def auto_homography(img):
-    m = YOLO("models/padel_yolov8s_wpt_v11.pt")
-    r = m.predict(img, conf=0.25, verbose=False)[0]
+    m = YOLO(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "models", "padel_yolov8s_wpt_v11.pt"))
+    # conf 0.1: serve lines are thin/low-contrast and often score ~0.15; RANSAC
+    # below tolerates the extra noise the lower threshold lets in.
+    r = m.predict(img, conf=0.10, verbose=False)[0]
     nets, serves = [], []
     for b in r.boxes:
         c = int(b.cls[0])
@@ -33,22 +37,38 @@ def auto_homography(img):
             nets.append(box)
         elif c == SERVE_CLS:
             serves.append(box)
-    if not nets or len(serves) < 2:
-        return None, f"need net + 2 serve lines (got net={len(nets)}, serve={len(serves)})"
 
-    net = max(nets, key=lambda b: b[2] - b[0])            # widest net box
-    serves = sorted(serves, key=lambda b: (b[1] + b[3]) / 2)
+    # dedupe serve lines that overlap vertically (same line detected twice)
+    serves.sort(key=lambda b: (b[1] + b[3]) / 2)
+    dedup = []
+    for s in serves:
+        yc = (s[1] + s[3]) / 2
+        if dedup and abs(yc - (dedup[-1][1] + dedup[-1][3]) / 2) < img.shape[0] * 0.04:
+            if (s[2] - s[0]) > (dedup[-1][2] - dedup[-1][0]):
+                dedup[-1] = s                              # keep the wider box
+            continue
+        dedup.append(s)
+    serves = dedup
+
+    if len(serves) < 2:
+        return None, f"need 2 serve lines (got net={len(nets)}, serve={len(serves)})"
+
     far, near = serves[0], serves[-1]                     # higher in image = far
 
     def edges(b, wy):
         yc = (b[1] + b[3]) / 2
         return [([b[0], yc], [0, wy]), ([b[2], yc], [10, wy])]
 
-    pairs = edges(net, 10) + edges(far, 17) + edges(near, 3)
+    pairs = edges(far, 17) + edges(near, 3)
+    if nets:                                              # net adds 2 more points when seen
+        net = max(nets, key=lambda b: b[2] - b[0])
+        pairs += edges(net, 10)
     img_pts = np.float32([p[0] for p in pairs])
     world_pts = np.float32([p[1] for p in pairs])
     H, _ = cv2.findHomography(img_pts, world_pts, cv2.RANSAC, 5.0)   # image -> world
-    return H, "ok"
+    if H is None:
+        return None, "findHomography failed"
+    return H, f"ok ({len(pairs)} pts, net={'yes' if nets else 'no'})"
 
 
 def main():
