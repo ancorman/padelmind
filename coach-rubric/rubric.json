@@ -1,10 +1,14 @@
 {
   "source": "Synthesised from @padeldriver YouTube technique videos (transcripts). Cues/mistakes are paraphrased coaching criteria, not verbatim transcript. Powers the labeling tool's technique_flags and the Player Score technique pillar (scoring_model.json).",
-  "status": "7 of 9 shot-groups; drives + bajada/rulo/chiquita/slice pending agent completion",
+  "status": "complete — 13 shots across 9 groups (all @padeldriver technique videos)",
   "shots": [
     {
       "shot": "Bandeja",
-      "aka": ["banda", "tray shot", "defensive overhead"],
+      "aka": [
+        "banda",
+        "tray shot",
+        "defensive overhead"
+      ],
       "purpose": "A defensive overhead played off a lob to neutralize it, keep the ball deep, and hold your net position rather than to win the point outright.",
       "cues": [
         "Treat it as a defensive positional shot: tap the ball back deep and reclaim the net rather than swinging for a winner.",
@@ -37,7 +41,10 @@
     },
     {
       "shot": "Víbora",
-      "aka": ["Viper", "Vibora"],
+      "aka": [
+        "Viper",
+        "Vibora"
+      ],
       "purpose": "An aggressive attacking overhead off a shortish lob to add side-spin, pressure the opponents, block their net rush, and go for the winner rather than just reset.",
       "cues": [
         "Use a continental grip, or drop slightly toward a backhand grip to load extra side-spin.",
@@ -68,7 +75,11 @@
     },
     {
       "shot": "Forehand volley",
-      "aka": ["FH volley", "punch volley", "net forehand"],
+      "aka": [
+        "FH volley",
+        "punch volley",
+        "net forehand"
+      ],
       "purpose": "Played at the net to keep and press the attacking position — an aggressive point-ender or a firm controlled block depending on the incoming ball.",
       "cues": [
         "Continental grip, held loosely as if pointing at the ball with the face.",
@@ -101,7 +112,11 @@
     },
     {
       "shot": "Backhand volley",
-      "aka": ["BH volley", "block volley", "net backhand"],
+      "aka": [
+        "BH volley",
+        "block volley",
+        "net backhand"
+      ],
       "purpose": "Net shot on the backhand side — critical for a right-hander on the right court because most balls funnel to the centre backhand; aggressive for a winner or a controlled block. Power must come from the body, not just the arm.",
       "cues": [
         "Continental grip; verify the grip before the rest of the motion.",
@@ -134,7 +149,12 @@
     },
     {
       "shot": "Smash / Remate",
-      "aka": ["Overhead", "Remate", "Kick smash (variant)", "Por tres"],
+      "aka": [
+        "Overhead",
+        "Remate",
+        "Kick smash (variant)",
+        "Por tres"
+      ],
       "purpose": "An attacking overhead off a short lob to finish the point or force a weak reply — flat and down for pace, or brushed up-and-out over the side glass (kick smash) to bounce it out of the court.",
       "cues": [
         "Get the racket up and loaded early — take it back the instant you read the lob so the elbow points at the sky.",
@@ -168,7 +188,10 @@
     },
     {
       "shot": "Serve",
-      "aka": ["Underarm serve", "Saque"],
+      "aka": [
+        "Underarm serve",
+        "Saque"
+      ],
       "purpose": "An underarm below-the-waist drop-and-hit whose job is to start the point with an advantage and get to the net first, not to hit an outright winner.",
       "cues": [
         "Drop/gently push the ball from ~shoulder height so contact happens right at the waistline (flatter, faster path).",
@@ -201,7 +224,9 @@
     },
     {
       "shot": "Return",
-      "aka": ["Return of serve"],
+      "aka": [
+        "Return of serve"
+      ],
       "purpose": "The return's job is not to win the point but to neutralise the server's attack with a deep, low ball so you survive the first volley and work your way to the net.",
       "cues": [
         "Set a pre-serve routine and split-step as the server strikes so you are balanced, not flat-footed.",
@@ -230,6 +255,208 @@
         "backswing": "Short compact take-back prepared early — racket set before the ball reaches the glass, no last-second wind-up.",
         "contact": "Early and in front, low with knees bent and body down, slice for control; stop before hitting if you had to run for it.",
         "follow_through": "Controlled finish keeping the ball low and tight over the net, then move up toward the net and recover immediately."
+      }
+    },
+    {
+      "shot": "Backhand drive",
+      "aka": [
+        "Backhand groundstroke",
+        "Backhand off the glass"
+      ],
+      "purpose": "A controlled groundstroke from the back of the court, driven low and deep (often off the back-wall rebound) to neutralise the rally and wait for a weak volley to lob and follow to the net.",
+      "cues": [
+        "Grip: Continental/Chopper so no switch between wings; tennis-backhand grip optional for extra topspin.",
+        "Prepare early and sideways: turn the shoulders and step the front foot in together with the take-back, not one after the other.",
+        "Take the racket back LOW ('out of your left pocket'), not high above the ball, to keep the flat/lob option and avoid an accidental slice.",
+        "Non-dominant hand grips the throat during prep and pulls back through contact — effort split 50/50 between both arms.",
+        "Contact out in front and to the side, low ~knee height (let the ball drop) so you use the legs and transfer weight back-to-front.",
+        "Racket tip below the ball, swing low-to-high brushing up to lift and control height.",
+        "Long push through contact — strings on the ball as long as possible, driven by the shoulder not a wrist flick.",
+        "Finish with the chest/arms turned to the side glass in a straight line; finishing open and face-up sends it into the back glass.",
+        "Off the glass: treat the wall like a mirror (rebound angle = incoming angle), give double the space on cross-court, move off the glass so the ball ends in front of you.",
+        "Be patient off the rebound: let it drop, adjust with small steps, touch it at the right moment instead of a big rushed swing."
+      ],
+      "mistakes": [
+        "Late or high preparation, forcing a rushed weak contact and unwanted slices.",
+        "No shoulder turn / hitting with only the dominant side so the off hand does nothing.",
+        "Finishing open (chest forward) instead of stopping turned to the side glass — loses height control.",
+        "Contact too close to the body (ball behind you), cramped, steering with the wrist.",
+        "All-arm no-legs swing that hits the ball too high instead of letting it drop.",
+        "Power from a wrist flick or exaggerated high take-back instead of a long shoulder push.",
+        "Standing too close to the back glass so the rebound arrives behind you; not giving double space cross-court.",
+        "Lifting the racket tip above the ball, or rushing early instead of waiting for the lower timing."
+      ],
+      "phases": {
+        "preparation": "Early unit turn: shoulders sideways, front foot stepped in, non-dominant hand on the throat, footwork and take-back starting together as the ball is read.",
+        "backswing": "Short low take-back — racket drawn 'out of the left pocket', tip below the ball, not lifted high (avoids slice and net/glass errors).",
+        "contact": "Out in front and to the side ~knee height after letting the ball drop; both arms working, off hand pulling back, driving low-to-high with weight onto the front foot.",
+        "follow_through": "Long push keeping strings on the ball, driven by the shoulder; face closes and the body stops turned to the side glass, arms extended in a straight line."
+      }
+    },
+    {
+      "shot": "Forehand drive",
+      "aka": [
+        "Forehand groundstroke"
+      ],
+      "purpose": "A fluent, relaxed groundstroke from the back of the court that pushes the ball deep and low to stay in the point and wait for a bad volley to lob and move up.",
+      "cues": [
+        "Keep the grip simple (Continental works both wings) and stay relaxed and fluent, not stiff.",
+        "Prepare early with a shoulder turn and quick footwork; small adjusting steps so you arrive set.",
+        "Keep the hitting elbow relatively close to the body — far easier to push than to reach out wide.",
+        "Contact out in front and let the ball drop to a comfortable low height so you drive through it with the legs.",
+        "Power from pushing through the ball in the target direction, not from a wrist snap.",
+        "Push long at contact — strings on the ball as long as possible for a long controlled follow-through.",
+        "Control the height with the FINISH of the shot, same as a good backhand.",
+        "Get the body low WITH the ball rather than just dropping the hand while the body stays tall."
+      ],
+      "mistakes": [
+        "Robotic, blocked, tense motion instead of a relaxed flowing swing.",
+        "Ball too far from the body with the elbow away from the torso, hard to push.",
+        "Poor footwork / big late steps so the contact point is inconsistent.",
+        "Relying on a wrist flick for power instead of pushing through with the arm.",
+        "Short jabbed impact rather than a long push that keeps the ball on the strings.",
+        "Hitting too high/early instead of letting it drop into a comfortable slot.",
+        "Reaching down with only the hand while the body stays upright on low balls.",
+        "Trying to hit too hard, losing consistency instead of prioritising timing and depth."
+      ],
+      "phases": {
+        "preparation": "Early shoulder turn with quick small-step footwork, staying relaxed and getting set beside the ball.",
+        "backswing": "Compact take-back with the elbow kept close to the body so the swing can push rather than reach.",
+        "contact": "Out in front at a comfortable low height after letting the ball drop, driving through with the legs and body.",
+        "follow_through": "Long push in the target direction with height controlled by the finish; smooth extension, no wrist snap."
+      }
+    },
+    {
+      "shot": "Bajada",
+      "aka": [
+        "Off-the-wall pull-down",
+        "Bajada de pared"
+      ],
+      "purpose": "Turn a ball rebounding off your own back glass into a fast, low, controlled attacking finish that pressures opponents rather than feeding them an easy block.",
+      "cues": [
+        "Stay compact through the whole move; short explosive swing, not long and loose.",
+        "Contact very close to the body, not reaching away, so you keep control while accelerating.",
+        "Open the stance wide and bend the knees at impact; legs, not arm, generate the speed.",
+        "Keep contact low and in front; on backhand aim ~chest height (like a backhand volley), lower than instinct.",
+        "Hit first, then let the footwork finish the shot — don't do everything in one lunge.",
+        "On backhand, engage the non-dominant arm and a strong braced shoulder for power.",
+        "Finish looking at the target (face the net) on backhand, not collapsing the chest to the side wall.",
+        "Think bandeja-like body support and drive, not a wristy víbora flick."
+      ],
+      "mistakes": [
+        "Reaching / contact too far from the body, forcing a wristy hit and loss of control.",
+        "Adding power with the arm alone instead of legs and body weight.",
+        "Contact point too high, especially on the backhand.",
+        "Not bending the knees / not opening the legs, so no support base or downward drive.",
+        "Backhand played entirely with the dominant arm, off-side and shoulder idle.",
+        "Getting under the ball so it flies up high and slow instead of driving flat and down.",
+        "Same pace/placement every time so opponents read and block it."
+      ],
+      "phases": {
+        "preparation": "Move back under the rebounding ball, compact and balanced; open the stance wide for a strong base, like the load of a serve.",
+        "backswing": "Short and contained, not a big takeback; on backhand set a firm shoulder and load the non-dominant arm.",
+        "contact": "Strike close to the body, low and in front (chest height on backhand), knees bent, driving up from the legs.",
+        "follow_through": "Accelerate through then let the footwork complete the motion; on backhand finish facing the net, shoulders open."
+      }
+    },
+    {
+      "shot": "Rulo",
+      "aka": [
+        "Rolled overhead to the side fence",
+        "Rollo"
+      ],
+      "purpose": "An overhead played to steer the ball into the side fence at an awkward angle, forcing the opponent to defend an extra part of the court and opening spaces.",
+      "cues": [
+        "Give the direction with whole-body rotation, not the wrist; turn so you 'show your back' and face the side fence.",
+        "For amateurs, contact in front over the right shoulder rather than behind the head like the pros.",
+        "Close the shot starting from the abs/core, not a wrist flick.",
+        "Play from the highest comfortable point, brushing over the top so the ball drops fast to the floor.",
+        "No need to hit hard — the goal is to make the ball reach and die in the side fence.",
+        "Play with margin, a metre or more off the fence, not threading the line.",
+        "Use it selectively as a surprise, when the lob sits nearer the sidewall (a central ball suits a víbora/bandeja).",
+        "As you advance, evolve toward slightly behind the head with more topspin brush for tougher balls."
+      ],
+      "mistakes": [
+        "Standing still, chest facing forward, aiming purely with the wrist.",
+        "Believing you must copy the pro behind-the-head heavy-topspin technique (too hard for amateurs).",
+        "Closing the shot with the wrist instead of body/abs, making direction inconsistent.",
+        "Brushing upward so the ball travels up rather than driving down.",
+        "Changing grip and scooping the ball up (wrong pattern for the standard rulo).",
+        "Trying to hit hard instead of prioritising placement into the fence.",
+        "Playing it from a central lob position where another overhead is better."
+      ],
+      "phases": {
+        "preparation": "Move under the ball and rotate so your back turns toward the opponent and you face the target side fence.",
+        "backswing": "Compact overhead prep; let body orientation set direction rather than cocking the wrist.",
+        "contact": "Strike in front over the right shoulder at a high point, brushing over the top, closing from the abs/core.",
+        "follow_through": "Finish the close-down toward the fence with the body; controlled and short since the aim is placement, not power."
+      }
+    },
+    {
+      "shot": "Chiquita",
+      "aka": [
+        "Chikita",
+        "Low dink to the feet"
+      ],
+      "purpose": "A soft, low ball played from the back down to the netting opponents' feet, forcing them to lift the ball while you and your partner advance to take the net.",
+      "cues": [
+        "Prepare the racket above the ball and slice; touch and push forward so it clears the net then drops — never a full downward finish.",
+        "Keep contact clearly in front so it's easy to redirect and launch into your run.",
+        "Off the glass, let the ball drop on its parabola before hitting; contacting high is much harder.",
+        "Use a neutral, disguised preparation identical to your lob so the opponent can't read it until you commit.",
+        "Move to the net while the ball is still in the air — the whole point is to buy time to advance.",
+        "After you hit, follow the ball: you cover centre, your partner covers the space toward the target side.",
+        "Best moments: after a weak high overhead you can take above waist, or a weak rebounding volley off the glass.",
+        "Prioritise a low safe ball over a fancy one; if unsure, play with margin."
+      ],
+      "mistakes": [
+        "Hitting it too high so the opponent steps in and attacks your feet.",
+        "Coming to the net after a poor chiquita instead of staying back and resetting.",
+        "Overusing it so opponents read it and step in.",
+        "Contact behind you, forcing a wristy scoop and making it hard to run in.",
+        "Taking the glass ball too early/high instead of letting it drop into the easier window.",
+        "Telegraphing it with a prep different from your lob, removing the disguise.",
+        "Partner failing to advance after the shot, breaking the tactic."
+      ],
+      "phases": {
+        "preparation": "From the back with opponents at the net, set a neutral high prep identical to your lob (disguise); for a glass ball read the bounce-rebound parabola.",
+        "backswing": "Racket above the ball with a slice grip; compact, letting the ball drop into the ideal window off the glass.",
+        "contact": "Slice-touch in front and push (don't chop down), just enough to clear the net so it falls low at the opponent's feet.",
+        "follow_through": "Body weight forward into the run; you and your partner sprint to the net while the ball is airborne, then split to cover centre and target side."
+      }
+    },
+    {
+      "shot": "Slice vs drive (shot selection)",
+      "aka": [
+        "When to slice vs flat/topspin",
+        "Backspin decision-making"
+      ],
+      "purpose": "Decide when a backspin slice actually helps (keeps the ball low so the opponent defends from below the net) vs when a flat or topspin ball is the smarter, lower-risk choice.",
+      "cues": [
+        "The value of a slice is that the ball stays LOW after bouncing, forcing play from below the net.",
+        "Slice mechanics: racket above the ball, swing forward (not down), no wrist, or the ball floats up.",
+        "Slice needs the ball a little farther back and lower; hard to slice a ball out in front or high.",
+        "At the net, slice most balls you take above the net (attacking, keep them low).",
+        "At the back, a slice usually wastes its benefit — the opponent volleys and the ball never bounces low.",
+        "Below waist at the back, play flat (or slight topspin if advanced) rather than slicing.",
+        "Above the waist at the back (rare), slicing is fine since you can prepare above the ball.",
+        "Against an incoming slice, keep it flat and push; re-slicing reverses heavy spin and costs far more effort.",
+        "Don't imitate pros slicing from the back — low-margin elite talent, not a model to copy."
+      ],
+      "mistakes": [
+        "Slicing every ball regardless of situation.",
+        "Using the wrist to generate the slice, killing forward speed and control.",
+        "Opening the face too much at the back so the ball floats up and gets attacked.",
+        "Slicing a low ball at the net, lifting it over instead of playing high-to-low.",
+        "Trying to slice a fast ball you can only block, or one too far in front.",
+        "Re-slicing a heavy incoming slice instead of blocking/pushing it flat.",
+        "Copying pro back-court slices that need exceptional talent and offer low margin."
+      ],
+      "phases": {
+        "preparation": "Read court position and ball height first: net vs back, above vs below the net/waistline — that decides slice vs flat/topspin before you set the racket.",
+        "backswing": "Slice: racket above the ball. Flat/topspin: behind/under it. Choose from the read.",
+        "contact": "Slice: swing forward (not down), ball slightly back and low, no wrist. Flat: meet it out front and push, especially against heavy incoming spin.",
+        "follow_through": "Decision cue — at the net take it above the net and slice low; below the net or facing a volleyer, touch/flat it; at the back below the waist, drive flat."
       }
     }
   ]
