@@ -128,8 +128,8 @@ def nearest_player(frame, ref_box):
 
 def draw(img, k, ox, oy, scale):
     H, W = img.shape[:2]
-    # Thin, Padel-AI style — reads as data over the game, doesn't overpower the image
-    lw = max(2, int(H*0.006)); r = max(2, int(H*0.008))
+    # Thin, Padel-AI style — fine lines, small joints, minimal outline
+    lw = max(1, int(H*0.004)); r = max(2, int(H*0.006)); ow = 1
     def P(j):
         x, y, c = k[j]
         if c <= KV:
@@ -152,13 +152,13 @@ def draw(img, k, ox, oy, scale):
     for (a, b), col in LIMBS:
         pa, pb = P(a), P(b)
         if pa and pb and math.hypot(pa[0]-pb[0], pa[1]-pb[1]) <= max_seg:
-            cv2.line(img, pa, pb, (20,20,20), lw+2); cv2.line(img, pa, pb, col, lw)
+            cv2.line(img, pa, pb, (25,25,25), lw+ow, cv2.LINE_AA)   # faint outline
+            cv2.line(img, pa, pb, col, lw, cv2.LINE_AA)
             drawn.add(a); drawn.add(b)
     for j in drawn:                      # only joints that belong to a valid limb
         p = P(j)
         if p:
-            cv2.circle(img, p, r+1, (20,20,20), -1)
-            cv2.circle(img, p, r, (80,160,255) if j in (9,10) else (255,255,255), -1)
+            cv2.circle(img, p, r, (255,255,255), -1, cv2.LINE_AA)   # small clean dots
 
 def gif_for_shot(cap, peak_t, pbox, out_path, target_h=260, nframes=16):
     """Render the shot as a looping slow-mo GIF with the skeleton overlaid, using
