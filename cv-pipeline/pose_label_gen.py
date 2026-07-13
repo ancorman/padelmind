@@ -128,7 +128,8 @@ def nearest_player(frame, ref_box):
 
 def draw(img, k, ox, oy, scale):
     H, W = img.shape[:2]
-    lw = max(2, int(H*0.010)); r = max(3, int(H*0.012))
+    # Thin, Padel-AI style — reads as data over the game, doesn't overpower the image
+    lw = max(2, int(H*0.006)); r = max(2, int(H*0.008))
     def P(j):
         x, y, c = k[j]
         if c <= KV:
