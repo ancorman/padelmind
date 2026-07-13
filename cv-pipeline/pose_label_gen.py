@@ -210,19 +210,53 @@ def crop_phase(frame, k, box, out_path):
     cv2.imwrite(out_path, crop, [cv2.IMWRITE_JPEG_QUALITY, 90])
     return [[round(v[0],1), round(v[1],1), round(v[2],3)] for v in k]
 
+def _dom_wrist(k):
+    """The CONFIDENT wrist further from its shoulder = the swinging arm.
+    Confidence gate avoids the jittery low-conf wrist keypoints that fake motion."""
+    best, bd = None, -1.0
+    for sh_j, wr_j in ((5, 9), (6, 10)):
+        sh, wr = _pt(k, sh_j), _pt(k, wr_j)
+        if sh and wr and k[wr_j][2] > 0.5:      # only a well-detected wrist
+            d = math.hypot(wr[0] - sh[0], wr[1] - sh[1])
+            if d > bd:
+                bd, best = d, wr
+    return best
+
+def _torso(k):
+    ls, rs, lh, rh = _pt(k, 5), _pt(k, 6), _pt(k, 11), _pt(k, 12)
+    if not (ls and rs and lh and rh):
+        return None
+    shm = ((ls[0]+rs[0])/2, (ls[1]+rs[1])/2)
+    hpm = ((lh[0]+rh[0])/2, (lh[1]+rh[1])/2)
+    return math.hypot(shm[0]-hpm[0], shm[1]-hpm[1]) or 1.0
+
+
 def process(video, out_dir, cidx, max_shots, manifest):
     global DEVICE
-    DEVICE = _GPU                        # fast peak-finding
-    # Pass 1 — strike-score series (no frame storage). 6 FPS is plenty to catch
-    # a ~1s strike; keeps a 76-min clip tractable.
-    series = []
-    for t, frame in ex.frames(video, target_fps=6.0):
+    DEVICE = _GPU
+    # Pass 1 — a SHOT is defined by WRIST MOTION, not a static arm pose. Score each
+    # frame by how fast the swinging wrist is moving (torso-normalised). A player
+    # standing in a ready stance scores ~0; the whip through a real return peaks.
+    # 8 FPS for enough temporal resolution to catch a ~0.25s swing.
+    raw = []  # (t, kpts, box, face)
+    for t, frame in ex.frames(video, target_fps=8.0):
         top = top_striker(frame)
-        series.append((t, top[0], top[2], face_score(top[1])) if top else (t, 0.0, None, 0))
+        raw.append((t, top[1], top[2], face_score(top[1])) if top else (t, None, None, 0))
 
-    peaks, win = [], 0.4
+    series = []  # (t, motion_score, box, face)
+    for i, (t, k, b, f) in enumerate(raw):
+        m = 0.0
+        if k is not None and b is not None and i > 0 and raw[i-1][1] is not None:
+            w, pw, tl = _dom_wrist(k), _dom_wrist(raw[i-1][1]), _torso(k)
+            dt = t - raw[i-1][0]
+            if w is not None and pw is not None and tl and 0 < dt <= 0.4:
+                sp = math.hypot(w[0]-pw[0], w[1]-pw[1]) / tl / dt   # torso-lengths / sec
+                m = sp if sp <= 8.0 else 0.0        # >8 torso/s isn't human — keypoint jump
+        series.append((t, m, b, f))
+
+    peaks, win = [], 0.35
     for t, sc, b, f in series:
-        if sc < 1.5 or b is None: continue
+        if sc < 3.0 or b is None: continue          # 3+ torso-lengths/s = a genuine swing whip
         if sc >= max(s for (tt, s, _, _) in series if abs(tt - t) <= win):
             peaks.append((t, sc, b, f))
     peaks.sort(key=lambda p: p[1], reverse=True)
