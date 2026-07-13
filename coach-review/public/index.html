@@ -44,6 +44,11 @@
   .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--green);color:#04231a;padding:12px 20px;border-radius:10px;font-weight:700;z-index:30;box-shadow:0 4px 16px rgba(0,0,0,.4)}
   .toast.err{background:var(--danger);color:#2a0a0a}
   .loader{text-align:center;padding:60px 20px;color:var(--muted)}
+  .skipbtn{border:1.5px dashed var(--border);border-radius:10px;padding:10px 8px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;user-select:none;text-align:center;transition:all .12s}
+  .skipbtn:hover{border-color:var(--danger);color:var(--danger)}
+  .card.skipped{opacity:.5}
+  .card.skipped .strip,.card.skipped .gifwrap,.card.skipped .body>.q:not(:first-child){filter:grayscale(1)}
+  .card.skipped .skipbtn{border-style:solid;border-color:var(--danger);color:var(--danger);background:rgba(248,113,113,.1)}
 </style></head>
 <body>
   <div class="top">
@@ -59,7 +64,7 @@
   </div>
 <script>
 const BACKEND='https://padelmind-coach.manoj-5ce.workers.dev';
-const CLIP='court-real-1406';
+const CLIP='padeldriver-bandeja';
 const QUESTIONS=[
   {key:'shot_type',label:'Shot type',multi:false,opts:['Forehand drive','Backhand drive','Forehand volley','Backhand volley','Bandeja','Víbora','Smash / Remate','Serve','Lob','Defensive / Block']},
   {key:'preparation',label:'Preparation',multi:false,opts:['Good','Rushed','Late','Poor']},
@@ -73,10 +78,12 @@ let SHOTS=[];
 const $=id=>document.getElementById(id);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
 const isDone=id=>{const a=answers[id]||{};return !!(a.shot_type&&a.execution);};
+const isSkipped=id=>!!(answers[id]||{}).skipped;
+const isHandled=id=>isDone(id)||isSkipped(id);
 const save=()=>localStorage.setItem(LS,JSON.stringify(answers));
 
 function updateBar(){
-  const done=SHOTS.filter(s=>isDone(s.shot_id)).length;
+  const done=SHOTS.filter(s=>isHandled(s.shot_id)).length;
   $('cnt').textContent=done+' / '+SHOTS.length;
   $('fill').style.width=(SHOTS.length?100*done/SHOTS.length:0)+'%';
   $('submit').disabled=!(done>0 && $('coach').value.trim());
@@ -110,6 +117,15 @@ function buildCard(shot,i){
 
   const body=el('div','body');
   const a=answers[shot.shot_id]||(answers[shot.shot_id]={});
+
+  // Reject control — the detector isn't perfect; a coach can drop a non-strike in one
+  // tap. Skipped shots still submit (as negative training examples), just not as labels.
+  const applySkip=()=>{card.classList.toggle('skipped',!!a.skipped);skipBtn.textContent=a.skipped?'✕ Marked: not a real shot — undo':'Not a real shot — skip';};
+  const skipRow=el('div','q');
+  const skipBtn=el('div','skipbtn');
+  skipBtn.onclick=()=>{a.skipped=!a.skipped;save();applySkip();updateBar();};
+  skipRow.append(skipBtn); body.append(skipRow);
+
   for(const q of QUESTIONS){
     const qd=el('div','q'); qd.append(el('div','qlabel',q.label));
     const opts=el('div','opts');
@@ -132,6 +148,7 @@ function buildCard(shot,i){
   ta.oninput=e=>{a.note=e.target.value;save();};
   nq.append(ta); body.append(nq);
   card.append(body);
+  applySkip();
   return card;
 }
 
@@ -139,7 +156,7 @@ function toast(m,e){const t=el('div','toast'+(e?' err':''),m);document.body.appe
 
 async function submit(){
   const coach=$('coach').value.trim();
-  const labels=SHOTS.filter(s=>isDone(s.shot_id)).map(s=>({...s,coach_input:answers[s.shot_id]}));
+  const labels=SHOTS.filter(s=>isHandled(s.shot_id)).map(s=>({...s,coach_input:answers[s.shot_id]}));
   $('submit').disabled=true; $('submit').textContent='Saving…';
   try{
     const r=await fetch(BACKEND+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},

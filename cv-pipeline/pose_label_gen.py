@@ -273,6 +273,12 @@ def process(video, out_dir, cidx, max_shots, manifest):
     for si, (pt, psc, pbox, pface) in enumerate(chosen):
         shot_id = f"c{cidx}s{si}"
         phases = []
+        # Track-continuity guard: all phases must stay near the swing anchor. When the
+        # real player briefly drops out, nearest_player() grabs whoever is closest —
+        # often a different player across the court — faking a "shot" out of a track jump.
+        pcx = (pbox[0] + pbox[2]) / 2.0
+        pbw = max(1.0, float(pbox[2] - pbox[0]))
+        teleport = False
         for pi, (pname, off) in enumerate(PHASES):
             tt = max(0.0, pt + off)
             cap.set(cv2.CAP_PROP_POS_MSEC, tt*1000)
@@ -281,10 +287,14 @@ def process(video, out_dir, cidx, max_shots, manifest):
             found = nearest_player(frame, pbox)
             if not found: continue
             k, b = found
+            bcx = (float(b[0]) + float(b[2])) / 2.0
+            if abs(bcx - pcx) > 2.5 * pbw:          # jumped to a different player → track unstable
+                teleport = True
+                break
             fn = f"{shot_id}_p{pi}.jpg"
             kp = crop_phase(frame, k, b, os.path.join(out_dir, fn))
             if kp: phases.append({"phase": pname, "id": fn, "t": round(tt,2), "keypoints": kp})
-        if len(phases) >= 3:
+        if not teleport and len(phases) >= 3:
             gif = gif_for_shot(cap, pt, pbox, os.path.join(out_dir, f"{shot_id}.gif"))
             manifest.append({"shot_id": shot_id, "shot_index": len(manifest)+1,
                              "peak_sec": round(pt,2), "strike_score": round(psc,2),
